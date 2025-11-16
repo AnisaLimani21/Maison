@@ -1,0 +1,20 @@
+.header{
+
+    color: rgb(59, 27, 27);
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.navbar{
+    font-size: larger;
+    text-align: right;
+    background-color: whitesmoke;
+    border: solid black 1px;
+    border-radius: 30px;
+}
+
+.navbar a{
+color: black;
+text-decoration: none;
+justify-content: space-around;
+}
