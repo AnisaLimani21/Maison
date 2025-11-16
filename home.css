@@ -2,19 +2,34 @@
 
     color: rgb(59, 27, 27);
     text-decoration: none;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: fantasy;
+
+
 }
 
 .navbar{
-    font-size: larger;
-    text-align: right;
-    background-color: whitesmoke;
-    border: solid black 1px;
-    border-radius: 30px;
+    font-size: x-large;
+    text-align: center;
+    background-color: rgba(145, 104, 84, 0.634);
+    /* border-bottom: solid rgb(126, 125, 125) 0.5px;*/
+    height: 50px;
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+     font-family: fantasy;
+     margin: auto;
+     gap: 40px;
+     box-shadow: 0 2px 15px;
+     
 }
 
-.navbar a{
-color: black;
+.navbar a.space{
+color: rgb(30, 10, 5);
 text-decoration: none;
-justify-content: space-around;
+
+}
+
+.header h1{
+    display: flex;
+ justify-content: center;  
 }
