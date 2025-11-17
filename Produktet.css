@@ -1,0 +1,61 @@
+.navbar{
+    font-size: larger;
+    padding: 0 20px;
+    background-color: rgba(54, 14, 14, 0.707);
+    border: solid black 1px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo img{
+    width: 80px;
+    height: auto;
+    display: block;
+}
+.nav a{
+    text-decoration: none;
+    color: white;
+    margin: 0 15px;
+   
+}
+.login a{
+    text-decoration: none;
+    color: white;
+    margin: 0 5px;
+}
+.login span{
+    color: white;
+    
+}
+.categories{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 50px;  
+    row-gap: 50px;  
+    padding: 50px;
+    width: max-content;  
+    margin: 0 auto;  
+}
+.card{
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    padding:25px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    
+}
+.card img{
+    width: 100%;
+}
+.card a{
+    text-decoration: none;
+    color:white;
+    background-color: rgba(54, 14, 14, 0.707);
+    border-radius: 15px;
+    padding: 10px 20px; 
+    font-size: 16px;
+}
+
+
