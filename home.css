@@ -1,6 +1,6 @@
 .header{
 
-    color: rgb(59, 27, 27);
+    color: rgb(4, 4, 4);
     text-decoration: none;
     font-family: fantasy;
 
@@ -8,12 +8,13 @@
 }
 
 .navbar{
-    font-size: x-large;
+    font-size: 50px;
     text-align: center;
-    background-color: rgba(142, 95, 71, 0.682);
+    background-color: rgb(0, 0, 0);
     /* border-bottom: solid rgb(126, 125, 125) 0.5px;*/
     height: 50px;
     padding-top: 30px;
+    padding-bottom: 30px;
     display: flex;
     justify-content: center;
      font-family: fantasy;
@@ -24,27 +25,107 @@
 }
 
 .navbar a.space{
-color: rgb(30, 10, 5);
+color: rgb(255, 255, 255);
 text-decoration: none;
 
 }
 
 .header h1{
     display: flex;
- justify-content: center;  
+ justify-content: center; 
+ font-size: 100px; 
 }
 
 .photo{
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    gap: 100px;
+   row-gap: 200px;
+   column-gap: 100px;
+  
 
 }
 
 .photo img{
     width: 100%;
-    height: auto;
+    height:auto;
     box-shadow: 0 3px 11px;
     border-radius: solid brown 10px;
     object-fit: cover;
+    
+   
+}
+
+.quote{
+    font-size: 60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     color: rgb(0, 0, 0);
+     display: flex;
+     justify-content: center;
+    margin-bottom: 200px;
+    margin-top: -150px;
+    
+}
+
+
+.photo .card{
+    color: black;
+    border:  solid black 1px;
+    width: auto;
+    height: 900px;
+     border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    padding:25px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: lighter;
+    
+    
+}
+
+.new{
+    padding-top: 150PX;
+}
+
+.new h2{
+    color: rgb(0, 0, 0);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+    text-align: center;
+    padding-bottom: 100px;
+    margin-bottom: 5px;
+}
+
+.new p{
+    color:rgb(0, 0, 0) ;
+    font-size: x-large;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+   padding-bottom: 100px;
+  margin-top: -100px;
+}
+
+.card:hover{
+border: solid black 1px;
+color: rgba(5, 5, 5, 0.684);
+
+}
+
+.nicolas{
+display: flex;
+justify-content: center;
+border: solid grey 0.5px;
+box-shadow: 2px 4px 15px;
+margin-top: -200px;
+}
+
+.nicolas:hover{
+   box-shadow: 2px 4px 25px;
+}
+.nicolas .nico{
+display: flex;
+justify-content: space-between;
+
+
 }
