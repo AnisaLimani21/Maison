@@ -46,3 +46,18 @@ text-decoration: none;
     margin-top: -150px;
     
 }
+
+.login{
+    border: solid black 1px;
+    display: flex;
+    justify-content: center;
+    height: 400px;
+    width: 400px;
+    margin: auto;
+    padding: auto;
+}
+
+.login h2{
+    font-size: xx-large;
+    text-align: center;
+}
