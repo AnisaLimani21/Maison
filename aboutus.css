@@ -46,3 +46,30 @@ text-decoration: none;
     margin-top: -150px;
     
 }
+
+.nicolas{
+display: flex;
+justify-content: center;
+border: solid grey 0.5px;
+box-shadow: 2px 4px 15px;
+margin-top: -200px;
+}
+
+.nicolas:hover{
+   box-shadow: 2px 4px 25px;
+}
+.nicolas .nico{
+display: flex;
+justify-content: space-between;
+
+
+}
+
+
+.whipper{
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 250px;
+    width: 400px;
+    height: 400px;
+}
