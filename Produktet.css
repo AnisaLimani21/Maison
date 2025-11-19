@@ -1,12 +1,24 @@
 .navbar{
-    font-size: larger;
-    padding: 0 20px;
-    background-color: rgba(0, 0, 0);
-    border: solid black 1px;
-    border-radius: 30px;
+    font-size: 50px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.94);
+    /* border-bottom: solid rgb(126, 125, 125) 0.5px;*/
+    height: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
+     font-family: fantasy;
+     margin: auto;
+     gap: 40px;
+     box-shadow: 0 2px 15px;
+     
+}
+
+.navbar a.space{
+color: rgb(255, 255, 255);
+text-decoration: none;
+
 }
 .logo img{
     width: 80px;
