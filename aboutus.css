@@ -48,6 +48,7 @@ text-decoration: none;
 }
 
 .nicolas{
+
 display: flex;
 justify-content: center;
 border: solid grey 0.5px;
@@ -72,4 +73,30 @@ justify-content: space-between;
     padding-top: 250px;
     width: 400px;
     height: 400px;
+}
+
+.pic{
+    padding-bottom: 500px;
+    padding-top: 200px;
+    display: flex;
+    justify-content: flex-end;
+    
+}
+
+
+
+.pic img{
+    width:800px;
+    height:500px;
+}
+
+
+.text{
+font-size: xx-large;
+color: black;
+font-family: fantasy;
+text-align: start;
+
+padding-top: 100px;
+
 }
