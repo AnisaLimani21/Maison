@@ -196,3 +196,29 @@ color:#372414 ;
     justify-content: center;
 }
 
+
+.boksi{
+border: solid #e4e4e4 100px;
+width: auto;
+height: 800px;
+margin: auto;
+position: relative;
+overflow: hidden; 
+}
+
+.boksi img{
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-top: 100px;
+    width: auto; 
+    transform: rotate(-15deg) translate(50px, 30px);   
+}
+
+ .boksi h1{
+    font-size: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    color: #372414;
+    text-align: center;
+    
+ }
