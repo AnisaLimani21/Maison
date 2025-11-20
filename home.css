@@ -1,6 +1,6 @@
 .header{
 
-    color:black;
+    color:#372414 ;
     text-decoration: none;
     font-family: 'Times New Roman', Times, serif;
     display: flex;
@@ -11,10 +11,13 @@ padding-left: 50px;
 
 }
 
+
+
+
 .navbar{
     font-size: 50px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.94);
+    background-color:#372414 ;
     /* border-bottom: solid rgb(126, 125, 125) 0.5px;*/
     height: 50px;
     padding-top: 30px;
@@ -29,7 +32,7 @@ padding-left: 50px;
 }
 
 .navbar a.space{
-color: rgb(255, 255, 255);
+color:#F7EBDF;
 text-decoration: none;
 
 }
@@ -44,7 +47,7 @@ text-decoration: none;
 .quote{
     font-size: 30px;
     font-family: 'Times New Roman', Times, serif;
-     color: rgb(0, 0, 0);
+     color: #372414 ;
      display: flex;
      justify-content: flex-start;
     margin-bottom: 200px;
@@ -108,8 +111,8 @@ text-decoration: none;
 }
 
 .buton{
- background-color: #000000;
-    color: white;
+ background-color: #372414 ;
+    color:#F7EBDF;
     padding: 12px 24px;
     font-size: 24px;
     border: none;
@@ -119,7 +122,77 @@ text-decoration: none;
 
 }
 
+.buton:hover{
+    background-color: rgb(114, 119, 114);
+}
+
 .button{
     margin-left: 100px;
     margin-top: -150px;
 }
+
+.logo img{
+    width: 80px;
+    height: auto;
+    display: block;
+}
+
+.kifle img{
+
+
+    width: 400px;
+}
+
+.kifle{
+    display: flex;
+    justify-content: right;
+    padding-top:200px ;
+ padding-right: 20px;
+}
+
+.baked{
+    display: flex;
+    justify-content: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
+color:#372414 ;
+}
+
+.flavour{
+    text-align: center;
+    font-size: xx-large;
+    font-family: 'Times New Roman', Times, serif;
+    color:#372414 ;
+    
+}
+
+.flavour p{
+    margin-bottom: 60px;
+}
+
+.slide {
+    position: relative;
+    display: inline-block;
+}
+
+.slide img {
+    width: 500px;   
+    height: 500px;  
+    object-fit: cover;
+    margin-right: 20px; }
+
+.view-more {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background:#372414 ;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+}
+
