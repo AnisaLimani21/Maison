@@ -11,14 +11,53 @@ padding-left: 50px;
 
 }
 
+.subnav{
+    font-size: 15px;
+    padding-left: 20px;
+   border-bottom:solid  #e7e6e5 0.5px;
+    color: #372414;
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+}
 
 
+ .subnav .search-form{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 20px 0;
+}
 
+ .subnav .search-form input{
+    outline: none;
+     padding: 8px 12px;
+  font-size: 14px;
+  border: 2px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  width: 200px;
+}
+
+.search-form button {
+  padding: 8px 12px;
+  border: 2px solid #F7EBDF;
+  background-color: #F7EBDF;
+  color: #ffffff9e;
+  font-size: 14px;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.search-form button:hover {
+  background-color: #f5e1cc;
+}
+.search-form input:focus {
+  border-color: #372414;}
 .navbar{
     font-size: 50px;
     text-align: center;
-    background-color:#372414 ;
-    /* border-bottom: solid rgb(126, 125, 125) 0.5px;*/
+  /*  background-color:#372414 ;*/
+     border-bottom: solid  #e7e6e5 0.5px;
     height: 50px;
     padding-top: 30px;
     padding-bottom: 30px;
@@ -27,15 +66,15 @@ padding-left: 50px;
      font-family: fantasy;
      margin: auto;
      gap: 40px;
-     box-shadow: 0 2px 15px;
-     
-}
+  /*   box-shadow: 0 2px 15px;*/
+     }
 
 .navbar a.space{
-color:#F7EBDF;
+color:#372414;
 text-decoration: none;
 
 }
+
 
 .header h1{
     display: flex;
@@ -287,7 +326,7 @@ overflow: hidden;
 
 
 footer{
-    background-color: #372414;
+  
     width: auto;
     height: auto;
 }
@@ -307,7 +346,7 @@ footer{
 .footer-section h3 {
   margin-bottom: 10px;
   font-size: 22px;
-  color: #F7EBDF;
+  color: #372414;
   text-align: center;
 }
 
@@ -315,7 +354,7 @@ footer{
   margin: 5px 0;
   font-size: 20px;
   line-height: 1.5;
-  color: #F7EBDF;
+  color: #372414;
   text-align: center;
 }
 
@@ -323,7 +362,7 @@ footer{
   text-align: center;
   margin-top: 20px;
   font-size: 12px;
-  border-top: 1px solid #444;
+  border-top: 0.5px solid  #e7e6e5;
   padding-top: 10px;
   color: #ccc;
 }
