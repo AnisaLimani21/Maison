@@ -56,27 +56,32 @@
 .navbar{
     font-size: 50px;
     text-align: center;
-   
-    /* border-bottom: solid rgb(126, 125, 125) 0.5px;*/
+    border-bottom: solid #e7e6e5 0.5px;
+padding-top: 30px;
+padding-bottom: 30px;
+margin: auto;
     height: 50px;
-    padding-top: 30px;
-    padding-bottom: 30px;
     display: flex;
     justify-content: center;
-     font-family: fantasy;
-     margin: auto;
-     gap: 40px;
-     border-bottom: solid #e7e6e5 0.5px;
-     align-items: center;
-
-     
+    align-items: center;
+    gap: 40px;
+    font-family: fantasy;
+    gap: 40px;
+    
 }
 
 .navbar a.space{
-color: #372414;
-text-decoration: none;
-
+    color: #372414;
+    text-decoration: none;
+    
 }
+
+.logo img{
+    width: 80px;
+    height: auto;
+    display: block;
+}
+
 
 .header h1{
     display: flex;
@@ -95,56 +100,21 @@ text-decoration: none;
     
 }
 
-.nicolas{
-
-display: flex;
-justify-content: center;
-border: solid grey 0.5px;
-box-shadow: 2px 4px 15px;
-margin-top: -200px;
+.foto img{
+    width: auto;
+    height: auto;
+   border-radius: 30px;
+   
 }
 
-.nicolas:hover{
-   box-shadow: 2px 4px 25px;
-}
-.nicolas .nico{
-display: flex;
-justify-content: space-between;
-
-
-}
-
-
-.whipper{
+.foto{
+border-radius:30px;
     display: flex;
-    justify-content: flex-start;
-    padding-top: 250px;
-    width: 400px;
-    height: 400px;
-}
-
-.pic{
-    padding-bottom: 500px;
-    padding-top: 200px;
-    display: flex;
-    justify-content: flex-end;
-    
-}
-
-
-
-.pic img{
-    width:800px;
-    height:500px;
-}
-
-
-.text{
-font-size: xx-large;
-color: black;
-font-family: fantasy;
-text-align: start;
-
-padding-top: 100px;
-
+    justify-content: right;
+border:solid #ecebea 0.5px;
+width: auto;
+height: auto;
+align-items: flex-end;
+background-color: #F7EBDF;
+   margin-top: 30px;
 }
