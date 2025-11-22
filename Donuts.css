@@ -1,0 +1,147 @@
+body {
+    background: #ffffff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #111;
+    border-radius: 30px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: white;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav a:hover {
+    color: #ee9ca7;
+}
+
+.logo img {
+    width: 80px;
+}
+
+.header {
+    text-align: center;
+    margin: 40px 0 20px;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.header h1 {
+    font-size: 50px;
+}
+
+.donut-products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    padding: 20px 50px;
+}
+
+.donut-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.donut-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+}
+
+.img-circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.img-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.donut-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 10px 0 5px;
+}
+
+.donut-card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 25px;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #ee9ca7;
+    color: #fff;
+}
+
+@media (max-width: 1200px) {
+    .donut-products {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 20px;
+    }
+}
+
+@media (max-width: 900px) {
+    .donut-products {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .donut-products {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+        border-radius: 0;
+    }
+
+    .nav a {
+        margin: 5px;
+    }
+
+    .header {
+        font-size: 2rem;
+    }
+}
