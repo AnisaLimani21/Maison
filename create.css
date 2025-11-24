@@ -125,3 +125,109 @@ footer{
     text-align: center;
   }
 }
+
+.login-container {
+    width: 380px;
+    background: #fff;
+    margin: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: center;
+    gap: 40px;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 10vh;
+
+
+
+}
+
+.foto img {
+    width: 120px;
+    margin-bottom: 15px;
+}
+
+.login h2 {
+    margin-bottom: 15px;
+    font-size: 26px;
+}
+
+.login label {
+    display: block;
+    text-align: left;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+.login input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.login input:focus {
+    border-color: #7a5af5;
+    outline: none;
+}
+
+.login-btn {
+    width: 100%;
+    margin-top: 18px;
+    padding: 12px;
+    background: #f2b632;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.login-btn:hover {
+    background:#d9a12f;
+}
+
+.or-text {
+    margin: 15px 0 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.social-login a {
+    display: inline-block;
+    padding: 10px 14px;
+    margin: 5px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+}
+
+.facebook-btn {
+    background: #4267B2;
+}
+.facebook-btn:hover {
+    background-color: #365899;
+}
+
+.email-btn {
+    background: #f44336;
+}
+.email-btn:hover {
+    background-color: #d32f2f;
+}
+.create-account {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.create-account a {
+    color: #7a5af5;
+    font-weight: bold;
+    text-decoration: none;
+}
