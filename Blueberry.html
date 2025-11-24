@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueberry Burst Muffin</title>
+    <link rel="stylesheet" href="Blueberry.css">
+</head>
+<body>
+
+
+<div class="subnav">
+    <h4>Free shipping for up to €50 order</h4>
+
+    <form class="search-form">
+        <input type="text" placeholder="Search...">
+        <button type="submit">🔍</button>
+    </form>
+</div>
+
+
+<div class="navbar">
+    <div class="logo">
+        <img src="img/logoP.png" alt="">
+    </div>
+
+    <a href="homee.html" class="space">Home</a>
+    <a href="Produktet.html" class="space">Products</a>
+    <a href="aboutus.html" class="space">About Us</a>
+    <a href="gift.html" class="space">Gift Box</a>
+    <a href="login.html" class="space">Log In</a>
+
+
+    <a href="#" class="cart-icon">🛒 <span id="cartCount">0</span></a>
+</div>
+
+
+<div class="container">
+
+    <div class="image-box">
+        <img src="img/Screenshot (411).png" alt="Blueberry Muffin">
+    </div>
+
+    <div class="info">
+        <h1>Blueberry Burst</h1>
+        <p class="price" id="priceDisplay">$2.80</p>
+
+        <h3>Ingredients</h3>
+        <ul>
+            <li>Fresh Blueberries</li>
+            <li>Soft Vanilla Batter</li>
+            <li>Brown Sugar</li>
+            <li>Butter</li>
+            <li>Eggs</li>
+            <li>A Touch of Lemon</li>
+        </ul>
+
+        <label for="qtySelect"><b>Quantity: </b></label>
+        <select id="qtySelect">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+
+        <button class="btn" id="addCartBtn">Add to Cart</button>
+    </div>
+
+</div>
+
+
+<div class="cart-popup" id="cartPopup">
+    <h3>Your Cart</h3>
+    <ul id="cartItems"></ul>
+    <button onclick="closeCart()" class="close-btn">Close</button>
+</div>
+
+
+<script>
+let basePrice = 2.80;
+
+const qtySelect = document.getElementById("qtySelect");
+const priceDisplay = document.getElementById("priceDisplay");
+const addCartBtn = document.getElementById("addCartBtn");
+
+function updatePrice() {
+    let qty = parseInt(qtySelect.value);
+    let newPrice = basePrice * qty;
+    priceDisplay.textContent = "$" + newPrice.toFixed(2);
+}
+qtySelect.addEventListener("change", updatePrice);
+
+
+let cart = [];
+const cartCount = document.getElementById("cartCount");
+const cartPopup = document.getElementById("cartPopup");
+const cartItemsList = document.getElementById("cartItems");
+
+addCartBtn.addEventListener("click", () => {
+    const qty = parseInt(qtySelect.value);
+
+    cart.push({
+        name: "Blueberry Burst",
+        qty: qty,
+        price: basePrice * qty
+    });
+
+    cartCount.textContent = cart.length;
+    showCart();
+});
+
+document.querySelector(".cart-icon").addEventListener("click", (e) => {
+    e.preventDefault();
+    showCart();
+});
+
+function showCart() {
+    cartItemsList.innerHTML = "";
+
+    cart.forEach(item => {
+        let li = document.createElement("li");
+        li.textContent = `${item.qty}× ${item.name} - $${item.price.toFixed(2)}`;
+        cartItemsList.appendChild(li);
+    });
+
+    cartPopup.style.display = "block";
+}
+
+function closeCart() {
+    cartPopup.style.display = "none";
+}
+</script>
+
+</body>
+</html>
