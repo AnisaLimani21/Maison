@@ -88,6 +88,7 @@ text-decoration: none;
 
 .product-image img{
     width: 380px;
+    height: auto;
     filter: drop-shadow(0 0 18px rgba(0,0,0,0.18));
     transition: 0.3s ease;
 }
