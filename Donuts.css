@@ -5,6 +5,7 @@ body {
     padding: 0;
 }
 
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -30,6 +31,7 @@ body {
     width: 80px;
 }
 
+
 .header {
     text-align: center;
     margin: 40px 0 20px;
@@ -41,24 +43,25 @@ body {
     font-size: 50px;
 }
 
+
 .donut-products {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     padding: 20px 50px;
+    justify-items: center; 
+    justify-content: center;
 }
+
+
 
 .donut-card {
     background: #fff;
     padding: 20px;
     border-radius: 25px;
     text-align: center;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 50px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .donut-card:hover {
@@ -66,28 +69,74 @@ body {
     box-shadow: 0 15px 25px rgba(0,0,0,0.2);
 }
 
+
 .img-circle {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    position: relative;
+    width: 250px;
+    height: 200px;
+    border-radius: 20%;
+    background: #fff;
+    padding: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
+
+
+.img-circle::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 20%;
+    padding: 4px;
+    background: linear-gradient(80deg, #ffa2a5, #ce9d72);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude; 
+    pointer-events: none;
+}
+
+.img-circle:hover,
+.img-circle:focus {
+    
+    box-shadow: 0 0 12px rgba(217, 145, 108, 0.4);
+    transform: scale(1.03);
+}
+
+
+
 
 .img-circle img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    display: block;
+    object-fit: contain;
 }
+
+
+.donut1 img { transform: scale(1.08); }
+.donut2 img { transform: scale(1.35); }
+.donut3 img { transform: scale(0.80); }
+.donut4 img { transform: scale(1.10); }
+.donut5 img { transform: scale(1.10) translateY(-15px); 
+    transition: transform 0.3s; }
+.donut6 img { transform: scale(1.13) translateY(20px);  ;
+           transition: transform 0.3s;      }
+.donut7 img { transform: scale(1.25); translate: (-20px); 
+transition: transform 0.3s;}
+.donut8 img { transform: scale(0.90); }
+
 
 .donut-card h3 {
     font-size: 1.2rem;
     color: #333;
-    margin: 10px 0 5px;
+    margin-top: 10px;
 }
 
 .donut-card p {
@@ -108,27 +157,25 @@ body {
 
 .btn:hover {
     background: #ee9ca7;
-    color: #fff;
 }
+
+
 
 @media (max-width: 1200px) {
     .donut-products {
         grid-template-columns: repeat(3, 1fr);
-        padding: 20px;
     }
 }
 
 @media (max-width: 900px) {
     .donut-products {
         grid-template-columns: repeat(2, 1fr);
-        padding: 15px;
     }
 }
 
 @media (max-width: 600px) {
     .donut-products {
         grid-template-columns: 1fr;
-        padding: 10px;
     }
 
     .navbar {
@@ -141,7 +188,7 @@ body {
         margin: 5px;
     }
 
-    .header {
-        font-size: 2rem;
+    .header h1 {
+        font-size: 35px;
     }
 }
