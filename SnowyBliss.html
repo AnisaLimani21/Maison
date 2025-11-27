@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strawberry Sprinkle</title>
+<title>Snowy Bliss</title>
 <link rel="stylesheet" href="Donuts.css">
 <style>
     .product-container {
@@ -116,11 +116,11 @@
 
 <div class="product-container">
     <div class="image-box">
-        <img src="img/Screenshot__365_-removebg-preview.png" alt="Blueberry Bliss">
+        <img src="img/Screenshot__405_-removebg-preview.png" alt="Blueberry Bliss">
     </div>
     <div class="info">
-        <h1>Strawberry Sprinkle</h1>
-        <p class="price" id="price">$2.50</p>
+        <h1>Snowy Bliss</h1>
+        <p class="price" id="price">$3.00</p>
         <h3>Ingredients</h3>
         <ul>
             <li>Fresh Blueberries</li>
@@ -142,7 +142,7 @@
 <script>
     const priceElement = document.getElementById('price');
     const quantityInput = document.getElementById('quantity');
-    const basePrice = 2.50;
+    const basePrice = 3.00;
 
     function updatePrice() {
         let quantity = parseInt(quantityInput.value);
@@ -156,7 +156,7 @@
 
     function addToCart() {
         const quantity = parseInt(quantityInput.value);
-        alert(`Added ${quantity} Blueberry Bliss(s) to the cart!`);
+        alert(`Added ${quantity} Snowy Bliss(s) to the cart!`);
     }
 </script>
 

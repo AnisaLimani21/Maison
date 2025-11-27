@@ -122,13 +122,13 @@ body {
 
 .donut1 img { transform: scale(1.08); }
 .donut2 img { transform: scale(1.35); }
-.donut3 img { transform: scale(0.80); }
+.donut3 img { transform: scale(0.90); }
 .donut4 img { transform: scale(1.10); }
 .donut5 img { transform: scale(1.10) translateY(-15px); 
     transition: transform 0.3s; }
 .donut6 img { transform: scale(1.13) translateY(20px);  ;
            transition: transform 0.3s;      }
-.donut7 img { transform: scale(1.25); translate: (-20px); 
+.donut7 img { transform: scale(1.15); translate: (-20px); 
 transition: transform 0.3s;}
 .donut8 img { transform: scale(0.90); }
 
