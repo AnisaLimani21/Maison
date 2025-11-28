@@ -123,8 +123,24 @@ body {
 
 
 
-.hero-img { flex: 1; min-width: 300px; text-align: center; }
-.hero-img img { width: 100%; max-width: 500px; border-radius: 20px; }
+.hero-img {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.hero-img img {
+    width: 100%;
+    display: block;
+    
+    transition: transform 0.5s ease;
+}
+
+.hero-img img:hover {
+    transform: scale(1.05);
+}
+
 
 
 .quote {
