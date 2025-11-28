@@ -12,76 +12,83 @@
     <div class="nav-left">
         <img src="img/logoP.png" class="logo" alt="Logo">
     </div>
-
     <div class="nav-center" id="nav-links">
         <a href="homee.html">Home</a>
         <a href="Produktet.html">Products</a>
         <a href="aboutus.html">About Us</a>
         <a href="gift.html">Gift Box</a>
     </div>
-
     <div class="nav-right">
         <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search products...">
-    <button onclick="searchProduct()">🔍</button>
-</div>
-
-
-
+            <input type="text" id="searchInput" placeholder="Search products...">
+            <button onclick="searchProduct()">🔍</button>
+        </div>
         <a href="login.html" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
-
         <a href="cart.html" class="cart-icon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
         </a>
-
         <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>
+
 <header class="header">
     <h1>Our Macarons</h1>
 </header>
 
+
 <section class="products">
 
     <div class="product-card">
-        <img src="img/Screenshot__418_-removebg-preview.png">
+        <div class="img-wrapper">
+            <img src="img/Screenshot__418_-removebg-preview.png" alt="Strawberry Dream" class="mac1">
+        </div>
         <h3>Strawberry Dream</h3>
         <p>$3.00</p>
         <a href="#" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
-        <img src="img/Screenshot__419_-removebg-preview.png">
+        <div class="img-wrapper">
+            <img src="img/Screenshot__419_-removebg-preview.png" alt="Choco Delight" class="mac2">
+        </div>
         <h3>Choco Delight</h3>
         <p>$3.20</p>
         <a href="#" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
-        <img src="img/PistachioMacaron.png">
+        <div class="img-wrapper">
+            <img src="img/Screenshot__420_-removebg-preview (1).png" alt="Pistachio Bliss">
+        </div>
         <h3>Pistachio Bliss</h3>
         <p>$3.50</p>
         <a href="#" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
-        <img src="img/VanillaMacaron.png">
+        <div class="img-wrapper">
+            <img src="img/Screenshot__422_-removebg-preview.png" alt="Vanilla Cloud">
+        </div>
         <h3>Vanilla Cloud</h3>
         <p>$3.00</p>
         <a href="#" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
-        <img src="img/LemonMacaron.png">
+        <div class="img-wrapper">
+            <img src="img/Screenshot__423_-removebg-preview.png" alt="Lemon Spark">
+        </div>
         <h3>Lemon Spark</h3>
         <p>$3.10</p>
         <a href="#" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
-        <img src="img/RaspberryMacaron.png">
+        <div class="img-wrapper">
+            <img src="img/Screenshot__424_-removebg-preview.png" alt="Raspberry Rose">
+        </div>
         <h3>Raspberry Rose</h3>
         <p>$3.40</p>
         <a href="#" class="btn">Order Now</a>
@@ -91,45 +98,30 @@
 
 <script>
  const hamburger = document.getElementById("hamburger");
-    const navLinks = document.getElementById("nav-links");
-    hamburger.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
-    });
-    function searchProduct() {
-    const input = document.getElementById('searchInput').value.toLowerCase().trim();
+ const navLinks = document.getElementById("nav-links");
+ hamburger.addEventListener("click", () => {
+     navLinks.classList.toggle("active");
+ });
 
-    if(input === "muffins") {
-        window.location.href = "Muffins.html";
-    } else if(input === "cookies") {
-        window.location.href = "Cookies.html";
-    } else if(input === "donuts") {
-        window.location.href = "Donuts.html";
-    }else if(input === "macarons") {
-        window.location.href = "Macarons.html";
-    }else if(input === "chocolates") {
-        window.location.href = "Chocolates.html";
-    }else if(input === "brownies") {
-        window.location.href = "Brownies.html";
-    }else if(input === "croissants") {
-        window.location.href = "Croissants.html";
-    }else if(input === "cheesecakes") {
-        window.location.href = "Cheesecakes.html";
-    }else if(input === "pralines") {
-        window.location.href = "Pralines.html";
-    }else if(input === "wine") {
-        window.location.href = "Wine.html";
-    }else if(input === "login") {
-        window.location.href = "login.html";
-    }
-    else if(input === "products") {
-        window.location.href = "Produktet.html";
-    }
-
-
-     else {
-        alert("Product not found");
-    }
-}
+ function searchProduct() {
+     const input = document.getElementById('searchInput').value.toLowerCase().trim();
+     const pages = {
+         muffins: "Muffins.html",
+         cookies: "Cookies.html",
+         donuts: "Donuts.html",
+         macarons: "Macarons.html",
+         chocolates: "Chocolates.html",
+         brownies: "Brownies.html",
+         croissants: "Croissants.html",
+         cheesecakes: "Cheesecakes.html",
+         pralines: "Pralines.html",
+         wine: "Wine.html",
+         login: "login.html",
+         products: "Produktet.html"
+     };
+     if(pages[input]) window.location.href = pages[input];
+     else alert("Product not found");
+ }
 </script>
 
 </body>
