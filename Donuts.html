@@ -7,20 +7,35 @@
     <link rel="stylesheet" href="Donuts.css">
 </head>
 <body>
-
-<div class="navbar">
-    <div class="logo">
-       <img src="img/logoP.png" alt="logo">
+<nav class="navbar">
+    <div class="nav-left">
+        <img src="img/logoP.png" class="logo" alt="Logo">
     </div>
 
-    <div class="nav">
+    <div class="nav-center" id="nav-links">
         <a href="homee.html">Home</a>
         <a href="Produktet.html">Products</a>
         <a href="aboutus.html">About Us</a>
-        <a href="login.html">Log In</a>
         <a href="gift.html">Gift Box</a>
     </div>
-</div>
+
+    <div class="nav-right">
+        <form class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button>🔍</button>
+        </form>
+
+        <a href="login.html" class="login-btn">
+            <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
+        </a>
+
+        <a href="cart.html" class="cart-icon">
+            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+        </a>
+
+        <span class="hamburger" id="hamburger">☰</span>
+    </div>
+</nav>
 
 <header class="header">
     <h1>Our Donuts</h1>
@@ -101,6 +116,13 @@
     </div>
 
 </section>
-
+<script>
+    
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("nav-links");
+    hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+    });
+</script>
 </body>
 </html>

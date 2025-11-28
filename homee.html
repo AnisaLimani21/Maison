@@ -22,10 +22,12 @@
     </div>
 
     <div class="nav-right">
-        <form class="search-bar">
-            <input type="text" placeholder="Search...">
-            <button>🔍</button>
-        </form>
+        <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search products...">
+    <button onclick="searchProduct()">🔍</button>
+</div>
+
+
 
         <a href="login.html" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
@@ -115,6 +117,26 @@ window.addEventListener('DOMContentLoaded', () => {
 
     moveSlides();
 });
+function searchProduct() {
+    const input = document.getElementById('searchInput').value.toLowerCase().trim();
+
+    if(input === "muffins") {
+        window.location.href = "Muffins.html";
+    } else if(input === "cookies") {
+        window.location.href = "Cookies.html";
+    } else if(input === "donuts") {
+        window.location.href = "Donuts.html";
+    }else if(input === "donuts") {
+        window.location.href = "Donuts.html";
+    }else if(input === "donuts") {
+        window.location.href = "Donuts.html";
+    }else if(input === "donuts") {
+        window.location.href = "Donuts.html";
+    }
+     else {
+        alert("Product not found");
+    }
+}
 </script>
 
 </body>
