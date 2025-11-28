@@ -1,46 +1,78 @@
-.navbar{
-    font-size: 50px;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.94);
-    /* border-bottom: solid rgb(126, 125, 125) 0.5px;*/
-    height: 50px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: #fff8f2;
+    overflow-x: hidden; 
+}
+
+.navbar {
+    width: 100%; 
+    margin: 10px auto;
     display: flex;
-    justify-content: center;
-     font-family: fantasy;
-     margin: auto;
-     gap: 40px;
-     box-shadow: 0 2px 15px;
-     
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: #6b3e26; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+   border-bottom-left-radius: 10px; 
+    border-bottom-right-radius: 10px;  
+    position: relative;
+    z-index: 10;
 }
 
-.navbar a.space{
-color: rgb(255, 255, 255);
-text-decoration: none;
 
+.nav-left { display: flex; align-items: center; }
+.logo { width: 70px; }
+
+.nav-center {
+    display: flex;
+    gap: 30px;
+    justify-content: center; 
+    align-items: center;     
+    flex: 1;                 
 }
-.logo img{
-    width: 80px;
-    height: auto;
-    display: block;
-}
-.nav a{
+
+.nav-center a {
     text-decoration: none;
-    color: white;
-    margin: 0 15px;
-   
+    color: #fff;
+    font-weight: 600;
+    transition: 0.3s;
 }
-.login a{
-    text-decoration: none;
-    color: white;
-    margin: 0 5px;
+
+.nav-center a:hover { color: #ffd88c; }
+
+.nav-right { display: flex; align-items: center; gap: 15px; }
+
+.search-bar {
+    display: flex; align-items: center;
+    background: #fff; border: 1px solid #ffd88c;
+    border-radius: 20px; padding: 2px 10px;
 }
-.login span{
-    color: white;
-    
+.search-bar input { border: none; outline: none; padding: 5px; background: none; }
+.search-bar button { border: none; background: none; font-size: 18px; cursor: pointer; }
+
+.login-btn img, .cart-icon img {
+    width: 30px; height: 30px;
+    filter: invert(100%);
+    transition: 0.3s;
 }
-.categories{
+.login-btn img:hover, .cart-icon img:hover {
+    filter: invert(85%) sepia(100%) saturate(500%) hue-rotate(30deg);
+}
+
+.hamburger {
+    display: none;
+    font-size: 28px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.categories {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: 50px;  
@@ -49,21 +81,23 @@ text-decoration: none;
     width: max-content;  
     margin: 0 auto;  
 }
-.card{
-    width: 200px;
+
+.card {
+    width: 250px;
     border: 1px solid #ccc;
     border-radius: 10px;
     text-align: center;
     padding:25px;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-     transition: 0.3s ease;
-    
+    transition: 0.3s ease;
 }
-.card:hover{
+
+.card:hover {
     transform: translateY(-10px) scale(1.05);
     box-shadow: 4px 4px 15px rgba(0,0,0,0.4);
 }
-.card img{
+
+.card img {
     width: 180px;     
     height: 180px;  
     object-fit: contain; 
@@ -71,7 +105,7 @@ text-decoration: none;
     margin: 0 auto;
 }
 
-.card a{
+.card a {
     text-decoration: none;
     color:white;
     background-color: rgb(0, 0, 0);
@@ -81,9 +115,68 @@ text-decoration: none;
     display: inline-block;
     transition: 0.3s ease;
 }
-.card a:hover{
+
+.card a:hover {
     background-color: #333;
     transform: scale(1.1);
 }
 
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+    .categories {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 30px;
+        column-gap: 30px;
+        row-gap: 30px;
+    }
+}
 
+@media (max-width: 900px) {
+    .categories {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
+        column-gap: 20px;
+        row-gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .categories {
+        grid-template-columns: 1fr;
+        padding: 15px;
+        column-gap: 15px;
+        row-gap: 15px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        font-size: 30px;
+        gap: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .nav a, .login a {
+        margin: 0 10px;
+    }
+}
+@media screen and (max-width: 900px) {
+    .nav-center {
+        display: none;
+        flex-direction: column;
+        background: #4b2e1e;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+    }
+    .nav-center a {
+        padding: 15px; 
+        text-align: center; 
+        border-top: 1px solid #ffd88c33;
+    }
+    .nav-center.active { display: flex; }
+    .hamburger { display: block; }
+
+    .categories { grid-template-columns: 1fr; gap: 20px; }
+}
