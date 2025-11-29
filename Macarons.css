@@ -65,10 +65,12 @@ body {
 .products {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 35px;
-    padding: 10px 20px;
+    column-gap: 2px; 
+    row-gap: 35px;   
+    padding: 20px 60px;
     justify-items: center;
 }
+
 
 .product-card {
     width: 260px;
@@ -121,7 +123,7 @@ body {
 
 .img-wrapper img.mac1 {
     width: 100%;      
-    max-width: 500px; 
+    max-width: 300px; 
     height: auto;     
 }
 
@@ -129,6 +131,7 @@ body {
     width: 100%;
     max-width: 500px;
     height: auto;
+     margin-top: -15px;
 }
 
 

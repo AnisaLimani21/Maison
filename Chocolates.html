@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Chocolates</title>
+    <link rel="stylesheet" href="Chocolates.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-left">
+        <img src="img/logoP.png" class="logo" alt="Logo">
+    </div>
+    <div class="nav-center" id="nav-links">
+        <a href="homee.html">Home</a>
+        <a href="Produktet.html">Products</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="gift.html">Gift Box</a>
+    </div>
+    <div class="nav-right">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search products...">
+            <button onclick="searchProduct()">🔍</button>
+        </div>
+        <a href="login.html" class="login-btn">
+            <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
+        </a>
+        <a href="cart.html" class="cart-icon">
+            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+        </a>
+        <span class="hamburger" id="hamburger">☰</span>
+    </div>
+</nav>
+
+<header class="header">
+    <h1>Our Chocolates</h1>
+</header>
+
+<section class="chocolate-display">
+    <div class="main-photo">
+        <img id="mainChocolate" src="img/Screenshot__427_-removebg-preview.png" alt="Dark Chocolate">
+    </div>
+    <div class="chocolate-info">
+        <h2 id="chocName">Dark Chocolate</h2>
+        <p id="chocPrice">$5.00</p>
+    </div>
+    <div class="thumbnails">
+        <img src="img/Screenshot__427_-removebg-preview.png" alt="Dark" data-name="Dark Chocolate" data-price="$5.00">
+        <img src="img/Screenshot__428_-removebg-preview.png" alt="Milk" data-name="Milk Chocolate" data-price="$4.50">
+        <img src="img/2gg795cc7v4kwp7ni73aqfhpm09275pqas5kx3q30dpz2n3esdpjo7kinlxx-w1750-q85-removebg-preview.png" alt="White" data-name="White Chocolate" data-price="$4.80">
+        <img src="img/Screenshot__430_-removebg-preview.png" alt="Hazelnut" data-name="Hazelnut Chocolate" data-price="$5.50">
+    </div>
+</section>
+
+<script src="Chocolates.js"></script>
+</body>
+</html>
