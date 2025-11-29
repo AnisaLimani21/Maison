@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+<link rel="stylesheet" href="Chocolates.css">
+<style>
+.cart-container { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; padding:20px;}
+.cart-card { background:#fff; border:2px solid #d88f2f; border-radius:15px; padding:15px; width:220px;
+             box-shadow:0 8px 20px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; transition:0.3s;}
+.cart-card:hover { transform:translateY(-5px);}
+.cart-card img { width:150px; height:120px; object-fit:contain; border-radius:10px; margin-bottom:10px;}
+.cart-card h3 { color:#6b3e26; font-size:18px; margin:5px 0; text-align:center;}
+.cart-card p { color:#555; font-size:16px; margin:5px 0;}
+.cart-card button { background:#6b3e26; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; margin-top:10px; transition:0.3s;}
+.cart-card button:hover { background:#855c3a;}
+.total-section { text-align:center; margin:20px 30px; font-weight:bold; font-size:20px; color:#6b3e26;}
+.payment-section { margin:30px auto; background:#fff0e0; border-radius:15px; padding:20px; max-width:500px; box-shadow:0 8px 20px rgba(0,0,0,0.1);}
+.payment-section h2 { color:#6b3e26; margin-bottom:15px; text-align:center;}
+.payment-section label { display:block; font-weight:bold; margin-top:15px;}
+.payment-section input, .payment-section select { width:100%; padding:10px; margin-top:5px; border-radius:8px; border:1px solid #d88f2f; font-size:14px;}
+.checkout { background:#6b3e26; color:white; border:none; padding:12px 20px; border-radius:10px; cursor:pointer; font-size:16px; margin-top:20px; width:100%; transition:0.3s;}
+.checkout:hover { background:#855c3a;}
+</style>
+</head>
+<body>
+
+<h1 style="text-align:center; color:#6b3e26; margin:30px 0;">Your Shopping Cart</h1>
+
+<div class="cart-container" id="cartContainer"></div>
+<p class="total-section" id="cartTotal">Total: $0.00</p>
+
+<div class="payment-section">
+    <h2>Payment Info</h2>
+    <label for="fullName">Full Name</label>
+    <input type="text" id="fullName" placeholder="Enter your name:">
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="Enter your email:">
+    <label for="paymentMethod">Payment Method</label>
+    <select id="paymentMethod">
+        <option value="credit">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="cod">Cash on Delivery</option>
+    </select>
+    <button class="checkout" id="checkoutBtn">Confirm Order</button>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cartContainer = document.getElementById("cartContainer");
+const cartTotal = document.getElementById("cartTotal");
+
+function renderCart() {
+    cartContainer.innerHTML = "";
+    let total = 0;
+    cart.forEach((item,index)=>{
+        total += parseFloat(item.price.replace("$",""));
+        const card = document.createElement("div");
+        card.classList.add("cart-card");
+        card.innerHTML = `
+            <img src="img/${item.img}" alt="${item.name}">
+            <h3>${item.name}</h3>
+            <p>${item.price}</p>
+            <button onclick="removeItem(${index})">Remove</button>
+        `;
+        cartContainer.appendChild(card);
+    });
+    cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+}
+
+function removeItem(index){
+    cart.splice(index,1);
+    localStorage.setItem("cart",JSON.stringify(cart));
+    renderCart();
+}
+
+renderCart();
+
+document.getElementById("checkoutBtn").addEventListener("click",()=>{
+    const fullName = document.getElementById("fullName").value;
+    const email = document.getElementById("email").value;
+    const paymentMethod = document.getElementById("paymentMethod").value;
+
+    if(cart.length===0){ alert("Your cart is empty!"); return;}
+    if(!fullName || !email){ alert("Please fill in your name and email!"); return;}
+
+    alert(`Thank you, ${fullName}!\nYour order of ${cart.length} items totaling $${cart.reduce((sum,item)=>sum+parseFloat(item.price.replace("$","")),0).toFixed(2)} will be processed via ${paymentMethod}.`);
+
+    cart=[];
+    localStorage.setItem("cart",JSON.stringify(cart));
+    renderCart();
+});
+</script>
+
+</body>
+</html>

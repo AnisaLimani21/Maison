@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Chocolates</title>
-    <link rel="stylesheet" href="Chocolates.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Chocolates</title>
+<link rel="stylesheet" href="Chocolates.css">
 </head>
 <body>
 
@@ -26,12 +26,20 @@
         <a href="login.html" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
-        <a href="cart.html" class="cart-icon">
+        <a href="#" class="cart-icon" id="cartIcon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+            <span id="cartCount" class="cart-count">0</span>
         </a>
         <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>
+
+<div id="miniCart" class="mini-cart">
+    <h4>Your Cart</h4>
+    <ul id="cartItems"></ul>
+    <p id="totalPrice">Total: $0.00</p>
+    <a href="cart.html" class="go-cart-btn">Go to Cart</a>
+</div>
 
 <header class="header">
     <h1>Our Chocolates</h1>
@@ -42,9 +50,13 @@
         <img id="mainChocolate" src="img/Screenshot__427_-removebg-preview.png" alt="Dark Chocolate">
     </div>
     <div class="chocolate-info">
-        <h2 id="chocName">Dark Chocolate</h2>
-        <p id="chocPrice">$5.00</p>
+    <h2 id="chocName">Dark Chocolate</h2>
+    <div class="price-add">
+        <span id="chocPrice">$5.00</span>
+        <button id="addToCartBtn">Add to Cart 🛒</button>
     </div>
+</div>
+
     <div class="thumbnails">
         <img src="img/Screenshot__427_-removebg-preview.png" alt="Dark" data-name="Dark Chocolate" data-price="$5.00">
         <img src="img/Screenshot__428_-removebg-preview.png" alt="Milk" data-name="Milk Chocolate" data-price="$4.50">
@@ -53,6 +65,76 @@
     </div>
 </section>
 
-<script src="Chocolates.js"></script>
+<script>
+const mainChocolate = document.getElementById('mainChocolate');
+const chocName = document.getElementById('chocName');
+const chocPrice = document.getElementById('chocPrice');
+const addToCartBtn = document.getElementById("addToCartBtn");
+const thumbnails = document.querySelectorAll('.thumbnails img');
+const cartIcon = document.getElementById("cartIcon");
+const cartCount = document.getElementById("cartCount");
+const miniCart = document.getElementById("miniCart");
+const cartItems = document.getElementById("cartItems");
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("nav-links");
+
+thumbnails.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+        mainChocolate.src = thumb.src;
+        chocName.textContent = thumb.dataset.name;
+        chocPrice.textContent = thumb.dataset.price;
+    });
+});
+
+
+hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+});
+
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+cartCount.textContent = cart.length;
+updateMiniCart();
+
+
+addToCartBtn.addEventListener("click", () => {
+    const product = {
+        name: chocName.textContent,
+        price: chocPrice.textContent,
+        img: mainChocolate.src.split("/").pop() 
+    };
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${product.name} has been added to cart!`);
+    cartCount.textContent = cart.length;
+    updateMiniCart();
+});
+
+function updateMiniCart() {
+    cartItems.innerHTML = "";
+    let total = 0;
+    cart.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `<img src="img/${item.img}" alt="${item.name}" style="width:40px;height:30px;margin-right:5px;vertical-align:middle;"> ${item.name} - ${item.price}`;
+        cartItems.appendChild(li);
+        total += parseFloat(item.price.replace("$",""));
+    });
+    document.getElementById("totalPrice").textContent = `Total: $${total.toFixed(2)}`;
+}
+
+
+cartIcon.addEventListener("click", (e) => {
+    e.preventDefault();
+    miniCart.style.display = miniCart.style.display === "block" ? "none" : "block";
+});
+
+
+document.addEventListener("click", (e) => {
+    if (!cartIcon.contains(e.target) && !miniCart.contains(e.target)) {
+        miniCart.style.display = "none";
+    }
+});
+</script>
+
 </body>
 </html>
