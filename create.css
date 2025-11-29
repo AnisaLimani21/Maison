@@ -170,6 +170,7 @@ footer{
 .login h2 {
     margin-bottom: 15px;
     font-size: 26px;
+    text-align: center;
 }
 
 .login label {
@@ -215,19 +216,24 @@ footer{
     margin: 15px 0 8px;
     font-size: 14px;
     color: #555;
+    text-align: center;
 }
 
 .social-login a {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
     padding: 10px 14px;
     margin: 5px;
     border-radius: 6px;
     text-decoration: none;
     color: white;
+    
+    
 }
 
 .facebook-btn {
     background: #4267B2;
+    
 }
 .facebook-btn:hover {
     background-color: #365899;
@@ -242,6 +248,7 @@ footer{
 .create-account {
     margin-top: 15px;
     font-size: 14px;
+    text-align: center;
 }
 
 .create-account a {
