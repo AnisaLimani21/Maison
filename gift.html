@@ -8,25 +8,37 @@
 </head>
 <body>
 
-      <div class="subnav">
-    <h4>Free shipping for  up to €50 order</h4>
-   
-    <form class="search-form" action="/search" method="GET">
-  <input type="text" name="query" placeholder="Search...">
-  <button type="submit">🔍</button>
-</form>
-      </div>
-    <div class="navbar">
-         <div class="logo">
-        <img src="img/logoP.png" alt="">
-     </div>
-     <a href="homee.html" class="space">Home</a>
-     <a href="Produktet.html" class="space">Products</a>
-     <a href="aboutus.html" class="space">About Us</a>
-      <a href="gift.html" class="space">Gift Box</a>
-     <a href="login.html" class="space">Log In</a>
-     
-     </div> 
+    <nav class="navbar">
+    <div class="nav-left">
+        <img src="img/logoP.png" class="logo" alt="Logo">
+    </div>
+
+    <div class="nav-center" id="nav-links">
+        <a href="homee.html">Home</a>
+        <a href="Produktet.html">Products</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="gift.html">Gift Box</a>
+    </div>
+
+    <div class="nav-right">
+        <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search products...">
+    <button onclick="searchProduct()">🔍</button>
+</div>
+
+
+
+        <a href="login.html" class="login-btn">
+            <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
+        </a>
+
+        <a href="cart.html" class="cart-icon">
+            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+        </a>
+
+        <span class="hamburger" id="hamburger">☰</span>
+    </div>
+</nav>
 
       <div class="new">
         <h2>Best Seller</h2>
@@ -85,7 +97,7 @@ Our Master Chocolatiers have created a selection of the finest French chocolate 
                     <p>Dark and Milk Ganache flavored with Champagne</p>
                 <h2>115.00€</h2>
                        <div class="button">
-    <button class="buton"onclick="window.location.href='lovegift.html'">Order</button></div>
+    <button class="buton"onclick="window.location.href='party.html'">Order</button></div>
         </div>
 
         <div class="card">
