@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Classic Glazed</title>
+<title>Vanilla Cloud</title>
 <link rel="stylesheet" href="ChocolateChipCookie.css">
 </head>
 <body>
@@ -12,24 +12,20 @@
     <div class="nav-left">
         <img src="img/logoP.png" class="logo" alt="Logo">
     </div>
-
     <div class="nav-center" id="nav-links">
         <a href="homee.html">Home</a>
         <a href="Produktet.html">Products</a>
         <a href="aboutus.html">About Us</a>
         <a href="gift.html">Gift Box</a>
     </div>
-
     <div class="nav-right">
         <form class="search-bar">
             <input type="text" placeholder="Search...">
             <button>🔍</button>
         </form>
-
         <a href="login.html" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
-
         <a href="#" class="cart-icon" id="cartIcon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
             <span id="cartCount" class="cart-count">0</span>
@@ -47,45 +43,39 @@
 
 <section class="product-single">
     <div class="circle-box">
-        <img src="img/Glazed-Donuts--removebg-preview.png" alt="Classic Glazed" style="width:500px; max-width:100%;">
+        <img src="img/Screenshot__422_-removebg-preview.png" alt="Vanilla Cloud" style="width:500px; max-width:100%;">
     </div>
-
     <div class="product-details">
-        <h2 class="product-title">Classic Glazed</h2>
-        <p class="price">$2.00</p>
-
+        <h2 class="product-title">Vanilla Cloud</h2>
+        <p class="price">$3.00</p>
         <h3>Ingredients:</h3>
         <ul>
             <li>Soft Vanilla Batter</li>
-            <li>Granulated Sugar</li>
+            <li>White Chocolate Chips</li>
             <li>Butter</li>
-            <li>Eggs</li>
             <li>Milk</li>
             <li>Vanilla Extract</li>
+            <li>Whipped Cream</li>
         </ul>
-
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" value="1" min="1" max="20">
-
-        <p class="total-price">Total: $2.00</p>
+        <p class="total-price">Total: $3.00</p>
         <button id="add-to-cart">Add to Cart</button>
     </div>
 </section>
 
 <script>
-const basePrice = 2.00;
+const basePrice = 3.00;
 const quantityInput = document.getElementById('quantity');
 const totalPriceEl = document.querySelector('.total-price');
 const addToCartBtn = document.getElementById("add-to-cart");
 const productTitle = document.querySelector(".product-title").textContent;
 const productImg = document.querySelector(".circle-box img").src.split("/").pop();
 const productPrice = parseFloat(document.querySelector(".price").textContent.replace("$",""));
-
 const cartIcon = document.getElementById("cartIcon");
 const cartCount = document.getElementById("cartCount");
 const miniCart = document.getElementById("miniCart");
 const cartItems = document.getElementById("cartItems");
-
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 cartCount.textContent = cart.length;
 updateMiniCart();
@@ -99,12 +89,7 @@ quantityInput.addEventListener('input', () => {
 
 addToCartBtn.addEventListener("click", () => {
     const quantity = parseInt(quantityInput.value);
-    const product = {
-        name: productTitle,
-        price: `$${(productPrice * quantity).toFixed(2)}`,
-        img: productImg,
-        qty: quantity
-    };
+    const product = { name: productTitle, price: `$${(productPrice * quantity).toFixed(2)}`, img: productImg, qty: quantity };
     cart.push(product);
     localStorage.setItem("cart", JSON.stringify(cart));
     cartCount.textContent = cart.length;
@@ -124,21 +109,12 @@ function updateMiniCart() {
     document.getElementById("totalPrice").textContent = `Total: $${total.toFixed(2)}`;
 }
 
-cartIcon.addEventListener("click", (e) => {
-    e.preventDefault();
-    miniCart.style.display = miniCart.style.display === "block" ? "none" : "block";
-});
+cartIcon.addEventListener("click", (e) => { e.preventDefault(); miniCart.style.display = miniCart.style.display === "block" ? "none" : "block"; });
+document.addEventListener("click", (e) => { if (!cartIcon.contains(e.target) && !miniCart.contains(e.target)) miniCart.style.display = "none"; });
 
-document.addEventListener("click", (e) => {
-    if (!cartIcon.contains(e.target) && !miniCart.contains(e.target)) {
-        miniCart.style.display = "none";
-    }
-});
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("nav-links");
-hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-});
+hamburger.addEventListener("click", () => { navLinks.classList.toggle("active"); });
 </script>
 
 </body>

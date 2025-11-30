@@ -4,160 +4,141 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Strawberry Sprinkle</title>
-<link rel="stylesheet" href="Donuts.css">
-<style>
-    .product-container {
-        max-width: 950px;
-        margin: 40px auto;
-        display: flex;
-        gap: 40px;
-        background: #fff;
-        padding: 30px;
-        border-radius: 25px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-    }
-    .image-box {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .image-box img {
-        width: 350px;
-        border-radius: 20px;
-        box-shadow: 0 6px 25px rgba(0,0,0,0.2);
-    }
-    .info {
-        flex: 1;
-    }
-    .info h1 {
-        color: #85328a;
-        font-size: 36px;
-        margin-bottom: 15px;
-    }
-    .price {
-        color: #d88f2f;
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
-    .info h3 {
-        font-size: 22px;
-        margin-bottom: 10px;
-        color: #444;
-    }
-    ul {
-        list-style: circle;
-        padding-left: 20px;
-        font-size: 17px;
-        line-height: 1.7;
-    }
-    .cart-section {
-        margin-top: 25px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .cart-section input {
-        width: 60px;
-        padding: 6px 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        font-size: 16px;
-        text-align: center;
-    }
-    .btn {
-        padding: 12px 20px;
-        background: #d88f2f;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        font-size: 17px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-    .btn:hover {
-        background: black;
-    }
-
-    @media (max-width: 900px) {
-        .product-container {
-            flex-direction: column;
-            text-align: center;
-        }
-        .image-box img {
-            width: 260px;
-        }
-        ul {
-            text-align: left;
-            margin: auto;
-        }
-        .cart-section {
-            justify-content: center;
-        }
-    }
-</style>
+<link rel="stylesheet" href="ChocolateChipCookie.css">
 </head>
 <body>
 
-<div class="navbar">
-    <div class="logo">
-       <img src="img/logoP.png" alt="logo">
+<nav class="navbar">
+    <div class="nav-left">
+        <img src="img/logoP.png" class="logo" alt="Logo">
     </div>
-    <div class="nav">
+
+    <div class="nav-center" id="nav-links">
         <a href="homee.html">Home</a>
         <a href="Produktet.html">Products</a>
         <a href="aboutus.html">About Us</a>
-        <a href="login.html">Log In</a>
         <a href="gift.html">Gift Box</a>
     </div>
+
+    <div class="nav-right">
+        <form class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button>🔍</button>
+        </form>
+
+        <a href="login.html" class="login-btn">
+            <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
+        </a>
+
+        <a href="#" class="cart-icon" id="cartIcon">
+            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+            <span id="cartCount" class="cart-count">0</span>
+        </a>
+          <span class="hamburger" id="hamburger">☰</span>
+    </div>
+</nav>
+
+<div id="miniCart" class="mini-cart">
+    <h4>Your Cart</h4>
+    <ul id="cartItems"></ul>
+    <p id="totalPrice">Total: $0.00</p>
+    <a href="cart.html" class="go-cart-btn">Go to Cart</a>
 </div>
 
-
-<div class="product-container">
-    <div class="image-box">
-        <img src="img/Screenshot__365_-removebg-preview.png" alt="Blueberry Bliss">
+<section class="product-single">
+    <div class="circle-box">
+        <img src="img/Screenshot__365_-removebg-preview.png" alt="Strawberry Sprinkle" style="width:400px; max-width:100%;">
     </div>
-    <div class="info">
-        <h1>Strawberry Sprinkle</h1>
-        <p class="price" id="price">$2.50</p>
-        <h3>Ingredients</h3>
+
+    <div class="product-details">
+        <h2 class="product-title">Strawberry Sprinkle</h2>
+        <p class="price">$2.50</p>
+
+        <h3>Ingredients:</h3>
         <ul>
-         <li>Fresh Strawberries</li>
-    <li>Soft Vanilla Batter</li>
-    <li>Powdered Sugar</li>
-    <li>Butter</li>
-    <li>Eggs</li>
-    <li>Strawberry Frosting</li>
+            <li>Fresh Strawberries</li>
+            <li>Soft Vanilla Batter</li>
+            <li>Powdered Sugar</li>
+            <li>Butter</li>
+            <li>Eggs</li>
+            <li>Strawberry Frosting</li>
         </ul>
 
-        <div class="cart-section">
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" value="1" min="1" max="10">
-            <button class="btn" onclick="addToCart()">Add to Cart</button>
-        </div>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" value="1" min="1" max="20">
+
+        <p class="total-price">Total: $2.50</p>
+        <button id="add-to-cart">Add to Cart</button>
     </div>
-</div>
+</section>
 
 <script>
-    const priceElement = document.getElementById('price');
-    const quantityInput = document.getElementById('quantity');
-    const basePrice = 2.50;
+const basePrice = 2.50;
+const quantityInput = document.getElementById('quantity');
+const totalPriceEl = document.querySelector('.total-price');
+const addToCartBtn = document.getElementById("add-to-cart");
+const productTitle = document.querySelector(".product-title").textContent;
+const productImg = document.querySelector(".circle-box img").src.split("/").pop();
+const productPrice = parseFloat(document.querySelector(".price").textContent.replace("$",""));
 
-    function updatePrice() {
-        let quantity = parseInt(quantityInput.value);
-        if(quantity < 1) quantity = 1;
-        if(quantity > 10) quantity = 10;
-        const total = (basePrice * quantity).toFixed(2);
-        priceElement.textContent = `$${total}`;
+const cartIcon = document.getElementById("cartIcon");
+const cartCount = document.getElementById("cartCount");
+const miniCart = document.getElementById("miniCart");
+const cartItems = document.getElementById("cartItems");
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+cartCount.textContent = cart.length;
+updateMiniCart();
+
+quantityInput.addEventListener('input', () => {
+    let qty = parseInt(quantityInput.value);
+    if(qty < 1) qty = 1;
+    if(qty > 20) qty = 20;
+    totalPriceEl.textContent = `Total: $${(productPrice * qty).toFixed(2)}`;
+});
+
+addToCartBtn.addEventListener("click", () => {
+    const quantity = parseInt(quantityInput.value);
+    const product = {
+        name: productTitle,
+        price: `$${(productPrice * quantity).toFixed(2)}`,
+        img: productImg,
+        qty: quantity
+    };
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    cartCount.textContent = cart.length;
+    updateMiniCart();
+    alert(`${productTitle} has been added to cart!`);
+});
+
+function updateMiniCart() {
+    cartItems.innerHTML = "";
+    let total = 0;
+    cart.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `<img src="img/${item.img}" alt="${item.name}" style="width:40px;height:30px;margin-right:5px;vertical-align:middle;"> ${item.name} x${item.qty} - ${item.price}`;
+        cartItems.appendChild(li);
+        total += parseFloat(item.price.replace("$",""));
+    });
+    document.getElementById("totalPrice").textContent = `Total: $${total.toFixed(2)}`;
+}
+
+cartIcon.addEventListener("click", (e) => {
+    e.preventDefault();
+    miniCart.style.display = miniCart.style.display === "block" ? "none" : "block";
+});
+
+document.addEventListener("click", (e) => {
+    if (!cartIcon.contains(e.target) && !miniCart.contains(e.target)) {
+        miniCart.style.display = "none";
     }
-
-    quantityInput.addEventListener('input', updatePrice);
-
-    function addToCart() {
-        const quantity = parseInt(quantityInput.value);
-        alert(`Added ${quantity} Blueberry Bliss(s) to the cart!`);
-    }
+});
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("nav-links");
+hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+});
 </script>
 
 </body>

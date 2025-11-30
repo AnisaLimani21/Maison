@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Classic Glazed</title>
+<title>Strawberry Dream</title>
 <link rel="stylesheet" href="ChocolateChipCookie.css">
 </head>
 <body>
@@ -12,24 +12,20 @@
     <div class="nav-left">
         <img src="img/logoP.png" class="logo" alt="Logo">
     </div>
-
     <div class="nav-center" id="nav-links">
         <a href="homee.html">Home</a>
         <a href="Produktet.html">Products</a>
         <a href="aboutus.html">About Us</a>
         <a href="gift.html">Gift Box</a>
     </div>
-
     <div class="nav-right">
         <form class="search-bar">
             <input type="text" placeholder="Search...">
             <button>🔍</button>
         </form>
-
         <a href="login.html" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
-
         <a href="#" class="cart-icon" id="cartIcon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
             <span id="cartCount" class="cart-count">0</span>
@@ -47,33 +43,29 @@
 
 <section class="product-single">
     <div class="circle-box">
-        <img src="img/Glazed-Donuts--removebg-preview.png" alt="Classic Glazed" style="width:500px; max-width:100%;">
+        <img src="img/Screenshot__418_-removebg-preview.png" alt="Strawberry Dream" style="width:400px; max-width:100%;">
     </div>
-
     <div class="product-details">
-        <h2 class="product-title">Classic Glazed</h2>
-        <p class="price">$2.00</p>
-
+        <h2 class="product-title">Strawberry Dream</h2>
+        <p class="price">$3.00</p>
         <h3>Ingredients:</h3>
         <ul>
             <li>Soft Vanilla Batter</li>
-            <li>Granulated Sugar</li>
+            <li>Strawberries</li>
             <li>Butter</li>
-            <li>Eggs</li>
             <li>Milk</li>
-            <li>Vanilla Extract</li>
+            <li>Whipped Cream</li>
         </ul>
-
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" value="1" min="1" max="20">
-
-        <p class="total-price">Total: $2.00</p>
+        <p class="total-price">Total: $3.00</p>
         <button id="add-to-cart">Add to Cart</button>
     </div>
 </section>
 
 <script>
-const basePrice = 2.00;
+
+const basePrice = 3.00;
 const quantityInput = document.getElementById('quantity');
 const totalPriceEl = document.querySelector('.total-price');
 const addToCartBtn = document.getElementById("add-to-cart");
@@ -134,6 +126,7 @@ document.addEventListener("click", (e) => {
         miniCart.style.display = "none";
     }
 });
+
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("nav-links");
 hamburger.addEventListener("click", () => {

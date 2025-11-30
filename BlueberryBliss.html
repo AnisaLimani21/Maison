@@ -36,7 +36,11 @@
         <a href="#" class="cart-icon" id="cartIcon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
             <span id="cartCount" class="cart-count">0</span>
+
+
+
         </a>
+        <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>
 
@@ -137,6 +141,11 @@ document.addEventListener("click", (e) => {
     if (!cartIcon.contains(e.target) && !miniCart.contains(e.target)) {
         miniCart.style.display = "none";
     }
+});
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("nav-links");
+hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
 });
 </script>
 

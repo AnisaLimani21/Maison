@@ -39,7 +39,7 @@
     </div>
 </nav>
 
-<!-- Mini Cart -->
+
 <div id="miniCart" class="mini-cart">
     <h4>Your Cart</h4>
     <ul id="cartItems"></ul>
@@ -47,7 +47,7 @@
     <a href="cart.html" class="go-cart-btn">Go to Cart</a>
 </div>
 
-<!-- Product -->
+
 <section class="product-single">
     <div class="circle-box">
         <img src="img/Screenshot (411).png" alt="Blueberry Burst Muffin">
@@ -136,6 +136,12 @@ document.addEventListener("click", (e) => {
     if (!cartIcon.contains(e.target) && !miniCart.contains(e.target)) {
         miniCart.style.display = "none";
     }
+});
+
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("nav-links");
+hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
 });
 </script>
 
