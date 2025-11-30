@@ -64,6 +64,13 @@ body {
 #totalPrice { font-weight:bold; margin-top:10px; color:#6b3e26; }
 .go-cart-btn { display:block; margin-top:10px; text-align:center; background:#6b3e26; color:#fff; padding:8px 0; border-radius:6px; text-decoration:none; transition:0.3s; }
 .go-cart-btn:hover { background-color:#855c3a; }
+@media screen and (max-width: 900px) {
+    .nav-center { display: none; flex-direction: column; background: #4b2e1e; position: absolute; top: 70px; left: 0; width: 100%; }
+    .nav-center a { padding: 15px; text-align: center; border-top: 1px solid #ffd88c33; }
+    .nav-center.active { display: flex; }
+    .hamburger { display: block; }
+}
+
 </style>
 </head>
 <body>

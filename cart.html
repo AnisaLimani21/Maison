@@ -61,7 +61,7 @@ function renderCart() {
         card.innerHTML = `
             <img src="img/${item.img}" alt="${item.name}">
             <h3>${item.name}</h3>
-            <p>${item.price}</p>
+            <p>${item.qty} x ${item.price}</p>
             <button onclick="removeItem(${index})">Remove</button>
         `;
         cartContainer.appendChild(card);
