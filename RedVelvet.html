@@ -1,135 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Velvet Muffin</title>
-    <link rel="stylesheet" href="Blueberry.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Velvet Muffin</title>
+<link rel="stylesheet" href="ChocolateChipCookie.css">
 </head>
 <body>
 
-
-<div class="subnav">
-    <h4>Free shipping for up to €50 order</h4>
-
-    <form class="search-form">
-        <input type="text" placeholder="Search...">
-        <button type="submit">🔍</button>
-    </form>
-</div>
-
-
-<div class="navbar">
-    <div class="logo">
-        <img src="img/logoP.png" alt="">
+<nav class="navbar">
+    <div class="nav-left">
+        <img src="img/logoP.png" class="logo" alt="Logo">
     </div>
 
-    <a href="homee.html" class="space">Home</a>
-    <a href="Produktet.html" class="space">Products</a>
-    <a href="aboutus.html" class="space">About Us</a>
-    <a href="gift.html" class="space">Gift Box</a>
-    <a href="login.html" class="space">Log In</a>
-
-
-    <a href="#" class="cart-icon">🛒 <span id="cartCount">0</span></a>
-</div>
-
-
-<div class="container">
-
-    <div class="image-box">
-        <img src="img/Screenshot (407).png" alt="DoubleChoco Muffin">
+    <div class="nav-center" id="nav-links">
+        <a href="homee.html">Home</a>
+        <a href="Produktet.html">Products</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="gift.html">Gift Box</a>
     </div>
 
-    <div class="info">
-        <h1>Red Velvet</h1>
-        <p class="price" id="priceDisplay">$3.00</p>
+    <div class="nav-right">
+        <form class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button>🔍</button>
+        </form>
 
-        <h3>Ingredients</h3>
-    <ul>
-    <li>Buttermilk</li>
-    <li>Cocoa Powder</li>
-    <li>Butter</li>
-    <li>Eggs</li>
-    <li>Flour</li>
-    <li>Red Food Coloring</li>
-</ul>
+        <a href="login.html" class="login-btn">
+            <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
+        </a>
 
+        <a href="#" class="cart-icon" id="cartIcon">
+            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+            <span id="cartCount" class="cart-count">0</span>
+        </a>
 
-        <label for="qtySelect"><b>Quantity: </b></label>
-        <select id="qtySelect">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-        </select>
-
-        <button class="btn" id="addCartBtn">Add to Cart</button>
+        <span class="hamburger" id="hamburger">☰</span>
     </div>
+</nav>
 
-</div>
-
-
-<div class="cart-popup" id="cartPopup">
-    <h3>Your Cart</h3>
+<div id="miniCart" class="mini-cart">
+    <h4>Your Cart</h4>
     <ul id="cartItems"></ul>
-    <button onclick="closeCart()" class="close-btn">Close</button>
+    <p id="totalPrice">Total: $0.00</p>
+    <a href="cart.html" class="go-cart-btn">Go to Cart</a>
 </div>
 
+<section class="product-single">
+    <div class="circle-box">
+        <img src="img/Screenshot (407).png" alt="Red Velvet Muffin">
+    </div>
+
+    <div class="product-details">
+        <h2 class="product-title">Red Velvet Muffin</h2>
+        <p class="price">$3.00</p>
+
+        <h3>Ingredients:</h3>
+        <ul>
+            <li>Buttermilk</li>
+            <li>Cocoa Powder</li>
+            <li>Butter</li>
+            <li>Eggs</li>
+            <li>Flour</li>
+            <li>Red Food Coloring</li>
+        </ul>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" value="1" min="1" max="20">
+
+        <p class="total-price">Total: $3.00</p>
+        <button id="add-to-cart">Add to Cart</button>
+    </div>
+</section>
 
 <script>
-let basePrice = 3.00;
+const basePrice = 3.00;
+const quantityInput = document.getElementById('quantity');
+const totalPriceEl = document.querySelector('.total-price');
+const addToCartBtn = document.getElementById("add-to-cart");
+const productTitle = document.querySelector(".product-title").textContent;
+const productImg = document.querySelector(".circle-box img").src.split("/").pop();
+const productPrice = parseFloat(document.querySelector(".price").textContent.replace("$",""));
 
-const qtySelect = document.getElementById("qtySelect");
-const priceDisplay = document.getElementById("priceDisplay");
-const addCartBtn = document.getElementById("addCartBtn");
-
-function updatePrice() {
-    let qty = parseInt(qtySelect.value);
-    let newPrice = basePrice * qty;
-    priceDisplay.textContent = "$" + newPrice.toFixed(2);
-}
-qtySelect.addEventListener("change", updatePrice);
-
-
-let cart = [];
+const cartIcon = document.getElementById("cartIcon");
 const cartCount = document.getElementById("cartCount");
-const cartPopup = document.getElementById("cartPopup");
-const cartItemsList = document.getElementById("cartItems");
+const miniCart = document.getElementById("miniCart");
+const cartItems = document.getElementById("cartItems");
 
-addCartBtn.addEventListener("click", () => {
-    const qty = parseInt(qtySelect.value);
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+cartCount.textContent = cart.length;
+updateMiniCart();
 
-    cart.push({
-        name: "Blueberry Burst",
-        qty: qty,
-        price: basePrice * qty
-    });
+quantityInput.addEventListener('input', () => {
+    let qty = parseInt(quantityInput.value);
+    if(qty < 1) qty = 1;
+    if(qty > 20) qty = 20;
+    totalPriceEl.textContent = `Total: $${(productPrice * qty).toFixed(2)}`;
+});
 
+addToCartBtn.addEventListener("click", () => {
+    const quantity = parseInt(quantityInput.value);
+    const product = {
+        name: productTitle,
+        price: `$${(productPrice * quantity).toFixed(2)}`,
+        img: productImg,
+        qty: quantity
+    };
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
     cartCount.textContent = cart.length;
-    showCart();
+    updateMiniCart();
+    alert(`${productTitle} has been added to cart!`);
 });
 
-document.querySelector(".cart-icon").addEventListener("click", (e) => {
-    e.preventDefault();
-    showCart();
-});
-
-function showCart() {
-    cartItemsList.innerHTML = "";
-
+function updateMiniCart() {
+    cartItems.innerHTML = "";
+    let total = 0;
     cart.forEach(item => {
-        let li = document.createElement("li");
-        li.textContent = `${item.qty}× ${item.name} - $${item.price.toFixed(2)}`;
-        cartItemsList.appendChild(li);
+        const li = document.createElement("li");
+        li.innerHTML = `<img src="img/${item.img}" alt="${item.name}" style="width:40px;height:30px;margin-right:5px;vertical-align:middle;"> ${item.name} x${item.qty} - ${item.price}`;
+        cartItems.appendChild(li);
+        total += parseFloat(item.price.replace("$",""));
     });
-
-    cartPopup.style.display = "block";
+    document.getElementById("totalPrice").textContent = `Total: $${total.toFixed(2)}`;
 }
 
-function closeCart() {
-    cartPopup.style.display = "none";
-}
+cartIcon.addEventListener("click", (e) => {
+    e.preventDefault();
+    miniCart.style.display = miniCart.style.display === "block" ? "none" : "block";
+});
+
+document.addEventListener("click", (e) => {
+    if (!cartIcon.contains(e.target) && !miniCart.contains(e.target)) {
+        miniCart.style.display = "none";
+    }
+});
 </script>
 
 </body>
