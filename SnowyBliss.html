@@ -34,8 +34,7 @@
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
             <span id="cartCount" class="cart-count">0</span>
         </a>
-                <span class="hamburger" id="hamburger">☰</span>
-
+        <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>
 
@@ -46,7 +45,11 @@
     <a href="cart.html" class="go-cart-btn">Go to Cart</a>
 </div>
 
-<section class="product-single">
+<section class="product-single"
+         data-name="Snowy Bliss"
+         data-price="3.00"
+         data-img="Screenshot__405_-removebg-preview.png">
+
     <div class="circle-box">
         <img src="img/Screenshot__405_-removebg-preview.png" alt="Snowy Bliss" style="width:400px; max-width:100%;">
     </div>
@@ -74,26 +77,14 @@
 </section>
 
 <script>
-const productData = {
-    name: "Snowy Bliss",
-    price: 3.00,
-    image: "img/Screenshot__405_-removebg-preview.png",
-    ingredients: [
-        "Soft Vanilla Batter",
-        "Powdered Sugar",
-        "White Chocolate Chips",
-        "Butter",
-        "Milk",
-        "Whipped Cream"
-    ]
-};
+const product = document.querySelector('.product-single');
+const productName = product.dataset.name;
+const productPrice = parseFloat(product.dataset.price);
+const productImg = product.dataset.img;
 
 const quantityInput = document.getElementById('quantity');
 const totalPriceEl = document.querySelector('.total-price');
 const addToCartBtn = document.getElementById("add-to-cart");
-const productTitle = document.querySelector(".product-title").textContent;
-const productImg = document.querySelector(".circle-box img").src.split("/").pop();
-const productPrice = parseFloat(document.querySelector(".price").textContent.replace("$",""));
 
 const cartIcon = document.getElementById("cartIcon");
 const cartCount = document.getElementById("cartCount");
@@ -106,35 +97,40 @@ updateMiniCart();
 
 quantityInput.addEventListener('input', () => {
     let qty = parseInt(quantityInput.value);
-    if(qty < 1) qty = 1;
+    if(isNaN(qty) || qty < 1) qty = 1;
     if(qty > 20) qty = 20;
-    totalPriceEl.textContent = `Total: $${(productData.price * qty).toFixed(2)}`;
+    quantityInput.value = qty;
+    totalPriceEl.textContent = `Total: $${(productPrice * qty).toFixed(2)}`;
 });
 
 addToCartBtn.addEventListener("click", () => {
     const quantity = parseInt(quantityInput.value);
-    const product = {
-        name: productData.name,
-        price: `$${(productData.price * quantity).toFixed(2)}`,
+    const item = {
+        name: productName,
+        pricePerUnit: productPrice,
         img: productImg,
         qty: quantity
     };
-    cart.push(product);
+    cart.push(item);
     localStorage.setItem("cart", JSON.stringify(cart));
     cartCount.textContent = cart.length;
     updateMiniCart();
-    alert(`${productData.name} has been added to cart!`);
+    alert(`${productName} x${quantity} added to cart!`);
 });
 
 function updateMiniCart() {
     cartItems.innerHTML = "";
     let total = 0;
+
     cart.forEach(item => {
+        const cost = (item.pricePerUnit * item.qty).toFixed(2);
+        total += parseFloat(cost);
+
         const li = document.createElement("li");
-        li.innerHTML = `<img src="img/${item.img}" alt="${item.name}" style="width:40px;height:30px;margin-right:5px;vertical-align:middle;"> ${item.name} x${item.qty} - ${item.price}`;
+        li.innerHTML = `<img src="img/${item.img}" style="width:40px;height:30px;margin-right:5px;"> ${item.name} x${item.qty} - $${cost}`;
         cartItems.appendChild(li);
-        total += parseFloat(item.price.replace("$",""));
     });
+
     document.getElementById("totalPrice").textContent = `Total: $${total.toFixed(2)}`;
 }
 
@@ -148,6 +144,7 @@ document.addEventListener("click", (e) => {
         miniCart.style.display = "none";
     }
 });
+
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("nav-links");
 hamburger.addEventListener("click", () => {

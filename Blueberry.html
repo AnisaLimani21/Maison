@@ -12,33 +12,27 @@
     <div class="nav-left">
         <img src="img/logoP.png" class="logo" alt="Logo">
     </div>
-
     <div class="nav-center" id="nav-links">
         <a href="homee.html">Home</a>
         <a href="Produktet.html">Products</a>
         <a href="aboutus.html">About Us</a>
         <a href="gift.html">Gift Box</a>
     </div>
-
     <div class="nav-right">
         <form class="search-bar">
             <input type="text" placeholder="Search...">
             <button>🔍</button>
         </form>
-
         <a href="login.html" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
-
         <a href="#" class="cart-icon" id="cartIcon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
             <span id="cartCount" class="cart-count">0</span>
         </a>
-
         <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>
-
 
 <div id="miniCart" class="mini-cart">
     <h4>Your Cart</h4>
@@ -47,16 +41,13 @@
     <a href="cart.html" class="go-cart-btn">Go to Cart</a>
 </div>
 
-
 <section class="product-single">
     <div class="circle-box">
         <img src="img/Screenshot (411).png" alt="Blueberry Burst Muffin">
     </div>
-
     <div class="product-details">
         <h2 class="product-title">Blueberry Burst Muffin</h2>
         <p class="price">$2.80</p>
-
         <h3>Ingredients:</h3>
         <ul>
             <li>Fresh Blueberries</li>
@@ -66,24 +57,20 @@
             <li>Eggs</li>
             <li>A Touch of Lemon</li>
         </ul>
-
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" value="1" min="1" max="20">
-
         <p class="total-price">Total: $2.80</p>
         <button id="add-to-cart">Add to Cart</button>
     </div>
 </section>
 
 <script>
-const basePrice = 2.80;
 const quantityInput = document.getElementById('quantity');
 const totalPriceEl = document.querySelector('.total-price');
 const addToCartBtn = document.getElementById("add-to-cart");
 const productTitle = document.querySelector(".product-title").textContent;
 const productImg = document.querySelector(".circle-box img").src.split("/").pop();
 const productPrice = parseFloat(document.querySelector(".price").textContent.replace("$",""));
-
 const cartIcon = document.getElementById("cartIcon");
 const cartCount = document.getElementById("cartCount");
 const miniCart = document.getElementById("miniCart");
@@ -104,7 +91,7 @@ addToCartBtn.addEventListener("click", () => {
     const quantity = parseInt(quantityInput.value);
     const product = {
         name: productTitle,
-        price: `$${(productPrice * quantity).toFixed(2)}`,
+        pricePerUnit: productPrice,
         img: productImg,
         qty: quantity
     };
@@ -112,17 +99,18 @@ addToCartBtn.addEventListener("click", () => {
     localStorage.setItem("cart", JSON.stringify(cart));
     cartCount.textContent = cart.length;
     updateMiniCart();
-    alert(`${productTitle} has been added to cart!`);
+    alert(`${productTitle} x${quantity} added to cart!`);
 });
 
 function updateMiniCart() {
     cartItems.innerHTML = "";
     let total = 0;
     cart.forEach(item => {
+        const itemTotal = (item.pricePerUnit * item.qty).toFixed(2);
+        total += parseFloat(itemTotal);
         const li = document.createElement("li");
-        li.innerHTML = `<img src="img/${item.img}" alt="${item.name}" style="width:40px;height:30px;margin-right:5px;vertical-align:middle;"> ${item.name} x${item.qty} - ${item.price}`;
+        li.innerHTML = `<img src="img/${item.img}" alt="${item.name}" style="width:40px;height:30px;margin-right:5px;vertical-align:middle;"> ${item.name} x${item.qty} - $${itemTotal}`;
         cartItems.appendChild(li);
-        total += parseFloat(item.price.replace("$",""));
     });
     document.getElementById("totalPrice").textContent = `Total: $${total.toFixed(2)}`;
 }
