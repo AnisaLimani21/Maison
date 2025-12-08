@@ -32,6 +32,7 @@ body{font-family:Arial,sans-serif;background:#fff8f2;overflow-x:hidden;}
 .go-cart-btn{display:block;margin-top:10px;text-align:center;background-color:#6b3e26;color:#fff;padding:8px 0;border-radius:6px;text-decoration:none;transition:0.3s;}
 .go-cart-btn:hover{background-color:#855c3a;}
 
+
 .grid{padding:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;}
 .card{background:white;padding:20px;border-radius:20px;box-shadow:0 4px 15px rgba(0,0,0,0.1);text-align:center;transition:0.3s;}
 .card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.2);}
@@ -54,6 +55,7 @@ body{font-family:Arial,sans-serif;background:#fff8f2;overflow-x:hidden;}
 </head>
 <body>
 
+
 <nav class="navbar">
     <div class="nav-left"><img src="img/logoP.png" class="logo"></div>
     <div class="nav-center" id="nav-links">
@@ -68,12 +70,13 @@ body{font-family:Arial,sans-serif;background:#fff8f2;overflow-x:hidden;}
             <button>🔍</button>
         </div>
         <a href="login.html" class="login-btn"><img src="https://img.icons8.com/ios/50/user--v1.png"></a>
-        <a href="#" class="cart-icon" id="cartIcon">
+        <a href="cart.html" class="cart-icon" id="cartIcon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png">
             <span id="cartCount" class="cart-count">0</span>
         </a>
     </div>
 </nav>
+
 
 <div id="miniCart" class="mini-cart">
     <h4>Your Cart</h4>
@@ -82,8 +85,12 @@ body{font-family:Arial,sans-serif;background:#fff8f2;overflow-x:hidden;}
     <a href="cart.html" class="go-cart-btn">Go to Cart</a>
 </div>
 
+
 <h1 style="text-align:center;margin-top:40px;">Our Pralines</h1>
+
+
 <div class="grid" id="pralineGrid"></div>
+
 
 <div class="modal-bg" id="modalBg">
     <div class="modal">
@@ -104,18 +111,20 @@ body{font-family:Arial,sans-serif;background:#fff8f2;overflow-x:hidden;}
 </div>
 
 <script>
+
 let pralines=[
-{name:"Hazelnut Praline",price:2.50,img:"photos/slider1.jpg",desc:"Smooth hazelnut cream.",ing:["Hazelnuts","Milk chocolate","Sugar","Vanilla"]},
-{name:"Dark Choco Praline",price:2.80,img:"photos/slider2.jpg",desc:"Rich dark chocolate.",ing:["Dark chocolate","Cocoa butter","Cream"]},
-{name:"Almond Crunch",price:2.60,img:"photos/slider3.jpg",desc:"Crispy almond center.",ing:["Almonds","Caramel","Milk chocolate"]},
-{name:"Caramel Heart",price:2.40,img:"photos/slider4.jpg",desc:"Soft caramel filling.",ing:["Caramel","Milk chocolate","Butter"]},
-{name:"Signature Luxury",price:3.00,img:"photos/slider5.jpg",desc:"Premium gourmet praline.",ing:["Hazelnut paste","Belgian chocolate","Cream"]},
+{name:"Hazelnut Praline",price:2.50,img:"image.png",desc:"Smooth hazelnut cream.",ing:["Hazelnuts","Milk chocolate","Sugar","Vanilla"]},
+{name:"Dark Choco Praline",price:2.80,img:"image1.jpg",desc:"Rich dark chocolate.",ing:["Dark chocolate","Cocoa butter","Cream"]},
+{name:"Almond Crunch",price:2.60,img:"image3.jpg",desc:"Crispy almond center.",ing:["Almonds","Caramel","Milk chocolate"]},
+{name:"Caramel Heart",price:2.40,img:"image4.jpg",desc:"Soft caramel filling.",ing:["Caramel","Milk chocolate","Butter"]},
+{name:"Signature Luxury",price:3.00,img:"image5.jpg",desc:"Premium gourmet praline.",ing:["Hazelnut paste","Belgian chocolate","Cream"]},
 ];
+
 
 const grid=document.getElementById("pralineGrid");
 pralines.forEach((p,i)=>{
     grid.innerHTML+=`<div class="card">
-        <img src="${p.img}">
+        <img src="img/${p.img}">
         <h3>${p.name}</h3>
         <p>€${p.price.toFixed(2)}</p>
         <div class="btn" onclick="openModal(${i})">View Details</div>
@@ -128,7 +137,7 @@ let qty=1;
 function openModal(i){
     currentIndex=i;
     qty=1;
-    document.getElementById("modalImg").src=pralines[i].img;
+    document.getElementById("modalImg").src="img/"+pralines[i].img;
     document.getElementById("modalName").innerText=pralines[i].name;
     document.getElementById("modalPrice").innerText="€"+pralines[i].price.toFixed(2);
     document.getElementById("modalDesc").innerText=pralines[i].desc;
@@ -152,8 +161,16 @@ function updateCartCount(){ cartCount.textContent = cart.reduce((acc,item)=>acc+
 
 function addToCart(){
     let existing = cart.find(item => item.name===pralines[currentIndex].name);
-    if(existing){ existing.qty += qty; }
-    else{ cart.push({name:pralines[currentIndex].name,img:pralines[currentIndex].img,price:pralines[currentIndex].price,qty:qty}); }
+    if(existing){ 
+        existing.qty += qty; 
+    } else { 
+        cart.push({
+            name: pralines[currentIndex].name,
+            img: pralines[currentIndex].img, 
+            pricePerUnit: pralines[currentIndex].price,
+            qty: qty
+        }); 
+    }
     localStorage.setItem("cart",JSON.stringify(cart));
     updateCartCount();
     updateMiniCart();
@@ -166,10 +183,10 @@ function updateMiniCart(){
     let total=0;
     cart.forEach(item=>{
         cartItems.innerHTML+=`<li>
-            <img src="${item.img}">
-            <div>${item.name} x${item.qty}<br>€${(item.price*item.qty).toFixed(2)}</div>
+            <img src="img/${item.img}">
+            <div>${item.name} x${item.qty}<br>€${(item.pricePerUnit*item.qty).toFixed(2)}</div>
         </li>`;
-        total+=item.price*item.qty;
+        total+=item.pricePerUnit*item.qty;
     });
     document.getElementById("totalPrice").innerText="Total: €"+total.toFixed(2);
 }
