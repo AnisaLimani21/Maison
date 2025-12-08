@@ -205,3 +205,48 @@ body {
     .nav-center.active { display: flex; }
     .hamburger { display: block; }
 }
+.price-add {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+#chocPrice {
+    font-size: 22px;
+    color: #555;
+}
+
+.quantity-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 10px;
+}
+
+.quantity-box label {
+    font-size: 16px;
+    color: #333;
+}
+
+.quantity-box input {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #6b3e26;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.quantity-box input:hover {
+    border-color: #d88f2f;
+}
+
+.quantity-box input:focus {
+    outline: none;
+    border-color: #855c3a;
+    box-shadow: 0 0 5px rgba(133,92,58,0.5);
+}
+
