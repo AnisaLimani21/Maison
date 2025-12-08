@@ -4,10 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Wines</title>
-<link rel="stylesheet" href="Wine.css">
+<link rel="stylesheet" href="wine.css">
+<style>
+
+.qty-box-main {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+.qty-box-main button {
+    padding: 3px 8px;
+    background:#6b3e26;
+    color:#fff;
+    border:none;
+    border-radius:3px;
+    cursor:pointer;
+    font-size:14px;
+}
+.qty-box-main span {
+    min-width:20px;
+    text-align:center;
+    font-weight:bold;
+    color:#6b3e26;
+}
+</style>
 </head>
 <body>
-
 
 <nav class="navbar">
     <div class="nav-left">
@@ -42,42 +65,43 @@
     <a href="cart.html" class="go-cart-btn">Go to Cart</a>
 </div>
 
-
 <header class="header">
     <h1>Our Wines</h1>
 </header>
 
 <section class="wine-display">
-    <!-- Foto kryesore -->
     <div class="main-photo">
         <img id="mainWine" src="img/Screenshot__465_-removebg-preview.png" alt="Red Wine">
     </div>
-
     
     <div class="wine-info">
         <h2 id="wineName">Red Wine</h2>
         <p id="wineDesc">Full-bodied red with notes of cherry.</p>
         <div class="price-add">
             <span id="winePrice">$15.00</span>
-            <button id="addToCartBtn">Add to Cart</button>
         </div>
 
-      
+        
+        <div class="qty-box-main">
+            <button id="minusBtn">-</button>
+            <span id="qtyDisplay">1</span>
+            <button id="plusBtn">+</button>
+        </div>
+
+        <button id="addToCartBtn" style="margin-top:10px;padding:6px 12px;background:#6b3e26;color:white;border:none;border-radius:5px;cursor:pointer;">Add to Cart</button>
+
         <div class="wine-thumbnails">
-            <img src="img/Screenshot__465_-removebg-preview.png" alt="Red" data-name="Red Wine" data-price="$15.00" data-desc="Full-bodied red with notes of cherry.">
-            <img src="img/Screenshot__460_-removebg-preview.png" alt="White" data-name="White Wine" data-price="$14.50" data-desc="Crisp white with floral aroma.">
-            <img src="img/Screenshot__457_-removebg-preview.png" alt="Rosé" data-name="Rosé Wine" data-price="$16.00" data-desc="Fresh and fruity rosé.">
-            <img src="img/Screenshot__461_-removebg-preview.png" alt="Sparkling" data-name="Sparkling Wine" data-price="$18.00" data-desc="Bubbly sparkling wine for celebrations.">
-           
+            <img src="img/Screenshot__465_-removebg-preview.png" alt="Red" data-name="Red Wine" data-price="15.00" data-desc="Full-bodied red with notes of cherry.">
+            <img src="img/Screenshot__460_-removebg-preview.png" alt="White" data-name="White Wine" data-price="14.50" data-desc="Crisp white with floral aroma.">
+            <img src="img/Screenshot__457_-removebg-preview.png" alt="Rosé" data-name="Rosé Wine" data-price="16.00" data-desc="Fresh and fruity rosé.">
+            <img src="img/Screenshot__461_-removebg-preview.png" alt="Sparkling" data-name="Sparkling Wine" data-price="18.00" data-desc="Bubbly sparkling wine for celebrations.">
         </div>
     </div>
 </section>
 
-
 <script>
-    const mainWine = document.getElementById('mainWine');
+const mainWine = document.getElementById('mainWine');
 const wineName = document.getElementById('wineName');
-const wineDesc = document.getElementById('wineDesc');
 const winePrice = document.getElementById('winePrice');
 const addToCartBtn = document.getElementById("addToCartBtn");
 const thumbnails = document.querySelectorAll('.wine-thumbnails img');
@@ -89,13 +113,18 @@ const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("nav-links");
 
 
+let qty = 1;
+const qtyDisplay = document.getElementById('qtyDisplay');
+document.getElementById('plusBtn').addEventListener('click',()=>{ qty++; qtyDisplay.textContent=qty; });
+document.getElementById('minusBtn').addEventListener('click',()=>{ if(qty>1){ qty--; qtyDisplay.textContent=qty; } });
+
+
 thumbnails.forEach(thumb => {
     thumb.addEventListener('click', () => {
         mainWine.src = thumb.src;
         wineName.textContent = thumb.dataset.name;
-        winePrice.textContent = thumb.dataset.price;
-        wineDesc.textContent = thumb.dataset.desc;
-
+        winePrice.textContent = "$" + parseFloat(thumb.dataset.price).toFixed(2);
+        qty = 1; qtyDisplay.textContent = qty;
         thumbnails.forEach(t => t.classList.remove('active'));
         thumb.classList.add('active');
     });
@@ -106,35 +135,67 @@ hamburger.addEventListener("click", () => {
     navLinks.classList.toggle("active");
 });
 
-
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-cartCount.textContent = cart.length;
-updateMiniCart();
+updateCartUI();
 
 addToCartBtn.addEventListener("click", () => {
-    const product = {
-        name: wineName.textContent,
-        price: winePrice.textContent,
-        img: mainWine.src.split("/").pop()
-    };
-    cart.push(product);
+    const priceNumber = parseFloat(winePrice.textContent.replace("$",""));
+    const existing = cart.find(item => item.name === wineName.textContent);
+    if(existing){
+        existing.qty += qty;
+    } else {
+        cart.push({
+            name: wineName.textContent,
+            pricePerUnit: priceNumber,
+            img: mainWine.src.split("/").pop(),
+            qty: qty
+        });
+    }
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert(`${product.name} has been added to cart!`);
-    cartCount.textContent = cart.length;
-    updateMiniCart();
+    updateCartUI();
+    alert(`${wineName.textContent} x${qty} added to cart!`);
+    qty = 1; qtyDisplay.textContent = qty;
 });
 
-function updateMiniCart() {
+
+function updateCartUI(){
     cartItems.innerHTML = "";
     let total = 0;
-    cart.forEach(item => {
+    cart.forEach((item,index)=>{
+        const itemTotal = item.pricePerUnit * item.qty;
         const li = document.createElement("li");
-        li.innerHTML = `<img src="img/${item.img}" alt="${item.name}" style="width:40px;height:30px;margin-right:5px;vertical-align:middle;"> ${item.name} - ${item.price}`;
+        li.innerHTML = `
+            <span><img src="img/${item.img}" style="width:40px;height:30px;margin-right:5px;"> ${item.name}</span>
+            <span class="qty-box">
+                <button onclick="changeQty(${index},-1)">-</button>
+                ${item.qty}
+                <button onclick="changeQty(${index},1)">+</button>
+            </span>
+            <span>$${itemTotal.toFixed(2)}</span>
+            <button onclick="removeItem(${index})" style="background:red;color:white;border:none;border-radius:3px;cursor:pointer;">x</button>
+        `;
         cartItems.appendChild(li);
-        total += parseFloat(item.price.replace("$",""));
+        total += itemTotal;
     });
     document.getElementById("totalPrice").textContent = `Total: $${total.toFixed(2)}`;
+    cartCount.textContent = cart.reduce((sum,item)=>sum+item.qty,0);
 }
+
+
+function changeQty(index, delta){
+    cart[index].qty += delta;
+    if(cart[index].qty < 1) cart[index].qty = 1;
+    localStorage.setItem("cart",JSON.stringify(cart));
+    updateCartUI();
+}
+
+
+function removeItem(index){
+    cart.splice(index,1);
+    localStorage.setItem("cart",JSON.stringify(cart));
+    updateCartUI();
+}
+
 
 cartIcon.addEventListener("click", (e) => {
     e.preventDefault();
@@ -146,7 +207,6 @@ document.addEventListener("click", (e) => {
         miniCart.style.display = "none";
     }
 });
-
 </script>
 
 </body>
