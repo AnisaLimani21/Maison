@@ -21,29 +21,32 @@
         <a href="gift.html">Gift Box</a>
     </div>
 
+
+       
     <div class="nav-right">
         <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search products...">
     <button onclick="searchProduct()">🔍</button>
+  
 </div>
 </nav>
      
     
 
 <div class="login-container">
-    <div class="foto">
-  <img src="img/logoP.png" alt=""></div>
+   
   <div class="login">
    
-    <form action="#" method="get">
+    <form  id="loginForm"action="#" method="get">
       <h2>Log In</h2>
 
       <label for="user">User:</label>
       <input type="text" name="user" id="user" placeholder="Enter username">
+      <span class="error" id="userError"></span>
 
       <label for="pass">Password:</label>
       <input type="password" name="pass" id="pass" placeholder="Enter password">
-
+      <span class="error" id="passError"></span>
       <button type="submit" class="login-btn">Log In</button>
 
       <p class="or-text">or login with</p>
@@ -64,7 +67,7 @@
     <p>Contact: info@maisonchocolate.com | +383 44 444 444</p>
      <p>Facebook | Instagram | Twitter</p>
 </footer>
-
+<script src="login.js"></script>
 </body>
 </html>
 

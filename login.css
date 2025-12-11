@@ -105,7 +105,6 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
- border: solid rgb(240, 238, 238) 1px;
  border-radius: 40px;
  width: 800px;
  height: auto;
@@ -515,4 +514,11 @@ footer a:hover {
         padding: 20px 10px;
         font-size: 14px;
     }
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+    display: block;
+    margin-top: 4px;
 }
