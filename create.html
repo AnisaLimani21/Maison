@@ -34,33 +34,46 @@
 
 
      <div class="login-container">
-    <div class="foto">
+    <!--<div class="foto">
         <img src="img/logoP.png" alt="">
-    </div>
+    </div>-->
 
     <div class="loginC">
     <div class="login">
-        <form action="#" method="post">
+        <form id="createForm" action="#" method="post">
             <h2>Create Account</h2>
-            <label for="name">Full Name:</label>
+       <label for="name">Full Name:</label>
 
-            <input type="text" name="name" id="name" placeholder="Enter full name">
+<input type="text" name="name" id="name" placeholder="Enter full name">
 
-            <label for="email">Email:</label>
+<span class="error" id="nameError"></span>
 
-            <input type="email" name="email" id="email" placeholder="Enter your email">
+<label for="email">Email:</label>
 
-            <label for="user">Username:</label>
+<input type="email" name="email" id="email" placeholder="Enter your email">
 
-            <input type="text" name="user" id="user" placeholder="Choose a username">
+<span class="error" id="emailError"></span>
 
-            <label for="pass">Password:</label>
+<label for="user">Username:</label>
 
-            <input type="password" name="pass" id="pass" placeholder="Create password">
+<input type="text" name="user" id="user" placeholder="Choose a username">
 
-            <label for="confirm-pass">Confirm Password:</label>
+<span class="error" id="usernameError"></span>
 
-            <input type="password" name="confirm-pass" id="confirm-pass" placeholder="Confirm password">
+
+<label for="pass">Password:</label>
+
+<input type="password" name="pass" id="pass" placeholder="Create password">
+
+<span class="error" id="passError"></span>
+
+
+<label for="confirmPass">Confirm Password:</label>
+
+<input type="password" name="confirmPass" id="confirmPass" placeholder="Confirm password">
+
+<span class="error" id="confirmPassError"></span>
+
 
             <button type="submit" class="login-btn">Create Account</button>
 
@@ -85,5 +98,8 @@
     <p>Contact: info@maisonchocolate.com | +383 44 444 444</p>
      <p>Facebook | Instagram | Twitter</p>
 </footer>
+
+
+<script src="create.js"></script>
 </body>
 </html>
