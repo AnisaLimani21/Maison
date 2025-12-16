@@ -21,15 +21,21 @@
     </div>
 
     <div class="nav-right">
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search products...">
+        <form class="search-bar">
+            <input type="text" placeholder="Search...">
             <button>🔍</button>
-        </div>
+        </form>
 
-        <a href="#" class="cart-icon" id="cartIcon">
-            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png">
-            <span id="cartCount" class="cart-count">0</span>
+        <a href="login.html" class="login-btn">
+            <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
+
+        <a href="cart.html" class="cart-icon" id="cartIcon">
+            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+            <span class="cart-count" id="cartCount">0</span>
+        </a>
+
+        <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>
 
@@ -56,15 +62,12 @@
             <button id="addToCartBtn">Add to Cart 🛒</button>
         </div>
 
-       <div class="quantity-box">
-    <label>Quantity:</label>
-    <button class="qty-btn" id="decrease">-</button>
-    <input type="number" id="quantity" value="1" min="1" max="20">
-    <button class="qty-btn" id="increase">+</button>
-</div>
-
-
-       
+        <div class="quantity-box">
+            <label>Quantity:</label>
+            <button class="qty-btn" id="decrease">-</button>
+            <input type="number" id="quantity" value="1" min="1" max="20">
+            <button class="qty-btn" id="increase">+</button>
+        </div>
     </div>
 
     <div class="thumbnails">
@@ -75,20 +78,20 @@
     </div>
 </section>
 
-<script>
-const mainChocolate = document.getElementById('mainChocolate');
+<script>const mainChocolate = document.getElementById('mainChocolate');
 const chocName = document.getElementById('chocName');
 const chocPrice = document.getElementById('chocPrice');
 const addToCartBtn = document.getElementById("addToCartBtn");
 const thumbnails = document.querySelectorAll('.thumbnails img');
 const quantityInput = document.getElementById('quantity');
-const totalCalc = document.getElementById('totalCalc');
 const cartIcon = document.getElementById("cartIcon");
 const cartCount = document.getElementById("cartCount");
 const miniCart = document.getElementById("miniCart");
 const cartItems = document.getElementById("cartItems");
 const increaseBtn = document.getElementById('increase');
 const decreaseBtn = document.getElementById('decrease');
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("nav-links");
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 cartCount.textContent = cart.length;
@@ -101,40 +104,27 @@ thumbnails.forEach(thumb => {
         chocPrice.dataset.unitPrice = thumb.dataset.price;
         chocPrice.textContent = "$" + parseFloat(thumb.dataset.price).toFixed(2);
         quantityInput.value = 1;
-        updateTotal();
     });
 });
-
-
-function updateTotal() {
-    let qty = parseInt(quantityInput.value);
-    if (isNaN(qty) || qty < 1) qty = 1;
-    if (qty > 20) qty = 20;
-    quantityInput.value = qty;
-
-    const pricePerUnit = parseFloat(chocPrice.dataset.unitPrice || chocPrice.textContent.replace("$","")) || 0;
-    totalCalc.textContent = "Total: $" + (pricePerUnit * qty).toFixed(2);
-}
-
 
 increaseBtn.addEventListener('click', () => {
     let current = parseInt(quantityInput.value);
     if(current < 20) quantityInput.value = current + 1;
-    updateTotal();
 });
-
 decreaseBtn.addEventListener('click', () => {
     let current = parseInt(quantityInput.value);
     if(current > 1) quantityInput.value = current - 1;
-    updateTotal();
 });
-
-quantityInput.addEventListener("input", updateTotal);
-
+quantityInput.addEventListener("input", () => {
+    let val = parseInt(quantityInput.value);
+    if(isNaN(val) || val < 1) val = 1;
+    if(val > 20) val = 20;
+    quantityInput.value = val;
+});
 
 addToCartBtn.addEventListener("click", () => {
     const qty = parseInt(quantityInput.value);
-    let pricePerUnit = parseFloat(chocPrice.dataset.unitPrice) || 0;
+    const pricePerUnit = parseFloat(chocPrice.dataset.unitPrice) || 0;
 
     const product = {
         name: chocName.textContent,
@@ -149,7 +139,6 @@ addToCartBtn.addEventListener("click", () => {
     updateMiniCart();
     alert(`${product.name} x${product.qty} added to cart!`);
 });
-
 
 function updateMiniCart() {
     cartItems.innerHTML = "";
@@ -173,7 +162,6 @@ function updateMiniCart() {
     miniCart.style.display = cart.length ? "block" : "none";
 }
 
-
 function removeFromCart(index) {
     cart.splice(index, 1);
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -181,6 +169,9 @@ function removeFromCart(index) {
     updateMiniCart();
 }
 
+hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+});
 
 cartIcon.addEventListener("click", e => {
     e.preventDefault();
@@ -192,10 +183,6 @@ document.addEventListener("click", e => {
         miniCart.style.display = "none";
     }
 });
-
-updateTotal();
-
 </script>
-
 </body>
 </html>

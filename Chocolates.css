@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -11,18 +12,17 @@ body {
 }
 
 .navbar {
-    width: 100%;
-    margin: 10px auto;
+    width: 100vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
+    padding: 15px 30px;
     background: #6b3e26;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     position: relative;
-    z-index: 10;
+    z-index: 1000;
 }
 
 .nav-left { display: flex; align-items: center; }
@@ -35,17 +35,15 @@ body {
     align-items: center;
     flex: 1;
 }
-
 .nav-center a {
     text-decoration: none;
     color: #fff;
     font-weight: 600;
     transition: 0.3s;
 }
-
 .nav-center a:hover { color: #ffd88c; }
 
-.nav-right { display: flex; align-items: center; gap: 15px; position: relative; }
+.nav-right { display: flex; align-items: center; gap: 15px; }
 
 .search-bar {
     display: flex;
@@ -55,7 +53,6 @@ body {
     border-radius: 20px;
     padding: 2px 10px;
 }
-
 .search-bar input { border: none; outline: none; padding: 5px; background: none; }
 .search-bar button { border: none; background: none; font-size: 18px; cursor: pointer; }
 
@@ -63,6 +60,20 @@ body {
 .login-btn img:hover, .cart-icon img:hover { filter: invert(85%) sepia(100%) saturate(500%) hue-rotate(30deg); }
 
 .hamburger { display: none; font-size: 28px; color: white; cursor: pointer; }
+
+.cart-icon { position: relative; }
+.cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    background: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
 
 .header { text-align: center; padding: 30px 0; }
 .header h1 { color: #6b3e26; }
@@ -84,19 +95,8 @@ body {
 }
 
 .chocolate-info h2 { font-size: 28px; color: #333; }
-.chocolate-info p { font-size: 22px; color: #555; }
-.price-add {
-    display: flex;
-    align-items: center;
-    gap: 20px; 
-    margin-top: 10px;
-}
-
-#chocPrice {
-    font-size: 22px;
-    color: #555;
-    margin: 0;      
-}
+.price-add { display: flex; align-items: center; gap: 20px; margin-top: 10px; }
+#chocPrice { font-size: 22px; color: #555; }
 
 #addToCartBtn {
     background-color: #6b3e26;
@@ -108,51 +108,22 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
 }
+#addToCartBtn:hover { background-color: #855c3a; transform: scale(1.05); }
 
-#addToCartBtn:hover {
-    background-color: #855c3a;
-    transform: scale(1.05);
-}
+.quantity-box { display:flex; align-items:center; gap:10px; margin-top:10px; }
+.quantity-box label { font-size:16px; color:#333; font-weight:500; }
+.quantity-box input { width:50px; text-align:center; border:1px solid #6b3e26; border-radius:5px; padding:5px; font-size:16px; background:#fff8f2; }
+.qty-btn { background:#6b3e26; color:#fff; border:none; padding:5px 10px; font-size:18px; border-radius:5px; cursor:pointer; transition:0.3s; }
+.qty-btn:hover { background:#855c3a; }
 
-
-.thumbnails {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
-
-.thumbnails img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.thumbnails img:hover {
-    border-color: #d88f2f;
-    transform: scale(1.1);
-}
-
-
-.cart-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: red;
-    color: white;
-    font-size: 12px;
-    padding: 2px 6px;
-    border-radius: 50%;
-}
-
+.thumbnails { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+.thumbnails img { width: 80px; height: 80px; object-fit: contain; border: 2px solid transparent; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+.thumbnails img:hover { border-color: #d88f2f; transform: scale(1.1); }
 
 .mini-cart {
-    position: absolute;
-    top: 50px;
-    right: 0;
+    position: fixed; 
+    top: 70px;
+    right: 20px;
     background: #fff8f2;
     border: 2px solid #6b3e26;
     padding: 15px;
@@ -160,65 +131,51 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     display: none;
     width: 220px;
-    z-index: 100;
+    z-index: 10000; 
 }
 
-.mini-cart h4 {
-    margin-bottom: 10px;
-    color: #6b3e26;
-}
+.mini-cart h4 { margin-bottom: 10px; color: #6b3e26; }
+.mini-cart ul { list-style: none; padding: 0; }
+.mini-cart ul li { margin-bottom: 8px; font-size: 14px; color: #333; }
+#totalPrice { font-weight: bold; margin-top: 10px; color: #6b3e26; }
+.go-cart-btn { display: block; margin-top: 10px; text-align: center; background-color: #6b3e26; color: #fff; padding: 8px 0; border-radius: 6px; text-decoration: none; transition: 0.3s; }
+.go-cart-btn:hover { background-color: #855c3a; }
 
-.mini-cart ul {
-    list-style: none;
-    padding: 0;
-}
 
-.mini-cart ul li {
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: #333;
-}
-#totalPrice {
-    font-weight: bold;
-    margin-top: 10px;
-    color: #6b3e26;
-}
-
-.go-cart-btn {
-    display: block;
-    margin-top: 10px;
-    text-align: center;
-    background-color: #6b3e26;
-    color: #fff;
-    padding: 8px 0;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.go-cart-btn:hover {
-    background-color: #855c3a;
-}
 @media screen and (max-width: 900px) {
     .nav-center { display: none; flex-direction: column; background: #4b2e1e; position: absolute; top: 70px; left: 0; width: 100%; }
     .nav-center a { padding: 15px; text-align: center; border-top: 1px solid #ffd88c33; }
     .nav-center.active { display: flex; }
     .hamburger { display: block; }
 }
-.price-add {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-top: 10px;
+
+@media screen and (max-width: 768px) {
+    .main-photo img { width: 300px; height: 250px; }
+    .chocolate-info h2 { font-size: 24px; }
+    #chocPrice { font-size: 20px; }
+    #addToCartBtn { font-size: 14px; padding: 8px 15px; }
+    .quantity-box input { width: 40px; font-size: 14px; }
+    .qty-btn { padding: 4px 8px; font-size: 16px; }
+    .thumbnails img { width: 60px; height: 60px; }
 }
 
-#chocPrice {
-    font-size: 22px;
-    color: #555;
-}
 
-.quantity-box { display:flex; align-items:center; gap:10px; margin-top:10px; }
-.quantity-box label { font-size:16px; color:#333; font-weight:500; }
-.quantity-box input { width:50px; text-align:center; border:1px solid #6b3e26; border-radius:5px; padding:5px; font-size:16px; background:#fff8f2; }
-.qty-btn { background:#6b3e26; color:#fff; border:none; padding:5px 10px; font-size:18px; border-radius:5px; cursor:pointer; transition:0.3s; }
-.qty-btn:hover { background:#855c3a; }
+@media screen and (max-width: 600px) {
+    .chocolate-display { margin: 10px; }
+    .main-photo img { width: 100%; height: auto; }
+    .chocolate-info h2 { font-size: 20px; text-align: center; }
+    #chocPrice { font-size: 18px; }
+    #addToCartBtn { width: 100%; font-size: 16px; padding: 10px; }
+    .price-add { flex-direction: column; gap: 10px; align-items: center; }
+    .quantity-box { flex-direction: row; gap: 5px; justify-content: center; }
+    .thumbnails { justify-content: center; gap: 10px; }
+
+  
+
+.nav-center { display: none; flex-direction: column; background: #4b2e1e; position: absolute; top: 65px; left: 0; width: 100%; padding: 10px 0; z-index: 9; }
+    .nav-center.active { display: flex; }
+    .hamburger { display: block; }
+    .nav-right { gap: 10px; }
+    .search-bar input { width: 100px; font-size: 13px; }
+
+}
