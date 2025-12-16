@@ -5,69 +5,293 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Boba Drinks</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: Arial,sans-serif; background:#fff8f2; overflow-x:hidden; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff8f2;
+    overflow-x: hidden;
+}
 
 .navbar {
-    width: 100%; display:flex; justify-content:space-between; align-items:center;
-    padding: 15px 40px; background:#6b3e26; box-shadow:0 8px 20px rgba(0,0,0,0.3);
-    border-bottom-left-radius:10px; border-bottom-right-radius:10px; position:relative; z-index:10;
+    width: 100%;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #6b3e26;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
-.nav-left .logo { width:70px; }
-.nav-center { display:flex; gap:30px; justify-content:center; flex:1; }
-.nav-center a { text-decoration:none; color:#fff; font-weight:600; transition:0.3s; }
-.nav-center a:hover { color:#ffd88c; }
-.nav-right { display:flex; align-items:center; gap:15px; }
-.search-bar { display:flex; align-items:center; background:#fff; border:1px solid #ffd88c; border-radius:20px; padding:2px 10px; }
-.search-bar input { border:none; outline:none; padding:5px; background:none; }
-.search-bar button { border:none; background:none; font-size:18px; cursor:pointer; }
-.login-btn img, .cart-icon img { width:30px; height:30px; filter:invert(100%); transition:0.3s; }
-.login-btn img:hover, .cart-icon img:hover { filter:invert(85%) sepia(100%) saturate(500%) hue-rotate(30deg); }
-.hamburger { display:none; font-size:28px; color:#fff; cursor:pointer; }
-.mini-cart { position:absolute; right:20px; top:60px; width:250px; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.2); padding:15px; display:none; z-index:200; }
-.header { text-align:center; padding:30px 20px; color:#6b3e26; }
-.header h1 { font-size:36px; }
 
-.boba-display { display:flex; gap:40px; justify-content:center; align-items:flex-start; padding:20px; flex-wrap:wrap; }
-.main-photo { width:250px; border-radius:10px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
-.main-photo img { width:100%; height:auto; object-fit:contain; }
-.boba-info { max-width:300px; display:flex; flex-direction:column; align-items:flex-start; margin-top:100px; }
-.boba-info h2 { font-size:24px; margin-bottom:5px; }
-.boba-info p { margin-bottom:15px; color:#555; }
-.price-add { display:flex; gap:10px; align-items:center; margin-bottom:20px; }
-.price-add span { font-size:20px; font-weight:bold; color:#6b3e26; }
-.price-add button { padding:6px 12px; background:#6b3e26; color:#fff; border:none; border-radius:5px; cursor:pointer; }
+.logo {
+    width: 70px;
+}
 
-.boba-thumbnails { display:flex; gap:10px; margin-top:15px; justify-content:center; flex-wrap:wrap; overflow:visible; }
-.boba-thumbnails img { width:60px; height:60px; object-fit:contain; cursor:pointer; border-radius:5px; border:2px solid transparent; transition:0.3s; }
-.boba-thumbnails img:hover, .boba-thumbnails img.active { border-color:#6b3e26; }
+.nav-center {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-center a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.nav-center a:hover { color: #ffd88c; }
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 20px;
+    padding: 2px 10px;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    padding: 5px;
+    background: none;
+}
+
+.search-bar button {
+    border: none;
+    background: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.login-btn img,
+.cart-icon img {
+    width: 30px;
+    height: 30px;
+    filter: invert(100%);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-btn img:hover,
+.cart-icon img:hover {
+    filter: invert(85%) sepia(100%) saturate(500%) hue-rotate(30deg);
+}
+
+.cart-icon {
+    position: relative;
+    cursor: pointer;
+}
+
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+.mini-cart {
+    position: absolute;
+    right: 20px;
+    top: 60px;
+    width: 300px;
+    background: #fff8f2;
+    border: 2px solid #6b3e26;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    display: none;
+    z-index: 100;
+}
+
+.mini-cart h4 { color: #6b3e26; margin-bottom: 10px; }
+
+.mini-cart ul {
+    list-style: none;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-left: 0;
+}
+
+.mini-cart li {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    align-items: center;
+}
+
+.mini-cart img {
+    width: 40px;
+    height: 30px;
+    object-fit: contain;
+}
+
+#totalPrice {
+    font-weight: bold;
+    color: #6b3e26;
+    margin-top: 10px;
+}
+
+.go-cart-btn {
+    display: block;
+    margin-top: 10px;
+    background: #6b3e26;
+    color: white;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.header { text-align: center; padding: 30px; color: #6b3e26; }
+.header h1 { font-size: 36px; }
+
+.boba-display {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.main-photo-wrapper {
+    width: 300px;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 2px solid #6b3e26;
+    border-radius: 10px;
+    background: #fff8f2;
+}
+
+.main-photo-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.boba-info {
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.boba-info h2 { margin-bottom: 5px; }
+.boba-info p { margin-bottom: 10px; color: #555; }
+
+.price-add span {
+    font-size: 20px;
+    font-weight: bold;
+    color: #6b3e26;
+    margin-bottom: 10px;
+}
+
+.qty-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.qty-box button {
+    padding: 5px 10px;
+    background: #6b3e26;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.qty-box span { font-weight: bold; color: #6b3e26; }
+
+#addToCartBtn {
+    padding: 14px 20px;
+    background: linear-gradient(135deg,#6b3e26,#9c5c3b);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+#addToCartBtn:hover {
+    background: linear-gradient(135deg,#9c5c3b,#6b3e26);
+}
+
+.boba-thumbnails {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.boba-thumbnails img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.boba-thumbnails img.active { border-color: #6b3e26; }
 
 @media(max-width:768px){
-    .boba-display { flex-direction:column; align-items:center; }
-    .boba-info { align-items:center; text-align:center; }
-    .boba-thumbnails { justify-content:center; }
+    .boba-display {
+        flex-direction: column;
+        align-items: center;
+    }
+    .boba-info { align-items: center; text-align: center; }
 }
 </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <div class="nav-left"><img src="img/logoP.png" class="logo" alt="Logo"></div>
-    <div class="nav-center" id="nav-links">
+    <img src="img/logoP.png" class="logo">
+    <div class="nav-center">
         <a href="homee.html">Home</a>
         <a href="Produktet.html">Products</a>
         <a href="aboutus.html">About Us</a>
         <a href="gift.html">Gift Box</a>
     </div>
     <div class="nav-right">
-        <div class="search-bar"><input type="text" placeholder="Search products..."><button>🔍</button></div>
-        <a href="login.html" class="login-btn"><img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login"></a>
-        <a href="#" class="cart-icon" id="cartIcon"><img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart"><span id="cartCount" class="cart-count">0</span></a>
-        <span class="hamburger" id="hamburger">☰</span>
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
+            <button>🔍</button>
+        </div>
+        <a href="login.html" class="login-btn">
+            <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
+        </a>
+        <a href="#" class="cart-icon" id="cartIcon">
+            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+            <span id="cartCount" class="cart-count">0</span>
+        </a>
     </div>
 </nav>
 
-<div id="miniCart" class="mini-cart">
+<div class="mini-cart" id="miniCart">
     <h4>Your Cart</h4>
     <ul id="cartItems"></ul>
     <p id="totalPrice">Total: $0.00</p>
@@ -77,76 +301,84 @@ body { font-family: Arial,sans-serif; background:#fff8f2; overflow-x:hidden; }
 <header class="header"><h1>Our Boba Drinks</h1></header>
 
 <section class="boba-display">
-    <div class="main-photo"><img id="mainBoba" src="img/Screenshot__469_-removebg-preview.png" alt="Strawberry Boba"></div>
+    <div class="main-photo-wrapper">
+        <img id="mainBoba" src="img/Screenshot__469_-removebg-preview.png" alt="Strawberry Boba">
+    </div>
     <div class="boba-info">
         <h2 id="bobaName">Strawberry Boba</h2>
         <p id="bobaDesc">Sweet strawberry flavored boba with milk.</p>
         <div class="price-add">
             <span id="bobaPrice">$5.00</span>
-            <button id="addToCartBtn">Add to Cart</button>
         </div>
+        <div class="qty-box">
+            <button id="minusBtn">-</button>
+            <span id="qtyDisplay">1</span>
+            <button id="plusBtn">+</button>
+        </div>
+        <button id="addToCartBtn">Add to Cart</button>
         <div class="boba-thumbnails">
-            <img src="img/Screenshot__469_-removebg-preview.png" alt="Strawberry" data-name="Strawberry Boba" data-price="$5.00" data-desc="Sweet strawberry flavored boba with milk.">
-            <img src="img/Screenshot__470_-removebg-preview.png" alt="Taro" data-name="Taro Boba" data-price="$5.50" data-desc="Creamy taro flavored boba.">
-            <img src="img/Screenshot__472_-removebg-preview.png" alt="Matcha" data-name="Matcha Boba" data-price="$6.00" data-desc="Fresh matcha green tea boba.">
-            <img src="img/Screenshot__471_-removebg-preview.png" alt="Brown Sugar" data-name="Brown Sugar Boba" data-price="$6.50" data-desc="Rich brown sugar boba with caramel notes.">
+            <img src="img/Screenshot__469_-removebg-preview.png" data-name="Strawberry Boba" data-price="5" class="active">
+            <img src="img/Screenshot__470_-removebg-preview.png" data-name="Taro Boba" data-price="5.5">
+            <img src="img/unnamed-removebg-preview.png" data-name="Matcha Boba" data-price="6">
+            <img src="img/Screenshot__471_-removebg-preview.png" data-name="Brown Sugar Boba" data-price="6.5">
         </div>
     </div>
 </section>
 
 <script>
-const mainBoba = document.getElementById('mainBoba');
-const bobaName = document.getElementById('bobaName');
-const bobaDesc = document.getElementById('bobaDesc');
-const bobaPrice = document.getElementById('bobaPrice');
-const addToCartBtn = document.getElementById("addToCartBtn");
-const thumbnails = document.querySelectorAll('.boba-thumbnails img');
-const cartIcon = document.getElementById("cartIcon");
-const cartCount = document.getElementById("cartCount");
+let qty = 1;
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const qtyDisplay = document.getElementById("qtyDisplay");
+const mainBoba = document.getElementById("mainBoba");
+const bobaName = document.getElementById("bobaName");
+const bobaPrice = document.getElementById("bobaPrice");
+const thumbnails = document.querySelectorAll(".boba-thumbnails img");
 const miniCart = document.getElementById("miniCart");
 const cartItems = document.getElementById("cartItems");
+const cartIcon = document.getElementById("cartIcon");
+
+document.getElementById("plusBtn").onclick = () => { qty++; qtyDisplay.textContent = qty; }
+document.getElementById("minusBtn").onclick = () => { if(qty>1){ qty--; qtyDisplay.textContent = qty; } }
 
 thumbnails.forEach(thumb => {
-    thumb.addEventListener('click', () => {
+    thumb.onclick = () => {
+        thumbnails.forEach(t => t.classList.remove("active"));
+        thumb.classList.add("active");
         mainBoba.src = thumb.src;
         bobaName.textContent = thumb.dataset.name;
-        bobaPrice.textContent = thumb.dataset.price;
-        bobaDesc.textContent = thumb.dataset.desc;
-
-        thumbnails.forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
-    });
+        bobaPrice.textContent = "$" + parseFloat(thumb.dataset.price).toFixed(2);
+        qty = 1; qtyDisplay.textContent = qty;
+    }
 });
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-cartCount.textContent = cart.length;
-updateMiniCart();
-
-addToCartBtn.addEventListener("click", () => {
-    const product = {name: bobaName.textContent, price: bobaPrice.textContent, img: mainBoba.src.split("/").pop()};
-    cart.push(product);
+document.getElementById("addToCartBtn").onclick = () => {
+    const price = parseFloat(bobaPrice.textContent.replace("$",""));
+    const existing = cart.find(i => i.name === bobaName.textContent);
+    if(existing){ existing.qty += qty; } 
+    else { cart.push({ name: bobaName.textContent, pricePerUnit: price, img: mainBoba.src.split("/").pop(), qty: qty }); }
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert(`${product.name} has been added to cart!`);
-    cartCount.textContent = cart.length;
     updateMiniCart();
-});
+    qty = 1; qtyDisplay.textContent = qty;
+};
 
-function updateMiniCart() {
+function updateMiniCart(){
     cartItems.innerHTML = "";
     let total = 0;
-    cart.forEach(item => {
+    cart.forEach(i => {
+        total += i.pricePerUnit*i.qty;
         const li = document.createElement("li");
-        li.innerHTML = `<img src="img/${item.img}" alt="${item.name}" style="width:40px;height:30px;margin-right:5px;vertical-align:middle;"> ${item.name} - ${item.price}`;
+        li.innerHTML = `<img src="img/${i.img}"><div style="flex:1"><strong>${i.name}</strong><br>$${i.pricePerUnit.toFixed(2)} x ${i.qty} = $${(i.pricePerUnit*i.qty).toFixed(2)}</div>`;
         cartItems.appendChild(li);
-        total += parseFloat(item.price.replace("$",""));
     });
-    document.getElementById("totalPrice").textContent = `Total: $${total.toFixed(2)}`;
+    document.getElementById("totalPrice").textContent = "Total: $" + total.toFixed(2);
+    document.getElementById("cartCount").textContent = cart.reduce((s,i)=>s+i.qty,0);
 }
 
-cartIcon.addEventListener("click", (e) => {
-    e.preventDefault();
-    miniCart.style.display = miniCart.style.display === "block" ? "none" : "block";
-});
+cartIcon.onclick = e => { e.preventDefault(); miniCart.style.display = miniCart.style.display==="block"?"none":"block"; }
+document.addEventListener("click", e => { if(!e.target.closest(".cart-icon") && !e.target.closest(".mini-cart")){ miniCart.style.display="none"; } });
+
+updateMiniCart();
 </script>
 
 </body>

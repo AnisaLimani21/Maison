@@ -80,17 +80,18 @@ body{
     filter:invert(100%);
 }
 
-.cart-count{
-    position:absolute;
-    top:-5px;
-    right:-5px;
-    background:red;
-    color:white;
-    font-size:12px;
-    padding:2px 6px;
-    border-radius:50%;
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
 }
-
+.login-btn img, .cart-icon img { width: 30px; height: 30px; filter: invert(100%); transition: 0.3s; }
+.login-btn img:hover, .cart-icon img:hover { filter: invert(85%) sepia(100%) saturate(500%) hue-rotate(30deg); }
 
 .mini-cart{
     position:absolute;
@@ -296,6 +297,8 @@ body{
             <button>🔍</button>
         </div>
         <a class="cart-icon" id="cartIcon">
+            <a href="login.html" class="login-btn"><img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login"></a>
+        <a href="#" class="cart-icon" id="cartIcon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png">
             <span id="cartCount" class="cart-count">0</span>
         </a>

@@ -67,6 +67,8 @@ body {
     width: 30px;
     filter: invert(100%);
 }
+.login-btn img, .cart-icon img { width: 30px; height: 30px; filter: invert(100%); transition: 0.3s; }
+.login-btn img:hover, .cart-icon img:hover { filter: invert(85%) sepia(100%) saturate(500%) hue-rotate(30deg); }
 
 .cart-count {
     position: absolute;
