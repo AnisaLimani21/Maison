@@ -8,6 +8,7 @@
 </head>
 <body>
  <nav class="navbar">
+    <div class="nav-top">
     <div class="nav-left">
         <img src="img/logoP.png" class="logo" alt="Logo">
     </div>
@@ -139,12 +140,13 @@
     </div>
 </footer>
 <script>
-    const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("nav-links");
+const hamburger = document.querySelector('.hamburger');
+const navCenter = document.querySelector('.nav-center');
 
-hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
+hamburger.addEventListener('click', () => {
+    navCenter.classList.toggle('active');
 });
+
 
 </script>
 </body>
