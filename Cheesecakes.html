@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cheesecakes</title>
 <style>
+
 * {
     margin: 0;
     padding: 0;
@@ -86,8 +87,6 @@ body {
     border-radius:20px; 
     overflow:hidden; 
     position:relative;
-   
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,7 +98,6 @@ body {
     object-fit:contain; 
     transition: transform 0.4s ease;
 }
-
 
 .miniatures {
     position: absolute;
@@ -177,6 +175,26 @@ body {
     transform: scale(1.05); 
 }
 
+.quantity-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.quantity-box input {
+    width: 50px;
+    text-align: center;
+    font-size: 16px;
+    padding: 5px;
+}
+.quantity-box button {
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #6b3e26;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+.quantity-box button:hover { background-color:#855c3a; }
 
 @media screen and (max-width: 768px) {
     .cheesecake-info {
@@ -204,7 +222,6 @@ body {
     }
 }
 
-
 .cart-count { position:absolute; top:-5px; right:-5px; background:red; color:white; font-size:12px; padding:2px 6px; border-radius:50%; }
 .mini-cart { position:absolute; top:50px; right:0; background:#fff8f2; border:2px solid #6b3e26; padding:20px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.3); display:none; width:300px; z-index:100; }
 .mini-cart h4 { margin-bottom:10px; color:#6b3e26; }
@@ -214,14 +231,12 @@ body {
 .go-cart-btn { display:block; margin-top:10px; text-align:center; background-color:#6b3e26; color:#fff; padding:8px 0; border-radius:6px; text-decoration:none; transition:0.3s; }
 .go-cart-btn:hover { background-color:#855c3a; }
 
-
 @media screen and (max-width: 900px) {
     .nav-center { display: none; flex-direction: column; background: #4b2e1e; position: absolute; top: 70px; left: 0; width: 100%; }
     .nav-center a { padding: 15px; text-align: center; border-top: 1px solid #ffd88c33; }
     .nav-center.active { display: flex; }
     .hamburger { display: block; }
 }
-
 </style>
 </head>
 
@@ -266,26 +281,36 @@ body {
             <img id="mainCake" src="img/Screenshot__370_-removebg-preview.png" alt="Classic Cheesecake">
         </div>
         <div class="miniatures">
-            <img class="m1" src="img/Screenshot__443_-removebg-preview.png" data-name="Strawberry Cheesecake" data-price="$7.50">
-            <img class="m2" src="img/Screenshot__448_-removebg-preview.png" data-name="Blueberry Cheesecake" data-price="$7.00">
-            <img class="m3" src="img/Screenshot__444_-removebg-preview.png" data-name="Chocolate Cheesecake" data-price="$8.00">
-            <img class="m4" src="img/Screenshot__449_-removebg-preview.png" data-name="Caramel Cheesecake" data-price="$8.50">
-            <img class="m5" src="img/Screenshot__445_-removebg-preview.png" data-name="Lemon Cheesecake" data-price="$6.50">
-            <img class="m6" src="img/Screenshot__450_-removebg-preview.png" data-name="Raspberry Cheesecake" data-price="$7.80">
-            <img class="m7" src="img/Screenshot__451_-removebg-preview.png" data-name="Oreo Cheesecake" data-price="$8.20">
-            <img class="m8" src="img/Screenshot__452_-removebg-preview.png" data-name="Matcha Cheesecake" data-price="$8.00">
+            <img class="m1" src="img/Screenshot__443_-removebg-preview.png" data-name="Strawberry Cheesecake" data-price="7.50">
+            <img class="m2" src="img/Screenshot__448_-removebg-preview.png" data-name="Blueberry Cheesecake" data-price="7.00">
+            <img class="m3" src="img/Screenshot__444_-removebg-preview.png" data-name="Chocolate Cheesecake" data-price="8.00">
+            <img class="m4" src="img/Screenshot__449_-removebg-preview.png" data-name="Caramel Cheesecake" data-price="8.50">
+            <img class="m5" src="img/Screenshot__445_-removebg-preview.png" data-name="Lemon Cheesecake" data-price="6.50">
+            <img class="m6" src="img/Screenshot__450_-removebg-preview.png" data-name="Raspberry Cheesecake" data-price="7.80">
+            <img class="m7" src="img/Screenshot__451_-removebg-preview.png" data-name="Oreo Cheesecake" data-price="8.20">
+            <img class="m8" src="img/Screenshot__452_-removebg-preview.png" data-name="Matcha Cheesecake" data-price="8.00">
         </div>
     </div>
     <div class="cheesecake-info">
         <h2 id="cakeName">Classic Cheesecake</h2>
         <div class="price-add">
-            <span id="cakePrice">$6.99</span>
+            <span id="cakePrice">6.99</span>
+
+          
+            <div class="quantity-box">
+                <label>Quantity:</label>
+                <button class="qty-btn" id="decrease">-</button>
+                <input type="number" id="quantity" value="1" min="1" max="20">
+                <button class="qty-btn" id="increase">+</button>
+            </div>
+
             <button id="addToCartBtn">Add to Cart 🛒</button>
         </div>
     </div>
 </section>
 
 <script>
+
 const mainCake = document.getElementById('mainCake');
 const cakeName = document.getElementById('cakeName');
 const cakePrice = document.getElementById('cakePrice');
@@ -298,56 +323,115 @@ const cartItems = document.getElementById("cartItems");
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("nav-links");
 
+
+const quantityInput = document.getElementById('quantity');
+const increaseBtn = document.getElementById('increase');
+const decreaseBtn = document.getElementById('decrease');
+
+
 miniatures.forEach(mini => {
     mini.addEventListener('click', () => {
         mainCake.src = mini.src;
         cakeName.textContent = mini.dataset.name;
         cakePrice.textContent = mini.dataset.price;
+        quantityInput.value = 1;
+        updateTotal();
     });
 });
+
+
 hamburger.addEventListener("click", () => {
     navLinks.classList.toggle("active");
 });
+
+
+increaseBtn.addEventListener('click', () => {
+    let current = parseInt(quantityInput.value);
+    if(current < 20) quantityInput.value = current + 1;
+    updateTotal();
+});
+
+decreaseBtn.addEventListener('click', () => {
+    let current = parseInt(quantityInput.value);
+    if(current > 1) quantityInput.value = current - 1;
+    updateTotal();
+});
+
+quantityInput.addEventListener('input', updateTotal);
+
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 cartCount.textContent = cart.length;
 updateMiniCart();
 
+function updateTotal(){
+    let qty = parseInt(quantityInput.value);
+    if(isNaN(qty) || qty < 1) qty = 1;
+    if(qty > 20) qty = 20;
+    quantityInput.value = qty;
+}
+
+
 addToCartBtn.addEventListener("click", () => {
+    const qty = parseInt(quantityInput.value);
+    const pricePerUnit = parseFloat(cakePrice.textContent) || 0;
+
     const product = {
         name: cakeName.textContent,
-        price: cakePrice.textContent,
+        pricePerUnit: pricePerUnit,
+        qty: qty,
         img: mainCake.src.split("/").pop()
     };
+
     cart.push(product);
     localStorage.setItem("cart", JSON.stringify(cart));
     cartCount.textContent = cart.length;
     updateMiniCart();
-    miniCart.style.display = "block";
+    alert(`${product.name} x${product.qty} added to cart!`);
 });
 
 function updateMiniCart() {
     cartItems.innerHTML = "";
     let total = 0;
-    cart.forEach(item => {
+
+    cart.forEach((item, index) => {
+        const itemTotal = item.pricePerUnit * item.qty;
+        total += itemTotal;
+
         const li = document.createElement("li");
-        li.innerHTML = `<img src="img/${item.img}" alt="${item.name}" style="width:40px;height:30px;margin-right:5px;"> ${item.name} - ${item.price}`;
+        li.innerHTML = `
+            <img src="img/${item.img}" alt="${item.name}" style="width:40px;height:30px;margin-right:5px;">
+            ${item.name} x${item.qty} - $${itemTotal.toFixed(2)}
+            <button onclick="removeFromCart(${index})">Remove</button>
+        `;
         cartItems.appendChild(li);
-        total += parseFloat(item.price.replace("$",""));
     });
-    document.getElementById("totalPrice").textContent = `Total: $${total.toFixed(2)}`;
+
+    document.getElementById("totalPrice").textContent = "Total: $" + total.toFixed(2);
+    miniCart.style.display = cart.length ? "block" : "none";
 }
 
-cartIcon.addEventListener("click", (e) => {
+
+function removeFromCart(index){
+    cart.splice(index,1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    cartCount.textContent = cart.length;
+    updateMiniCart();
+}
+
+
+cartIcon.addEventListener("click", (e)=>{
     e.preventDefault();
-    miniCart.style.display = miniCart.style.display === "block" ? "none" : "block";
+    miniCart.style.display = miniCart.style.display==="block" ? "none" : "block";
 });
 
-document.addEventListener("click", (e) => {
-    if (!cartIcon.contains(e.target) && !miniCart.contains(e.target)) {
+document.addEventListener("click", (e)=>{
+    if(!cartIcon.contains(e.target) && !miniCart.contains(e.target)){
         miniCart.style.display = "none";
     }
 });
+
+updateTotal();
 </script>
 
 </body>

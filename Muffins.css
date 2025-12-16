@@ -68,7 +68,7 @@ body {
     padding: 25px 0;
 }
 .header h1{
-    color: #d88f2f;
+    color: #6b3e26;
     font-size: 30px;
 }
 .products{
@@ -113,7 +113,7 @@ body {
 .btn{
     display: inline-block;
     padding: 8px 14px;
-    background: #d88f2f;
+    background: #6b3e26;
     color: white;
     text-decoration: none;
     border-radius: 18px;

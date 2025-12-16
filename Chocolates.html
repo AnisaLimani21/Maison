@@ -56,12 +56,15 @@
             <button id="addToCartBtn">Add to Cart 🛒</button>
         </div>
 
-        <div class="quantity-box">
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" value="1" min="1" max="20">
-        </div>
+       <div class="quantity-box">
+    <label>Quantity:</label>
+    <button class="qty-btn" id="decrease">-</button>
+    <input type="number" id="quantity" value="1" min="1" max="20">
+    <button class="qty-btn" id="increase">+</button>
+</div>
 
-        <div class="total-price" id="totalCalc">Total: $5.00</div>
+
+       
     </div>
 
     <div class="thumbnails">
@@ -84,12 +87,12 @@ const cartIcon = document.getElementById("cartIcon");
 const cartCount = document.getElementById("cartCount");
 const miniCart = document.getElementById("miniCart");
 const cartItems = document.getElementById("cartItems");
-
+const increaseBtn = document.getElementById('increase');
+const decreaseBtn = document.getElementById('decrease');
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 cartCount.textContent = cart.length;
 updateMiniCart();
-
 
 thumbnails.forEach(thumb => {
     thumb.addEventListener('click', () => {
@@ -105,13 +108,26 @@ thumbnails.forEach(thumb => {
 
 function updateTotal() {
     let qty = parseInt(quantityInput.value);
-    if (qty < 1) qty = 1;
+    if (isNaN(qty) || qty < 1) qty = 1;
     if (qty > 20) qty = 20;
     quantityInput.value = qty;
 
     const pricePerUnit = parseFloat(chocPrice.dataset.unitPrice || chocPrice.textContent.replace("$","")) || 0;
     totalCalc.textContent = "Total: $" + (pricePerUnit * qty).toFixed(2);
 }
+
+
+increaseBtn.addEventListener('click', () => {
+    let current = parseInt(quantityInput.value);
+    if(current < 20) quantityInput.value = current + 1;
+    updateTotal();
+});
+
+decreaseBtn.addEventListener('click', () => {
+    let current = parseInt(quantityInput.value);
+    if(current > 1) quantityInput.value = current - 1;
+    updateTotal();
+});
 
 quantityInput.addEventListener("input", updateTotal);
 
@@ -154,10 +170,7 @@ function updateMiniCart() {
     });
 
     document.getElementById("totalPrice").textContent = "Total: $" + total.toFixed(2);
-
-    if(cart.length === 0){
-        miniCart.style.display = "none";
-    }
+    miniCart.style.display = cart.length ? "block" : "none";
 }
 
 
@@ -181,6 +194,7 @@ document.addEventListener("click", e => {
 });
 
 updateTotal();
+
 </script>
 
 </body>

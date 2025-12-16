@@ -217,36 +217,8 @@ body {
     color: #555;
 }
 
-.quantity-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: 10px;
-}
-
-.quantity-box label {
-    font-size: 16px;
-    color: #333;
-}
-
-.quantity-box input {
-    width: 60px;
-    padding: 5px;
-    border: 1px solid #6b3e26;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.quantity-box input:hover {
-    border-color: #d88f2f;
-}
-
-.quantity-box input:focus {
-    outline: none;
-    border-color: #855c3a;
-    box-shadow: 0 0 5px rgba(133,92,58,0.5);
-}
-
+.quantity-box { display:flex; align-items:center; gap:10px; margin-top:10px; }
+.quantity-box label { font-size:16px; color:#333; font-weight:500; }
+.quantity-box input { width:50px; text-align:center; border:1px solid #6b3e26; border-radius:5px; padding:5px; font-size:16px; background:#fff8f2; }
+.qty-btn { background:#6b3e26; color:#fff; border:none; padding:5px 10px; font-size:18px; border-radius:5px; cursor:pointer; transition:0.3s; }
+.qty-btn:hover { background:#855c3a; }
