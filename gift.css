@@ -153,72 +153,84 @@ color: rgba(5, 5, 5, 0.684);
 .footer {
     background: #6b3e26;
     color: #fff;
-    padding: 50px 40px;
+    padding: 40px 40px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 40px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    gap: 50px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    flex-wrap: wrap;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+    font-family: Arial, Helvetica, sans-serif;
 }
-
 
 .footer-left, .footer-center, .footer-right {
     flex: 1;
     min-width: 250px;
+    text-align: center; 
 }
 
-.footer h2, .footer h3 {
-    color: #ffd88c;
-    margin-bottom: 15px;
+.footer-left h2, .footer-center h2, .footer-right h2 {
+    color: #ffe1a1;
+    font-size: 24px; 
+    margin-bottom: 12px;
     letter-spacing: 1px;
 }
-
 
 .footer p {
     opacity: 0.85;
     margin: 5px 0;
+    line-height: 1.5;
 }
 
-.footer-right a {
+.footer-right {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.08);
-    padding: 10px 12px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    transition: 0.3s;
+    gap: 5px;
 }
 
-.footer-right a:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateX(6px);
+.social-icons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
 }
 
-.icon {
-    width: 26px;
-    transition: 0.3s;
+.social-icons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    padding: 12px;
+    border-radius: 12px;
+    transition: transform 0.4s, background 0.4s, box-shadow 0.4s;
 }
 
-.footer-right a:hover .icon {
-    transform: scale(1.2);
+.social-icons a:hover {
+    transform: scale(1.3);
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+
+.social-icons .icon {
+    width: 34px;
 }
 
 
-@media (max-width: 750px) {
+@media (max-width: 768px) {
     .footer {
         flex-direction: column;
+        align-items: center;
         text-align: center;
+        padding: 40px 20px;
     }
-
-    .footer-right a {
-        justify-content: center;
+    .footer-left, .footer-center, .footer-right {
+        min-width: unset;
+        width: 100%;
+        margin-bottom: 5px;
     }
 }
-
  
 
 .buton{
