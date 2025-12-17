@@ -104,6 +104,7 @@ body {
 
 .card{
     margin-bottom: 50px;
+    margin-top: -120px;
 }
 .photo .card{
    color: #6b3e26;
@@ -290,6 +291,9 @@ color: rgba(5, 5, 5, 0.684);
         height: auto;
         padding: 20px;
         font-size: 18px;
+    }
+    .card{
+        margin-top: 20px;
     }
 
     .photo .card img {
