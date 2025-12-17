@@ -4,290 +4,191 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Boba Drinks</title>
+
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#fff8f2;overflow-x:hidden}
+
+.navbar{
+    width:100%;
+    padding:15px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#6b3e26;
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #fff8f2;
-    overflow-x: hidden;
+.logo{width:70px}
+
+.nav-left,.nav-right{display:flex;align-items:center;gap:15px}
+
+.nav-center{display:flex;gap:30px}
+.nav-center a{text-decoration:none;color:#fff;font-weight:600}
+.nav-center a:hover{color:#ffd88c}
+
+.search-bar{display:flex;align-items:center;background:#fff;border-radius:20px;padding:2px 10px}
+.search-bar input{border:none;outline:none;background:none}
+.search-bar button{border:none;background:none;font-size:18px;cursor:pointer}
+
+.login-btn img,.cart-icon img{
+    width:30px;height:30px;filter:invert(100%);transition:.3s
+}
+.login-btn img:hover,.cart-icon img:hover{
+    filter:invert(85%) sepia(100%) saturate(500%) hue-rotate(30deg)
 }
 
-.navbar {
-    width: 100%;
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #6b3e26;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+.cart-icon{position:relative;cursor:pointer}
+.cart-count{
+    position:absolute;
+    top:-6px;right:-6px;
+    background:red;color:#fff;
+    font-size:12px;padding:2px 6px;border-radius:50%
 }
 
-.logo {
-    width: 70px;
+.hamburger{
+    display:none;
+    font-size:28px;
+    color:#fff;
+    cursor:pointer
 }
 
-.nav-center {
-    display: flex;
-    gap: 30px;
+.mini-cart{
+    position:absolute;
+    right:20px;top:65px;
+    width:300px;
+    background:#fff8f2;
+    border:2px solid #6b3e26;
+    padding:20px;
+    border-radius:10px;
+    display:none;
+    z-index:100
 }
 
-.nav-center a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: 600;
-    transition: 0.3s;
+.mini-cart h4{color:#6b3e26;margin-bottom:10px}
+.mini-cart ul{list-style:none;max-height:200px;overflow-y:auto}
+.mini-cart li{display:flex;gap:8px;margin-bottom:10px;font-size:14px;align-items:center}
+.mini-cart img{width:40px;height:30px;object-fit:contain}
+#totalPrice{font-weight:bold;color:#6b3e26;margin-top:10px}
+.go-cart-btn{
+    display:block;margin-top:10px;
+    background:#6b3e26;color:#fff;
+    text-align:center;padding:8px;
+    border-radius:6px;text-decoration:none
 }
 
-.nav-center a:hover { color: #ffd88c; }
+.header{text-align:center;padding:30px;color:#6b3e26}
 
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.boba-display{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+    padding:20px
 }
 
-.search-bar {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    border-radius: 20px;
-    padding: 2px 10px;
+.main-photo-wrapper{
+    width:300px;height:450px;
+    display:flex;justify-content:center;align-items:center;
+    border:2px solid #6b3e26;border-radius:10px
 }
 
-.search-bar input {
-    border: none;
-    outline: none;
-    padding: 5px;
-    background: none;
+.main-photo-wrapper img{width:100%;height:100%;object-fit:contain}
+
+.boba-info{
+    max-width:300px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start
 }
 
-.search-bar button {
-    border: none;
-    background: none;
-    font-size: 18px;
-    cursor: pointer;
+.price-add span{font-size:20px;font-weight:bold;color:#6b3e26}
+
+.qty-box{display:flex;gap:10px;margin:10px 0}
+.qty-box button{
+    padding:5px 10px;
+    background:#6b3e26;color:#fff;
+    border:none;border-radius:4px;cursor:pointer
 }
 
-.login-btn img,
-.cart-icon img {
-    width: 30px;
-    height: 30px;
-    filter: invert(100%);
-    cursor: pointer;
-    transition: 0.3s;
+#addToCartBtn{
+    padding:14px;
+    background:linear-gradient(135deg,#6b3e26,#9c5c3b);
+    color:#fff;border:none;border-radius:8px;
+    cursor:pointer;font-weight:bold
 }
 
-.login-btn img:hover,
-.cart-icon img:hover {
-    filter: invert(85%) sepia(100%) saturate(500%) hue-rotate(30deg);
+.boba-thumbnails{
+    display:flex;gap:10px;margin-top:15px;flex-wrap:wrap
 }
-
-.cart-icon {
-    position: relative;
-    cursor: pointer;
+.boba-thumbnails img{
+    width:60px;height:60px;
+    object-fit:contain;
+    cursor:pointer;
+    border:2px solid transparent;
+    border-radius:5px
 }
+.boba-thumbnails img.active{border-color:#6b3e26}
 
-.cart-count {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    background: red;
-    color: white;
-    font-size: 12px;
-    padding: 2px 6px;
-    border-radius: 50%;
-}
-
-.mini-cart {
-    position: absolute;
-    right: 20px;
-    top: 60px;
-    width: 300px;
-    background: #fff8f2;
-    border: 2px solid #6b3e26;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    display: none;
-    z-index: 100;
-}
-
-.mini-cart h4 { color: #6b3e26; margin-bottom: 10px; }
-
-.mini-cart ul {
-    list-style: none;
-    max-height: 200px;
-    overflow-y: auto;
-    padding-left: 0;
-}
-
-.mini-cart li {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    align-items: center;
-}
-
-.mini-cart img {
-    width: 40px;
-    height: 30px;
-    object-fit: contain;
-}
-
-#totalPrice {
-    font-weight: bold;
-    color: #6b3e26;
-    margin-top: 10px;
-}
-
-.go-cart-btn {
-    display: block;
-    margin-top: 10px;
-    background: #6b3e26;
-    color: white;
-    text-align: center;
-    padding: 8px 0;
-    border-radius: 6px;
-    text-decoration: none;
-}
-
-.header { text-align: center; padding: 30px; color: #6b3e26; }
-.header h1 { font-size: 36px; }
-
-.boba-display {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    padding: 20px;
-}
-
-.main-photo-wrapper {
-    width: 300px;
-    height: 450px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    border: 2px solid #6b3e26;
-    border-radius: 10px;
-    background: #fff8f2;
-}
-
-.main-photo-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.boba-info {
-    max-width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.boba-info h2 { margin-bottom: 5px; }
-.boba-info p { margin-bottom: 10px; color: #555; }
-
-.price-add span {
-    font-size: 20px;
-    font-weight: bold;
-    color: #6b3e26;
-    margin-bottom: 10px;
-}
-
-.qty-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 10px 0;
-}
-
-.qty-box button {
-    padding: 5px 10px;
-    background: #6b3e26;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.qty-box span { font-weight: bold; color: #6b3e26; }
-
-#addToCartBtn {
-    padding: 14px 20px;
-    background: linear-gradient(135deg,#6b3e26,#9c5c3b);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 10px;
-    transition: 0.3s;
-}
-
-#addToCartBtn:hover {
-    background: linear-gradient(135deg,#9c5c3b,#6b3e26);
-}
-
-.boba-thumbnails {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-    flex-wrap: wrap;
-}
-
-.boba-thumbnails img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    cursor: pointer;
-    border: 2px solid transparent;
-    border-radius: 5px;
-}
-
-.boba-thumbnails img.active { border-color: #6b3e26; }
-
-@media(max-width:768px){
-    .boba-display {
-        flex-direction: column;
-        align-items: center;
+@media(max-width:900px){
+    .navbar{flex-wrap:wrap;padding:15px 20px}
+    .nav-center{
+        display:none;
+        flex-direction:column;
+        width:100%;
+        background:#4b2e1e;
+        margin-top:15px;
+        border-radius:0 0 15px 15px
     }
-    .boba-info { align-items: center; text-align: center; }
+    .nav-center.active{display:flex}
+    .nav-center a{
+        padding:15px;
+        text-align:center;
+        border-top:1px solid rgba(255,255,255,.2)
+    }
+    .hamburger{display:block}
+}
+
+@media(max-width:600px){
+    .search-bar{display:none}
+    .boba-display{flex-direction:column;align-items:center}
+    .boba-info{align-items:center;text-align:center}
 }
 </style>
 </head>
+
 <body>
 
 <nav class="navbar">
-    <img src="img/logoP.png" class="logo">
-    <div class="nav-center">
+    <div class="nav-left">
+        <img src="img/logoP.png" class="logo">
+    </div>
+
+    <div class="nav-center" id="navLinks">
         <a href="homee.html">Home</a>
         <a href="Produktet.html">Products</a>
         <a href="aboutus.html">About Us</a>
         <a href="gift.html">Gift Box</a>
     </div>
+
     <div class="nav-right">
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="Search products...">
             <button onclick="searchProduct()">🔍</button>
         </div>
+
         <a href="login.html" class="login-btn">
-            <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
+            <img src="https://img.icons8.com/ios/50/user--v1.png">
         </a>
-        <a href="#" class="cart-icon" id="cartIcon">
-            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+
+        <div class="cart-icon" id="cartIcon">
+            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png">
             <span id="cartCount" class="cart-count">0</span>
-        </a>
+        </div>
+
+        <div class="hamburger" id="hamburger">☰</div>
     </div>
 </nav>
 
@@ -302,20 +203,21 @@ body {
 
 <section class="boba-display">
     <div class="main-photo-wrapper">
-        <img id="mainBoba" src="img/Screenshot__469_-removebg-preview.png" alt="Strawberry Boba">
+        <img id="mainBoba" src="img/Screenshot__469_-removebg-preview.png">
     </div>
     <div class="boba-info">
         <h2 id="bobaName">Strawberry Boba</h2>
-        <p id="bobaDesc">Sweet strawberry flavored boba with milk.</p>
-        <div class="price-add">
-            <span id="bobaPrice">$5.00</span>
-        </div>
+        <p>Sweet strawberry flavored boba with milk.</p>
+        <div class="price-add"><span id="bobaPrice">$5.00</span></div>
+
         <div class="qty-box">
             <button id="minusBtn">-</button>
             <span id="qtyDisplay">1</span>
             <button id="plusBtn">+</button>
         </div>
+
         <button id="addToCartBtn">Add to Cart</button>
+
         <div class="boba-thumbnails">
             <img src="img/Screenshot__469_-removebg-preview.png" data-name="Strawberry Boba" data-price="5" class="active">
             <img src="img/Screenshot__470_-removebg-preview.png" data-name="Taro Boba" data-price="5.5">
@@ -326,83 +228,61 @@ body {
 </section>
 
 <script>
-let qty = 1;
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let qty=1;
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
 
-const qtyDisplay = document.getElementById("qtyDisplay");
-const mainBoba = document.getElementById("mainBoba");
-const bobaName = document.getElementById("bobaName");
-const bobaPrice = document.getElementById("bobaPrice");
-const thumbnails = document.querySelectorAll(".boba-thumbnails img");
-const miniCart = document.getElementById("miniCart");
-const cartItems = document.getElementById("cartItems");
-const cartIcon = document.getElementById("cartIcon");
+const qtyDisplay=document.getElementById("qtyDisplay");
+const mainBoba=document.getElementById("mainBoba");
+const bobaName=document.getElementById("bobaName");
+const bobaPrice=document.getElementById("bobaPrice");
+const cartIcon=document.getElementById("cartIcon");
+const miniCart=document.getElementById("miniCart");
+const cartItems=document.getElementById("cartItems");
 
-document.getElementById("plusBtn").onclick = () => { qty++; qtyDisplay.textContent = qty; }
-document.getElementById("minusBtn").onclick = () => { if(qty>1){ qty--; qtyDisplay.textContent = qty; } }
+plusBtn.onclick=()=>{qty++;qtyDisplay.textContent=qty}
+minusBtn.onclick=()=>{if(qty>1){qty--;qtyDisplay.textContent=qty}}
 
-thumbnails.forEach(thumb => {
-    thumb.onclick = () => {
-        thumbnails.forEach(t => t.classList.remove("active"));
-        thumb.classList.add("active");
-        mainBoba.src = thumb.src;
-        bobaName.textContent = thumb.dataset.name;
-        bobaPrice.textContent = "$" + parseFloat(thumb.dataset.price).toFixed(2);
-        qty = 1; qtyDisplay.textContent = qty;
+document.querySelectorAll(".boba-thumbnails img").forEach(img=>{
+    img.onclick=()=>{
+        document.querySelectorAll(".boba-thumbnails img").forEach(i=>i.classList.remove("active"));
+        img.classList.add("active");
+        mainBoba.src=img.src;
+        bobaName.textContent=img.dataset.name;
+        bobaPrice.textContent="$"+(+img.dataset.price).toFixed(2);
+        qty=1;qtyDisplay.textContent=qty
     }
 });
 
-document.getElementById("addToCartBtn").onclick = () => {
-    const price = parseFloat(bobaPrice.textContent.replace("$",""));
-    const existing = cart.find(i => i.name === bobaName.textContent);
-    if(existing){ existing.qty += qty; } 
-    else { cart.push({ name: bobaName.textContent, pricePerUnit: price, img: mainBoba.src.split("/").pop(), qty: qty }); }
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateMiniCart();
-    qty = 1; qtyDisplay.textContent = qty;
+addToCartBtn.onclick=()=>{
+    const price=parseFloat(bobaPrice.textContent.replace("$",""));
+    const item=cart.find(i=>i.name===bobaName.textContent);
+    if(item){item.qty+=qty}
+    else{cart.push({name:bobaName.textContent,pricePerUnit:price,img:mainBoba.src.split("/").pop(),qty})}
+    localStorage.setItem("cart",JSON.stringify(cart));
+    updateCart()
 };
 
-function updateMiniCart(){
-    cartItems.innerHTML = "";
-    let total = 0;
-    cart.forEach(i => {
-        total += i.pricePerUnit*i.qty;
-        const li = document.createElement("li");
-        li.innerHTML = `<img src="img/${i.img}"><div style="flex:1"><strong>${i.name}</strong><br>$${i.pricePerUnit.toFixed(2)} x ${i.qty} = $${(i.pricePerUnit*i.qty).toFixed(2)}</div>`;
-        cartItems.appendChild(li);
+function updateCart(){
+    cartItems.innerHTML="";
+    let total=0;
+    cart.forEach(i=>{
+        total+=i.pricePerUnit*i.qty;
+        cartItems.innerHTML+=`<li><img src="img/${i.img}">${i.name} x${i.qty}</li>`
     });
-    document.getElementById("totalPrice").textContent = "Total: $" + total.toFixed(2);
-    document.getElementById("cartCount").textContent = cart.reduce((s,i)=>s+i.qty,0);
+    cartCount.textContent=cart.reduce((s,i)=>s+i.qty,0);
+    totalPrice.textContent="Total: $"+total.toFixed(2)
 }
 
-cartIcon.onclick = e => { e.preventDefault(); miniCart.style.display = miniCart.style.display==="block"?"none":"block"; }
-document.addEventListener("click", e => { if(!e.target.closest(".cart-icon") && !e.target.closest(".mini-cart")){ miniCart.style.display="none"; } });
+cartIcon.onclick=()=>miniCart.style.display=miniCart.style.display==="block"?"none":"block";
 
-updateMiniCart();
- function searchProduct() {
-    const input = document.getElementById('searchInput').value.toLowerCase().trim();
+hamburger.onclick=()=>navLinks.classList.toggle("active");
 
-    const pages = {
-        "muffins": "Muffins.html",
-        "cookies": "Cookies.html",
-        "donuts": "Donuts.html",
-        "macarons": "Macarons.html",
-        "chocolates": "Chocolates.html",
-        "brownies": "Brownies.html",
-        "croissants": "Croissants.html",
-        "cheesecakes": "Cheesecakes.html",
-        "pralines": "Pralines.html",
-        "wine": "Wine.html",
-        "login": "login.html",
-        "boba":"Boba.html",
-        "products": "Produktet.html"
-    };
+updateCart();
 
-    if(pages[input]) {
-        window.location.href = pages[input];
-    } else {
-        alert("Product not found");
-    }
+function searchProduct(){
+    const v=searchInput.value.toLowerCase().trim();
+    const p={muffins:"Muffins.html",cookies:"Cookies.html",donuts:"Donuts.html",macarons:"Macarons.html",chocolates:"Chocolates.html",brownies:"Brownies.html",croissants:"Croissants.html",cheesecakes:"Cheesecakes.html",pralines:"Pralines.html",wine:"Wine.html",boba:"Boba.html",products:"Produktet.html",login:"login.html"};
+    if(p[v])location.href=p[v];else alert("Product not found")
 }
 </script>
 
