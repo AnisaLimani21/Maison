@@ -33,3 +33,29 @@ if (loginForm) {
         }
     });
 }
+function searchProduct() {
+    const input = document.getElementById('searchInput').value.toLowerCase().trim();
+
+    const pages = {
+        "muffins": "Muffins.html",
+        "cookies": "Cookies.html",
+        "donuts": "Donuts.html",
+        "macarons": "Macarons.html",
+        "chocolates": "Chocolates.html",
+        "brownies": "Brownies.html",
+        "croissants": "Croissants.html",
+        "cheesecakes": "Cheesecakes.html",
+        "pralines": "Pralines.html",
+        "wine": "Wine.html",
+        "login": "login.html",
+        "boba":"Boba.html",
+        "products": "Produktet.html"
+    };
+
+    if(pages[input]) {
+        window.location.href = pages[input];
+    } else {
+        alert("Product not found");
+    }
+}
+

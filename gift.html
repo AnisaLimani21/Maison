@@ -149,6 +149,12 @@ Our Master Chocolatiers have created a selection of the finest French chocolate 
 </footer> 
 
 <script>
+    const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("nav-links");
+hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+});
+
     function searchProduct() {
     const input = document.getElementById('searchInput').value.toLowerCase().trim();
 

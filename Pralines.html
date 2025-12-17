@@ -278,6 +278,44 @@ body{
     font-weight:bold;
     cursor:pointer;
 }
+@media screen and (max-width: 1200px){
+    .nav-center{gap:20px;}
+    .search-bar input{width:130px;}
+    .card img{width:140px;height:140px;}
+}
+
+@media screen and (max-width: 900px){
+    .nav-center{
+        display:none;
+        flex-direction:column;
+        background:#4b2e1e;
+        position:absolute;
+        top:65px;
+        left:0;
+        width:100%;
+        border-radius:0 0 20px 20px;
+        overflow:hidden;
+    }
+    .nav-center.active{display:flex;}
+    .nav-center a{padding:15px;text-align:center;border-top:1px solid #ffd88c33;}
+    .hamburger{display:block;cursor:pointer;font-size:28px;color:#fff;}
+    .search-bar{padding:3px 8px;}
+    .search-bar input{width:110px;font-size:14px;}
+    .grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;padding:20px;}
+    .card img{width:120px;height:120px;}
+}
+
+@media screen and (max-width: 600px){
+    .search-bar input{width:90px;font-size:13px;}
+    .grid{grid-template-columns:1fr;gap:15px;padding:15px;}
+    .card img{width:100px;height:100px;}
+}
+
+@media screen and (max-width: 400px){
+    .search-bar{display:none;}
+    .card{padding:15px;border-radius:15px;}
+}
+
 </style>
 </head>
 
@@ -292,10 +330,11 @@ body{
         <a href="gift.html">Gift Box</a>
     </div>
     <div class="nav-right">
-        <div class="search-bar">
-            <input type="text" placeholder="Search">
-            <button>🔍</button>
+         <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search products...">
+            <button onclick="searchProduct()">🔍</button>
         </div>
+
         <a class="cart-icon" id="cartIcon">
             <a href="login.html" class="login-btn"><img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login"></a>
         <a href="#" class="cart-icon" id="cartIcon">
@@ -422,6 +461,41 @@ document.getElementById("cartIcon").onclick=()=>{
 };
 
 updateCart();
+
+ function searchProduct() {
+    const input = document.getElementById('searchInput').value.toLowerCase().trim();
+
+    const pages = {
+        "muffins": "Muffins.html",
+        "cookies": "Cookies.html",
+        "donuts": "Donuts.html",
+        "macarons": "Macarons.html",
+        "chocolates": "Chocolates.html",
+        "brownies": "Brownies.html",
+        "croissants": "Croissants.html",
+        "cheesecakes": "Cheesecakes.html",
+        "pralines": "Pralines.html",
+        "wine": "Wine.html",
+        "login": "login.html",
+        "boba":"Boba.html",
+        "products": "Produktet.html"
+    };
+
+    if(pages[input]) {
+        window.location.href = pages[input];
+    } else {
+        alert("Product not found");
+    }
+}
+const hamburger = document.createElement("span");
+hamburger.classList.add("hamburger");
+hamburger.innerText="☰";
+document.querySelector(".navbar").appendChild(hamburger);
+
+hamburger.addEventListener("click",()=>{
+    document.querySelector(".nav-center").classList.toggle("active");
+});
+
 </script>
 
 </body>
