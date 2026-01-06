@@ -1,9 +1,14 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Maison Chocolate</title>
+
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
@@ -14,10 +19,10 @@
     </div>
 
     <div class="nav-center" id="nav-links">
-        <a href="homee.html">Home</a>
-        <a href="Produktet.html">Products</a>
-        <a href="aboutus.html">About Us</a>
-        <a href="gift.html">Gift Box</a>
+        <a href="homee.php">Home</a>
+        <a href="Produktet.php">Products</a>
+        <a href="aboutus.php">About Us</a>
+        <a href="gift.php">Gift Box</a>
     </div>
 
     <div class="nav-right">
@@ -26,11 +31,11 @@
             <button onclick="searchProduct()">🔍</button>
         </div>
 
-        <a href="login.html" class="login-btn">
+        <a href="login.php" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
 
-        <a href="cart.html" class="cart-icon">
+        <a href="cart.php" class="cart-icon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
         </a>
 
@@ -42,7 +47,7 @@
     <div class="hero-text">
         <h1>Maison Chocolat</h1>
         <p>Discover the most exquisite chocolates and pastries, crafted to celebrate life’s sweetest moments.</p>
-        <a href="Produktet.html"><button>Discover More</button></a>
+        <a href="Produktet.php"><button>Discover More</button></a>
     </div>
     <div class="hero-img">
         <img src="img/fotojakryesore.png" alt="Chocolate">
@@ -52,16 +57,16 @@
 <div class="quote">
 “From delicate macarons to rich pralines, from soft muffins to signature chocolates — every creation is crafted to celebrate life’s sweetest moments, paired perfectly with a touch of champagne.”
 </div>
+
 <div id="newsletterPopup" class="popup">
   <div class="popup-content">
     <span class="close" id="closePopup">&times;</span>
     <h2>Join Our Maison Family!</h2>
     <p>Sign in to get the latest updates, promotions, and sweet treats!</p>
-    <a href="create.html"><button>Sign in</button></a>
+    <a href="create.php"><button>Sign in</button></a>
     <button id="noThanksBtn">No Thanks</button>
   </div>
 </div>
-
 
 <div class="slider-wrapper">
     <div class="slides" id="slides">
@@ -76,8 +81,6 @@
         <div class="slide"><img src="photos/sliderr2.jpg" alt=""></div>
         <div class="slide"><img src="photos/sliderr3.jpg" alt=""></div>
         <div class="slide"><img src="photos/sliderr5.jpg" alt=""></div>
-        
-       
     </div>
 </div>
 
@@ -86,7 +89,7 @@
     <img src="photos/sale.jpg" alt="Sale">
     <h2>Sign up to My Maison Rewards for exclusive early access</h2>
     <p>Enjoy up to 50% off favourites like Maison.</p>
-    <a href="create.html"><button>Sign up</button></a>
+    <a href="create.php"><button>Sign up</button></a>
 </div>
 
 <div class="reviews-section">
@@ -134,7 +137,6 @@
     </div>
 </div>
 
-
 <footer class="footer">
     <div class="footer-left">
         <h2>Maison</h2>
@@ -169,16 +171,10 @@
     </div>
 </footer>
 
-
-
 <script>
-
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("nav-links");
-hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-});
-
+hamburger.addEventListener("click", () => navLinks.classList.toggle("active"));
 
 window.addEventListener('load', () => {
     const slidesContainer = document.getElementById('slides');
@@ -193,9 +189,7 @@ window.addEventListener('load', () => {
 
     function moveSlider() {
         x -= 1;
-        if (Math.abs(x) >= slideWidth * slideCount) {
-            x = 0;
-        }
+        if (Math.abs(x) >= slideWidth * slideCount) x = 0;
         slidesContainer.style.transform = `translateX(${x}px)`;
         requestAnimationFrame(moveSlider);
     }
@@ -206,55 +200,38 @@ function searchProduct() {
     const input = document.getElementById('searchInput').value.toLowerCase().trim();
 
     const pages = {
-        "muffins": "Muffins.html",
-        "cookies": "Cookies.html",
-        "donuts": "Donuts.html",
-        "macarons": "Macarons.html",
-        "chocolates": "Chocolates.html",
-        "brownies": "Brownies.html",
-        "croissants": "Croissants.html",
-        "cheesecakes": "Cheesecakes.html",
-        "pralines": "Pralines.html",
-        "wine": "Wine.html",
-        "login": "login.html",
-        "boba":"Boba.html",
-        "products": "Produktet.html"
+        "muffins": "Muffins.php",
+        "cookies": "Cookies.php",
+        "donuts": "Donuts.php",
+        "macarons": "Macarons.php",
+        "chocolates": "Chocolates.php",
+        "brownies": "Brownies.php",
+        "croissants": "Croissants.php",
+        "cheesecakes": "Cheesecakes.php",
+        "pralines": "Pralines.php",
+        "wine": "Wine.php",
+        "login": "login.php",
+        "boba":"Boba.php",
+        "products": "Produktet.php"
     };
 
-    if(pages[input]) {
-        window.location.href = pages[input];
-    } else {
-        alert("Product not found");
-    }
+    if(pages[input]) window.location.href = pages[input];
+    else alert("Product not found");
 }
+
 const allStars = document.querySelectorAll('.review-card .star');
 allStars.forEach(star => {
-    star.addEventListener('mouseover', () => {
-        const parent = star.parentElement;
-        const value = parseInt(star.dataset.value);
-        highlightStars(parent, value);
-    });
-
-    star.addEventListener('mouseout', () => {
-        const parent = star.parentElement;
-        const currentRating = parseInt(parent.dataset.rating);
-        highlightStars(parent, currentRating);
-    });
-
+    star.addEventListener('mouseover', () => highlightStars(star.parentElement, parseInt(star.dataset.value)));
+    star.addEventListener('mouseout', () => highlightStars(star.parentElement, parseInt(star.parentElement.dataset.rating)));
     star.addEventListener('click', () => {
-        const parent = star.parentElement;
-        const value = parseInt(star.dataset.value);
-        parent.dataset.rating = value;
-        highlightStars(parent, value);
+        star.parentElement.dataset.rating = parseInt(star.dataset.value);
+        highlightStars(star.parentElement, parseInt(star.dataset.value));
     });
 });
 
 function highlightStars(parent, rating) {
-    const stars = parent.querySelectorAll('.star');
-    stars.forEach(star => {
-        const value = parseInt(star.dataset.value);
-        if (value <= rating) star.classList.add('selected');
-        else star.classList.remove('selected');
+    parent.querySelectorAll('.star').forEach(star => {
+        star.classList.toggle('selected', parseInt(star.dataset.value) <= rating);
     });
 }
 
@@ -262,21 +239,10 @@ const newsletterPopup = document.getElementById('newsletterPopup');
 const closePopup = document.getElementById('closePopup');
 const noThanksBtn = document.getElementById('noThanksBtn');
 
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        newsletterPopup.style.display = 'flex'; 
-    }, 5000); 
-});
-
+window.addEventListener('load', () => setTimeout(() => newsletterPopup.style.display = 'flex', 5000));
 closePopup.addEventListener('click', () => newsletterPopup.style.display = 'none');
 noThanksBtn.addEventListener('click', () => newsletterPopup.style.display = 'none');
-window.addEventListener('click', (e) => {
-    if(e.target === newsletterPopup) newsletterPopup.style.display = 'none';
-});
-
-
-
-
+window.addEventListener('click', e => { if(e.target === newsletterPopup) newsletterPopup.style.display = 'none'; });
 </script>
 
 </body>
