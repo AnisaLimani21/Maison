@@ -44,7 +44,7 @@
         <div class="card">
             <img src="img/Cookie_in_Mid-Break_with_Chocolate_Chips__1_-removebg-preview.png" alt="Cookies">
             <h3>Cookies</h3>
-            <a href="Cookies.html">View More</a>
+            <a href="Cookies.php">View More</a>
         </div>
         <div class="card">
             <img src="img/muffins-removebg-preview.png" alt="Muffins">
