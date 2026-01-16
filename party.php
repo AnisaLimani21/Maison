@@ -34,7 +34,7 @@
     <h4>Your Cart</h4>
     <ul id="cartItems"></ul>
     <p id="totalPriceMini">Total: €0.00</p>
-    <a href="cart.html" class="go-cart-btn">Go to Cart</a>
+    <a href="cart.php" class="go-cart-btn">Go to Cart</a>
 </div>
 
 <section class="product-single">

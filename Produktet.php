@@ -49,52 +49,52 @@
         <div class="card">
             <img src="img/muffins-removebg-preview.png" alt="Muffins">
             <h3>Muffins</h3>
-            <a href="Muffins.html">View More</a>
+            <a href="Muffins.php">View More</a>
         </div>
         <div class="card">
             <img src="img/Screenshot__365_-removebg-preview.png" alt="Donuts">
             <h3>Donuts</h3>
-            <a href="Donuts.html">View More</a>
+            <a href="Donuts.php">View More</a>
         </div>
         <div class="card">
             <img src="img/Screenshot__371_-removebg-preview.png" alt="Macarons">
             <h3>Macarons</h3>
-            <a href="Macarons.html">View More</a>
+            <a href="Macarons.php">View More</a>
         </div>
         <div class="card">
             <img src="img/Screenshot__367_-removebg-preview.png" alt="Chocolates">
             <h3>Chocolates</h3>
-            <a href="Chocolates.html">View More</a>
+            <a href="Chocolates.php">View More</a>
         </div>
         <div class="card">
             <img src="img/Screenshot__368_-removebg-preview.png" alt="Brownies">
             <h3>Brownies</h3>
-            <a href="Brownies.html">View More</a>
+            <a href="Brownies.php">View More</a>
         </div>
         <div class="card">
             <img src="img/Screenshot__369_-removebg-preview.png" alt="Croissants">
             <h3>Croissants</h3>
-            <a href="Croissants.html">View More</a>
+            <a href="Croissants.php">View More</a>
         </div>
         <div class="card">
             <img src="img/Screenshot__370_-removebg-preview.png" alt="Cheesecakes">
             <h3>Cheesecakes</h3>
-            <a href="Cheesecakes.html">View More</a>
+            <a href="Cheesecakes.php">View More</a>
         </div>
         <div class="card">
             <img src="photos/slider3-removebg-preview.png" alt="Cheesecakes">
             <h3>Pralines</h3>
-            <a href="Pralines.html">View More</a>
+            <a href="Pralines.php">View More</a>
         </div>
         <div class="card">
             <img src="img/Screenshot__463_-removebg-preview.png" alt="Cheesecakes">
             <h3>Wine</h3>
-            <a href="Wine.html">View More</a>
+            <a href="Wine.php">View More</a>
         </div>
         <div class="card">
             <img src="img/Screenshot__470_-removebg-preview.png" alt="Cheesecakes">
             <h3>Boba Drinks</h3>
-            <a href="Boba.html">View More</a>
+            <a href="Boba.php">View More</a>
         </div>
 
     </section>
@@ -144,19 +144,19 @@ function searchProduct() {
     const input = document.getElementById('searchInput').value.toLowerCase().trim();
 
     const pages = {
-        "muffins": "Muffins.html",
-        "cookies": "Cookies.html",
-        "donuts": "Donuts.html",
-        "macarons": "Macarons.html",
-        "chocolates": "Chocolates.html",
-        "brownies": "Brownies.html",
-        "croissants": "Croissants.html",
-        "cheesecakes": "Cheesecakes.html",
-        "pralines": "Pralines.html",
-        "wine": "Wine.html",
-        "login": "login.html",
-        "boba":"Boba.html",
-        "products": "Produktet.html"
+        "muffins": "Muffins.php",
+        "cookies": "Cookies.php",
+        "donuts": "Donuts.php",
+        "macarons": "Macarons.php",
+        "chocolates": "Chocolates.php",
+        "brownies": "Brownies.php",
+        "croissants": "Croissants.php",
+        "cheesecakes": "Cheesecakes.php",
+        "pralines": "Pralines.php",
+        "wine": "Wine.php",
+        "login": "login.php",
+        "boba":"Boba.php",
+        "products": "Produktet.php"
     };
 
     if(pages[input]) {

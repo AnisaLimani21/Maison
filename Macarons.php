@@ -46,7 +46,7 @@
         </div>
         <h3>Strawberry Dream</h3>
         <p>$3.00</p>
-        <a href="StrawberryDream.html" class="btn">Order Now</a>
+        <a href="StrawberryDream.php" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
@@ -55,7 +55,7 @@
         </div>
         <h3>Choco Delight</h3>
         <p>$3.20</p>
-        <a href="ChocoDelight.html" class="btn">Order Now</a>
+        <a href="ChocoDelight.php" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
@@ -64,7 +64,7 @@
         </div>
         <h3>Pistachio Bliss</h3>
         <p>$3.50</p>
-        <a href="PistachioBliss.html" class="btn">Order Now</a>
+        <a href="PistachioBliss.php" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
@@ -73,7 +73,7 @@
         </div>
         <h3>Vanilla Cloud</h3>
         <p>$3.00</p>
-        <a href="VanillaCloud.html" class="btn">Order Now</a>
+        <a href="VanillaCloud.php" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
@@ -82,7 +82,7 @@
         </div>
         <h3>Lemon Spark</h3>
         <p>$3.10</p>
-        <a href="LemonSpark.html" class="btn">Order Now</a>
+        <a href="LemonSpark.php" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
@@ -91,7 +91,7 @@
         </div>
         <h3>Raspberry Rose</h3>
         <p>$3.40</p>
-        <a href="RaspberryRose.html" class="btn">Order Now</a>
+        <a href="RaspberryRose.php" class="btn">Order Now</a>
     </div>
 
 </section>
@@ -106,18 +106,18 @@
  function searchProduct() {
      const input = document.getElementById('searchInput').value.toLowerCase().trim();
      const pages = {
-         muffins: "Muffins.html",
-         cookies: "Cookies.html",
-         donuts: "Donuts.html",
-         macarons: "Macarons.html",
-         chocolates: "Chocolates.html",
-         brownies: "Brownies.html",
-         croissants: "Croissants.html",
-         cheesecakes: "Cheesecakes.html",
-         pralines: "Pralines.html",
-         wine: "Wine.html",
-         login: "login.html",
-         products: "Produktet.html"
+         muffins: "Muffins.php",
+         cookies: "Cookies.php",
+         donuts: "Donuts.php",
+         macarons: "Macarons.php",
+         chocolates: "Chocolates.php",
+         brownies: "Brownies.php",
+         croissants: "Croissants.php"
+         cheesecakes: "Cheesecakes.php",
+         pralines: "Pralines.php",
+         wine: "Wine.php",
+         login: "login.php",
+         products: "Produktet.php"
      };
      if(pages[input]) window.location.href = pages[input];
      else alert("Product not found");
