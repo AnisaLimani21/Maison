@@ -51,7 +51,7 @@
         </div>
         <h3>Blueberry Burst</h3>
         <p>$2.80</p>
-        <a href="Blueberry.html" class="btn">View More</a>
+        <a href="Blueberry.php" class="btn">View More</a>
     </div>
 
     <div class="product-card">
@@ -60,7 +60,7 @@
         </div>
         <h3>Double Chocolate</h3>
         <p>$3.20</p>
-        <a href="DoubleChoco.html" class="btn">View More</a>
+        <a href="DoubleChoco.php" class="btn">View More</a>
     </div>
 
     <div class="product-card">
@@ -69,7 +69,7 @@
         </div>
         <h3>Vanilla Dream</h3>
         <p>$2.50</p>
-        <a href="Vanilla.html" class="btn">View More</a>
+        <a href="Vanilla.php" class="btn">View More</a>
     </div>
 
     <div class="product-card">
@@ -78,7 +78,7 @@
         </div>
         <h3>Red Velvet</h3>
         <p>$3.00</p>
-        <a href="RedVelvet.html" class="btn">View More</a>
+        <a href="RedVelvet.php" class="btn">View More</a>
     </div>
 
 </section>
@@ -92,19 +92,19 @@
     const input = document.getElementById('searchInput').value.toLowerCase().trim();
 
     const pages = {
-        "muffins": "Muffins.html",
-        "cookies": "Cookies.html",
-        "donuts": "Donuts.html",
-        "macarons": "Macarons.html",
-        "chocolates": "Chocolates.html",
-        "brownies": "Brownies.html",
-        "croissants": "Croissants.html",
-        "cheesecakes": "Cheesecakes.html",
-        "pralines": "Pralines.html",
-        "wine": "Wine.html",
-        "login": "login.html",
-        "boba":"Boba.html",
-        "products": "Produktet.html"
+        "muffins": "Muffins.php",
+        "cookies": "Cookies.php",
+        "donuts": "Donuts.php",
+        "macarons": "Macarons.php",
+        "chocolates": "Chocolates.php",
+        "brownies": "Brownies.php",
+        "croissants": "Croissants.php",
+        "cheesecakes": "Cheesecakes.php",
+        "pralines": "Pralines.php",
+        "wine": "Wine.php",
+        "login": "login.php",
+        "boba":"Boba.php",
+        "products": "Produktet.php"
     };
 
     if(pages[input]) {

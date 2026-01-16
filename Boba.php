@@ -281,7 +281,7 @@ updateCart();
 
 function searchProduct(){
     const v=searchInput.value.toLowerCase().trim();
-    const p={muffins:"Muffins.html",cookies:"Cookies.html",donuts:"Donuts.html",macarons:"Macarons.html",chocolates:"Chocolates.html",brownies:"Brownies.html",croissants:"Croissants.html",cheesecakes:"Cheesecakes.html",pralines:"Pralines.html",wine:"Wine.html",boba:"Boba.html",products:"Produktet.html",login:"login.html"};
+    const p={muffins:"Muffins.php",cookies:"Cookies.php",donuts:"Donuts.php",macarons:"Macarons.php",chocolates:"Chocolates.php",brownies:"Brownies.php",croissants:"Croissants.php",cheesecakes:"Cheesecakes.php",pralines:"Pralines.php",wine:"Wine.php",boba:"Boba.php",products:"Produktet.php",login:"login.php"};
     if(p[v])location.href=p[v];else alert("Product not found")
 }
 </script>

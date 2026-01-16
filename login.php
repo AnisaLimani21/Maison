@@ -38,7 +38,7 @@
    
   <div class="login">
    
-    <form  id="loginForm"action="#" method="get">
+    <form  id="loginForm"action="#" method="post">
       <h2>Log In</h2>
 
       <label for="user">User:</label>
