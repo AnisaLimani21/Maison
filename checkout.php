@@ -123,7 +123,7 @@ document.getElementById("checkoutForm").addEventListener("submit", function(e) {
 
   
     localStorage.removeItem("cart");
-    window.location.href = "brownies.html"; 
+    window.location.href = "brownies.php"; 
 });
 
 

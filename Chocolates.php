@@ -26,11 +26,11 @@
             <button onclick="searchProduct()">🔍</button>
         </div>
 
-        <a href="login.html" class="login-btn">
+        <a href="login.php" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
 
-        <a href="cart.html" class="cart-icon" id="cartIcon">
+        <a href="cart.php" class="cart-icon" id="cartIcon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
             <span class="cart-count" id="cartCount">0</span>
         </a>

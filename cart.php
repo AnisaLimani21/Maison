@@ -121,7 +121,7 @@ h1 a{
 </head>
 <body>
 
-<h1><a href="homee.html">Your Shopping Cart</a></h1>
+<h1><a href="homee.php">Your Shopping Cart</a></h1>
 
 <div class="cart-container" id="cartContainer">
     
@@ -182,7 +182,7 @@ function removeItem(index) {
 
 function checkout() {
     
-    window.location.href = "checkout.html";
+    window.location.href = "checkout.php";
 }
 
 

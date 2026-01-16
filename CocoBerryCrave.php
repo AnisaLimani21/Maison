@@ -26,7 +26,7 @@
             <button>🔍</button>
         </form>
 
-        <a href="login.html" class="login-btn">
+        <a href="login.php" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
 

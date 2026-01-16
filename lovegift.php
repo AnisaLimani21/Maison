@@ -22,7 +22,7 @@
             <input type="text" id="searchInput" placeholder="Search products...">
             <button onclick="searchProduct()">🔍</button>
         </div>
-        <a href="login.html" class="login-btn">
+        <a href="login.php" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
         <a href="#" class="cart-icon" id="cartIcon">

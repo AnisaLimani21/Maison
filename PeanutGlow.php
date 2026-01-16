@@ -14,10 +14,10 @@
     </div>
 
     <div class="nav-center" id="nav-links">
-        <a href="homee.html">Home</a>
-        <a href="Produktet.html">Products</a>
-        <a href="aboutus.html">About Us</a>
-        <a href="gift.html">Gift Box</a>
+        <a href="homee.php">Home</a>
+        <a href="Produktet.php">Products</a>
+        <a href="aboutus.php">About Us</a>
+        <a href="gift.php">Gift Box</a>
     </div>
 
     <div class="nav-right">
@@ -26,7 +26,7 @@
             <button>🔍</button>
         </form>
 
-        <a href="login.html" class="login-btn">
+        <a href="login.php" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
 
