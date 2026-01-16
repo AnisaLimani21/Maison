@@ -58,7 +58,7 @@ Our Master Chocolatiers have created a selection of the finest French chocolate 
             <p> A luxurious selection of spherical chocolate pralines!</p>
             <h2>26.00€</h2>
              <div class="button">
-    <button class="buton"onclick="window.location.href='sphere.html'">Order</button></div>
+    <button class="buton"onclick="window.location.href='sphere.php'">Order</button></div>
     </div>
            
       
@@ -70,7 +70,7 @@ Our Master Chocolatiers have created a selection of the finest French chocolate 
                      <p> Assorted mini chocolate bars in a convenient gift box!</p>
             <h2>42.00€</h2>
             <div class="button">
-    <button class="buton"onclick="window.location.href='minibar.html'">Order</button></div>
+    <button class="buton"onclick="window.location.href='minibar.php'">Order</button></div>
     </div>
 
         <div class="card">
@@ -79,7 +79,7 @@ Our Master Chocolatiers have created a selection of the finest French chocolate 
                      <p>Dark and Milk Ganache flavored with Champagne</p>
                 <h2>60.00€</h2>
                        <div class="button">
-    <button class="buton"onclick="window.location.href='minibarxl.html'">Order</button></div>
+    <button class="buton"onclick="window.location.href='minibarxl.php'">Order</button></div>
         </div>
 
         <div class="card">
@@ -88,7 +88,7 @@ Our Master Chocolatiers have created a selection of the finest French chocolate 
                      <p>A romantic assortment of chocolates, crafted to delight</p>
                     <h2>48.00€</h2>
                            <div class="button">
-    <button class="buton"onclick="window.location.href='lovegift.html'">Order</button></div>
+    <button class="buton"onclick="window.location.href='lovegift.php'">Order</button></div>
         </div>
 
         <div class="card">
@@ -97,7 +97,7 @@ Our Master Chocolatiers have created a selection of the finest French chocolate 
                     <p>A festive assortment of chocolates!</p>
                 <h2>115.00€</h2>
                        <div class="button">
-    <button class="buton"onclick="window.location.href='party.html'">Order</button></div>
+    <button class="buton"onclick="window.location.href='party.php'">Order</button></div>
         </div>
 
         <div class="card">
@@ -106,7 +106,7 @@ Our Master Chocolatiers have created a selection of the finest French chocolate 
                         <p>Explosive flavors in every chocolate</p>
             <h2>85.00€</h2>
                    <div class="button">
-    <button class="buton"onclick="window.location.href='bomb.html'">Order</button></div>
+    <button class="buton"onclick="window.location.href='bomb.php'">Order</button></div>
         </div>
     </div>  
 
