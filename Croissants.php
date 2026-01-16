@@ -20,9 +20,9 @@
     </div>
     <div class="nav-center" id="nav-links">
         <a href="homee.html">Home</a>
-        <a href="Produktet.html">Products</a>
-        <a href="aboutus.html">About Us</a>
-        <a href="gift.html">Gift Box</a>
+        <a href="Produktet.php">Products</a>
+        <a href="aboutus.php">About Us</a>
+        <a href="gift.php">Gift Box</a>
     </div>
     <div class="nav-right">
           <div class="search-bar">
