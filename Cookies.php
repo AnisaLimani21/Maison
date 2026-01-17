@@ -50,7 +50,7 @@
         <img src="img/Cookie_in_Mid-Break_with_Chocolate_Chips__1_-removebg-preview.png" alt="">
         <h3>Chocolate Chip Cookie</h3>
         <p>$2.50</p>
-        <a href="ChocolateChipCookie.html" class="btn">Order Now</a>
+        <a href="ChocolateChipCookie.php" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
@@ -92,7 +92,7 @@ hamburger.addEventListener("click", () => {
 function searchProduct() {
     const input = document.getElementById('searchInput').value.toLowerCase().trim();
 
-    const pages = {
+     const pages = {
         "muffins": "Muffins.php",
         "cookies": "Cookies.php",
         "donuts": "Donuts.php",
@@ -107,6 +107,7 @@ function searchProduct() {
         "boba":"Boba.php",
         "products": "Produktet.php"
     };
+
 
     if(pages[input]) {
         window.location.href = pages[input];
