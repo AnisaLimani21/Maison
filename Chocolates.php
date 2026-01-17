@@ -187,19 +187,19 @@ function searchProduct() {
     const input = document.getElementById('searchInput').value.toLowerCase().trim();
 
     const pages = {
-        "muffins": "Muffins.html",
-        "cookies": "Cookies.html",
-        "donuts": "Donuts.html",
-        "macarons": "Macarons.html",
-        "chocolates": "Chocolates.html",
-        "brownies": "Brownies.html",
-        "croissants": "Croissants.html",
-        "cheesecakes": "Cheesecakes.html",
-        "pralines": "Pralines.html",
-        "wine": "Wine.html",
-        "login": "login.html",
-        "boba":"Boba.html",
-        "products": "Produktet.html"
+        "muffins": "Muffins.php",
+        "cookies": "Cookies.php",
+        "donuts": "Donuts.php",
+        "macarons": "Macarons.php",
+        "chocolates": "Chocolates.php",
+        "brownies": "Brownies.php",
+        "croissants": "Croissants.php",
+        "cheesecakes": "Cheesecakes.php",
+        "pralines": "Pralines.php",
+        "wine": "Wine.php",
+        "login": "login.php",
+        "boba":"Boba.php",
+        "products": "Produktet.php"
     };
 
     if(pages[input]) {

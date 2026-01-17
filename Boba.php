@@ -196,7 +196,7 @@ body{font-family:Arial,sans-serif;background:#fff8f2;overflow-x:hidden}
     <h4>Your Cart</h4>
     <ul id="cartItems"></ul>
     <p id="totalPrice">Total: $0.00</p>
-    <a href="cart.html" class="go-cart-btn">Go to Cart</a>
+    <a href="cart.php" class="go-cart-btn">Go to Cart</a>
 </div>
 
 <header class="header"><h1>Our Boba Drinks</h1></header>

@@ -57,27 +57,27 @@
         <img src="img/Partially_Broken_Matcha_Cookie_Flight__1_-removebg-preview.png" alt="">
         <h3>Green Meadow Cookie</h3>
         <p>$3.00</p>
-        <a href="GreenMeadowCookie.html" class="btn">Order Now</a>
+        <a href="GreenMeadowCookie.php" class="btn">Order Now</a>
     </div>
     <div class="product-card">
         <img src="img/Crumbled_Chocolate_Cookie_Delight__1_-removebg-preview.png" alt="">
         <h3>Dark Velvet Cookie</h3>
         <p>$3.50</p>
-        <a href="DarkVelvet.html" class="btn">Order Now</a>
+        <a href="DarkVelvet.php" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
         <img src="img/Broken_Oatmeal_Raisin_Cookie_in_Air__1_-removebg-preview (1).png" alt="">
         <h3>CocoBerry Crave Cookie</h3>
         <p>$3.00</p>
-        <a href="CocoBerryCrave.html" class="btn">Order Now</a>
+        <a href="CocoBerryCrave.php" class="btn">Order Now</a>
     </div>
     
     <div class="product-card">
         <img src="img/Crumbled_Peanut_Butter_Delight__1_-removebg-preview.png" alt="">
         <h3>Peanut Glow Cookie</h3>
         <p>$2.50</p>
-        <a href="PeanutGlow.html" class="btn">Order Now</a>
+        <a href="PeanutGlow.php" class="btn">Order Now</a>
     </div>
     
 </section>
@@ -93,19 +93,19 @@ function searchProduct() {
     const input = document.getElementById('searchInput').value.toLowerCase().trim();
 
     const pages = {
-        "muffins": "Muffins.html",
-        "cookies": "Cookies.html",
-        "donuts": "Donuts.html",
-        "macarons": "Macarons.html",
-        "chocolates": "Chocolates.html",
-        "brownies": "Brownies.html",
-        "croissants": "Croissants.html",
-        "cheesecakes": "Cheesecakes.html",
-        "pralines": "Pralines.html",
-        "wine": "Wine.html",
-        "login": "login.html",
-        "boba":"Boba.html",
-        "products": "Produktet.html"
+        "muffins": "Muffins.php",
+        "cookies": "Cookies.php",
+        "donuts": "Donuts.php",
+        "macarons": "Macarons.php",
+        "chocolates": "Chocolates.php",
+        "brownies": "Brownies.php",
+        "croissants": "Croissants.php",
+        "cheesecakes": "Cheesecakes.php",
+        "pralines": "Pralines.php",
+        "wine": "Wine.php",
+        "login": "login.php",
+        "boba":"Boba.php",
+        "products": "Produktet.php"
     };
 
     if(pages[input]) {

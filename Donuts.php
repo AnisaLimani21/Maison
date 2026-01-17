@@ -49,7 +49,7 @@
         </div>
         <h3>Blueberry Bliss</h3>
         <p>$2.00</p>
-        <a href="BlueberryBliss.html" class="btn">Order Now</a>
+        <a href="BlueberryBliss.php" class="btn">Order Now</a>
     </div>
 
     <div class="donut-card">
@@ -58,7 +58,7 @@
         </div>
         <h3>Chocolate Frosted</h3>
         <p>$2.50</p>
-        <a href="ChocolateFrosted.html" class="btn">Order Now</a>
+        <a href="ChocolateFrosted.php" class="btn">Order Now</a>
     </div>
 
     <div class="donut-card">
@@ -67,7 +67,7 @@
         </div>
         <h3>Strawberry Sprinkle</h3>
         <p>$2.50</p>
-        <a href="StrawberrySprinkle.html" class="btn">Order Now</a>
+        <a href="StrawberrySprinkle.php" class="btn">Order Now</a>
     </div>
 
     <div class="donut-card">
@@ -76,7 +76,7 @@
         </div>
         <h3>Caramel Crunch</h3>
         <p>$3.00</p>
-        <a href="CaramelCrunch.html" class="btn">Order Now</a>
+        <a href="CaramelCrunch.php" class="btn">Order Now</a>
     </div>
 
     <div class="donut-card">
@@ -85,7 +85,7 @@
         </div>
         <h3>Classic Glazed</h3>
         <p>$2.00</p>
-        <a href="ClassicGlazed.html" class="btn">Order Now</a>
+        <a href="ClassicGlazed.php" class="btn">Order Now</a>
     </div>
 
     <div class="donut-card">
@@ -94,7 +94,7 @@
         </div>
         <h3>Sugar Cloud</h3>
         <p>$2.50</p>
-        <a href="SugarCloud.html" class="btn">Order Now</a>
+        <a href="SugarCloud.php" class="btn">Order Now</a>
     </div>
 
     <div class="donut-card">
@@ -103,7 +103,7 @@
         </div>
         <h3>Golden Nut Pistachio</h3>
         <p>$3.50</p>
-        <a href="GoldenNutPistachio.html" class="btn">Order Now</a>
+        <a href="GoldenNutPistachio.php" class="btn">Order Now</a>
     </div>
 
     <div class="donut-card">
@@ -112,7 +112,7 @@
         </div>
         <h3>Snowy Bliss</h3>
         <p>$3.00</p>
-        <a href="SnowyBliss.html" class="btn">Order Now</a>
+        <a href="SnowyBliss.php" class="btn">Order Now</a>
     </div>
 
 </section>
