@@ -38,7 +38,7 @@
    
   <div class="login">
    
-    <form  id="loginForm"action="#" method="post">
+    <form  id="loginForm"action="postMetoda.php" method="POST">
       <h2>Log In</h2>
 
       <label for="user">User:</label>
@@ -99,6 +99,4 @@
 <script src="login.js"></script>
 </body>
 </html>
-
-
 
