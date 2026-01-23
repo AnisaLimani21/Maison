@@ -1,3 +1,9 @@
+<?php
+require_once "classes/Category.php";
+
+$categoryObj = new Category();
+$categories = $categoryObj->getAll();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,98 +13,56 @@
     <link rel="stylesheet" href="Produktet.css">
 </head>
 <body>
- <nav class="navbar">
+
+
+<nav class="navbar">
     <div class="nav-top">
-    <div class="nav-left">
-        <img src="img/logoP.png" class="logo" alt="Logo">
-    </div>
-
-    <div class="nav-center" id="nav-links">
-        <a href="homee.php">Home</a>
-        <a href="Produktet.php">Products</a>
-        <a href="aboutus.php">About Us</a>
-        <a href="gift.php">Gift Box</a>
-    </div>
-
-    <div class="nav-right">
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search products...">
-            <button onclick="searchProduct()">🔍</button>
+        <div class="nav-left">
+            <img src="img/logoP.png" class="logo" alt="Logo">
         </div>
 
-        <a href="login.php" class="login-btn">
-            <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
-        </a>
+        <div class="nav-center" id="nav-links">
+            <a href="homee.php">Home</a>
+            <a href="Produktet.php">Products</a>
+            <a href="aboutus.php">About Us</a>
+            <a href="gift.php">Gift Box</a>
+        </div>
 
-        <a href="cart.php" class="cart-icon">
-            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
-        </a>
+        <div class="nav-right">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search products...">
+                <button onclick="searchProduct()">🔍</button>
+            </div>
 
-        <span class="hamburger" id="hamburger">☰</span>
+            <a href="login.php" class="login-btn">
+                <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
+            </a>
+
+            <a href="cart.php" class="cart-icon">
+                <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+            </a>
+
+            <span class="hamburger" id="hamburger">☰</span>
+        </div>
     </div>
 </nav>
 
 
+<section class="categories">
+    <?php if($categories && $categories->num_rows > 0): ?>
+        <?php while($cat = $categories->fetch_assoc()): ?>
+            <div class="card">
+                <img src="<?= htmlspecialchars($cat['image']) ?>" alt="<?= htmlspecialchars($cat['name']) ?>">
+                <h3><?= htmlspecialchars($cat['name']) ?></h3>
+                <a href="<?= htmlspecialchars($cat['name']) ?>.php">View More</a>
+            </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <p style="text-align:center">No categories found</p>
+    <?php endif; ?>
+</section>
 
-    <section class="categories">
-        <div class="card">
-            <img src="img/Cookie_in_Mid-Break_with_Chocolate_Chips__1_-removebg-preview.png" alt="Cookies">
-            <h3>Cookies</h3>
-            <a href="Cookies.php">View More</a>
-        </div>
-        <div class="card">
-            <img src="img/muffins-removebg-preview.png" alt="Muffins">
-            <h3>Muffins</h3>
-            <a href="Muffins.php">View More</a>
-        </div>
-        <div class="card">
-            <img src="img/Screenshot__365_-removebg-preview.png" alt="Donuts">
-            <h3>Donuts</h3>
-            <a href="Donuts.php">View More</a>
-        </div>
-        <div class="card">
-            <img src="img/Screenshot__371_-removebg-preview.png" alt="Macarons">
-            <h3>Macarons</h3>
-            <a href="Macarons.php">View More</a>
-        </div>
-        <div class="card">
-            <img src="img/Screenshot__367_-removebg-preview.png" alt="Chocolates">
-            <h3>Chocolates</h3>
-            <a href="Chocolates.php">View More</a>
-        </div>
-        <div class="card">
-            <img src="img/Screenshot__368_-removebg-preview.png" alt="Brownies">
-            <h3>Brownies</h3>
-            <a href="Brownies.php">View More</a>
-        </div>
-        <div class="card">
-            <img src="img/Screenshot__369_-removebg-preview.png" alt="Croissants">
-            <h3>Croissants</h3>
-            <a href="Croissants.php">View More</a>
-        </div>
-        <div class="card">
-            <img src="img/Screenshot__370_-removebg-preview.png" alt="Cheesecakes">
-            <h3>Cheesecakes</h3>
-            <a href="Cheesecakes.php">View More</a>
-        </div>
-        <div class="card">
-            <img src="photos/slider3-removebg-preview.png" alt="Cheesecakes">
-            <h3>Pralines</h3>
-            <a href="Pralines.php">View More</a>
-        </div>
-        <div class="card">
-            <img src="img/Screenshot__463_-removebg-preview.png" alt="Cheesecakes">
-            <h3>Wine</h3>
-            <a href="Wine.php">View More</a>
-        </div>
-        <div class="card">
-            <img src="img/Screenshot__470_-removebg-preview.png" alt="Cheesecakes">
-            <h3>Boba Drinks</h3>
-            <a href="Boba.php">View More</a>
-        </div>
 
-    </section>
-   </div>
 <footer class="footer">
     <div class="footer-left">
         <h2>Maison</h2>
@@ -132,40 +96,36 @@
         </div>
     </div>
 </footer>
+
 <script>
 const hamburger = document.querySelector('.hamburger');
 const navCenter = document.querySelector('.nav-center');
-
 hamburger.addEventListener('click', () => {
     navCenter.classList.toggle('active');
 });
 
 function searchProduct() {
     const input = document.getElementById('searchInput').value.toLowerCase().trim();
-
     const pages = {
-        "muffins": "Muffins.php",
-        "cookies": "Cookies.php",
-        "donuts": "Donuts.php",
-        "macarons": "Macarons.php",
-        "chocolates": "Chocolates.php",
-        "brownies": "Brownies.php",
-        "croissants": "Croissants.php",
-        "cheesecakes": "Cheesecakes.php",
-        "pralines": "Pralines.php",
-        "wine": "Wine.php",
-        "login": "login.php",
-        "boba":"Boba.php",
-        "products": "Produktet.php"
+        "cookies":"Cookies.php",
+        "muffins":"Muffins.php",
+        "donuts":"Donuts.php",
+        "macarons":"Macarons.php",
+        "chocolates":"Chocolates.php",
+        "brownies":"Brownies.php",
+        "croissants":"Croissants.php",
+        "cheesecakes":"Cheesecakes.php",
+        "pralines":"Pralines.php",
+        "wine":"Wine.php",
+        "boba drinks":"Boba.php"
     };
-
-    if(pages[input]) {
+    if(pages[input]){
         window.location.href = pages[input];
     } else {
         alert("Product not found");
     }
 }
-
 </script>
+
 </body>
 </html>
