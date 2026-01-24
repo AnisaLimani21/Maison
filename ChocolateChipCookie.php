@@ -9,7 +9,6 @@ $pass = "";
 $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
-
 $product_name = "Chocolate Chip Cookie";
 
 $stmt = $conn->prepare("SELECT * FROM products WHERE name = ?");
@@ -22,11 +21,9 @@ if(!$product) {
     die("Produkt nuk u gjet");
 }
 
-
 if(!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
-
 
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quantity'])) {
     $qty = intval($_POST['quantity']);
@@ -101,15 +98,14 @@ $cart_count = count($_SESSION['cart']);
         <?php
         $total = 0;
         foreach($_SESSION['cart'] as $item){
-    $itemTotal = $item['price'] * $item['qty'];
-    $total += $itemTotal;
-    $imageURL = htmlspecialchars($item['image']);
-    echo "<li>
-            <img src='$imageURL' style='width:40px;height:30px;margin-right:5px;vertical-align:middle;'> 
-            {$item['name']} x{$item['qty']} - $".number_format($itemTotal,2)."
-          </li>";
-}
-
+            $itemTotal = $item['price'] * $item['qty'];
+            $total += $itemTotal;
+            $imageURL = htmlspecialchars($item['image']);
+            echo "<li>
+                    <img src='$imageURL' style='width:40px;height:30px;margin-right:5px;vertical-align:middle;'> 
+                    {$item['name']} x{$item['qty']} - $".number_format($itemTotal,2)."
+                  </li>";
+        }
         ?>
     </ul>
     <p id="totalPrice">Total: $<?php echo number_format($total,2); ?></p>
@@ -118,18 +114,16 @@ $cart_count = count($_SESSION['cart']);
 
 <section class="product-single">
     <div class="circle-box">
-<div class="circle-box">
-<?php
-$imagePath = $product['image']; 
-if(file_exists($imagePath)) {
-    echo "<img src='$imagePath' alt='".htmlspecialchars($product['name'])."'>";
-} else {
-    echo "<p style='color:red;'>Foto nuk u gjet: $imagePath</p>";
-}
-?>
-</div>
-
+        <?php
+        $imagePath = $product['image']; 
+        if(file_exists($imagePath)) {
+            echo "<img src='$imagePath' alt='".htmlspecialchars($product['name'])."'>";
+        } else {
+            echo "<p style='color:red;'>Foto nuk u gjet: $imagePath</p>";
+        }
+        ?>
     </div>
+
     <div class="product-details">
         <h2 class="product-title"><?php echo htmlspecialchars($product['name']); ?></h2>
         <p class="price" data-unit-price="<?php echo $product['price']; ?>">$<?php echo number_format($product['price'],2); ?></p>
@@ -166,7 +160,6 @@ quantityInput.addEventListener('input', () => {
     totalPriceEl.textContent = `Total: $${(price * qty).toFixed(2)}`;
 });
 
-
 const cartIcon = document.getElementById("cartIcon");
 const miniCart = document.getElementById("miniCart");
 
@@ -184,7 +177,24 @@ document.addEventListener("click", (e) => {
 
 document.getElementById('goCartBtn').addEventListener('click', function(e){
     e.preventDefault();
-    <?php if(isset($_SESSION['user_id'])): ?>
+
+    <?php if(isset($_SESSION['user_id']) && !empty($_SESSION['cart'])): ?>
+        fetch('save_cart.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(<?php echo json_encode($_SESSION['cart']); ?>)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success){
+                window.location.href = 'dashboard.php';
+            } else {
+                alert('Gabim duke ruajtur porosinë!');
+            }
+        })
+        .catch(err => console.error(err));
+
+    <?php elseif(isset($_SESSION['user_id'])): ?>
         window.location.href = 'dashboard.php';
     <?php else: ?>
         window.location.href = 'login.php';
