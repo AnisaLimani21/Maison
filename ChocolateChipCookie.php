@@ -101,10 +101,15 @@ $cart_count = count($_SESSION['cart']);
         <?php
         $total = 0;
         foreach($_SESSION['cart'] as $item){
-            $itemTotal = $item['price'] * $item['qty'];
-            $total += $itemTotal;
-            echo "<li><img src='img/{$item['image']}' style='width:40px;height:30px;margin-right:5px;vertical-align:middle;'> {$item['name']} x{$item['qty']} - $".number_format($itemTotal,2)."</li>";
-        }
+    $itemTotal = $item['price'] * $item['qty'];
+    $total += $itemTotal;
+    $imageURL = htmlspecialchars($item['image']);
+    echo "<li>
+            <img src='$imageURL' style='width:40px;height:30px;margin-right:5px;vertical-align:middle;'> 
+            {$item['name']} x{$item['qty']} - $".number_format($itemTotal,2)."
+          </li>";
+}
+
         ?>
     </ul>
     <p id="totalPrice">Total: $<?php echo number_format($total,2); ?></p>
@@ -113,7 +118,17 @@ $cart_count = count($_SESSION['cart']);
 
 <section class="product-single">
     <div class="circle-box">
-        <img src="img/<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+<div class="circle-box">
+<?php
+$imagePath = $product['image']; 
+if(file_exists($imagePath)) {
+    echo "<img src='$imagePath' alt='".htmlspecialchars($product['name'])."'>";
+} else {
+    echo "<p style='color:red;'>Foto nuk u gjet: $imagePath</p>";
+}
+?>
+</div>
+
     </div>
     <div class="product-details">
         <h2 class="product-title"><?php echo htmlspecialchars($product['name']); ?></h2>
