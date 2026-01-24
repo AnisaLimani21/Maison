@@ -58,7 +58,7 @@
     <a href="mailto:example@example.com" class="email-btn">Email</a>
       </div>
 
-      <p class="create-account">Don't have an account? <a href="create.html">Create Account</a></p>
+      <p class="create-account">Don't have an account? <a href="create.php">Create Account</a></p>
     </form>
   </div>
 

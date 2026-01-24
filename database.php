@@ -1,16 +1,23 @@
 <?php
 class Database {
-    private $host = "localhost";
-    private $user = "root";
-    private $pass = "";
-    private $dbname = "projekti";
-    public $conn;
+    private $host = 'localhost';
+    private $dbname = 'maison';
+    private $username = 'root'; // Change this as per your configuration
+    private $password = ''; // Change this as per your configuration
+    private $conn;
 
     public function __construct() {
-        $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->dbname);
-        if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
+        try {
+            $this->conn = new PDO("mysql:host={$this->host};dbname={$this->dbname}", $this->username, 
+            $this->password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("Connection failed: " . $e->getMessage());
         }
+    }
+
+    public function getConnection() {
+        return $this->conn;
     }
 }
 ?>

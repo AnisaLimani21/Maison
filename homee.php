@@ -63,10 +63,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
     }
 }
 
+
+
 $sliders = $sliderObj->getAll();
 $products = $productObj->getAll(6);
 $reviews = $reviewObj->getAll();
-?>
 
 <!DOCTYPE html>
 <html lang="en">

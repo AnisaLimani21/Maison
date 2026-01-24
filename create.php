@@ -38,9 +38,24 @@
         <img src="img/logoP.png" alt="">
     </div>-->
 
+    <?php
+session_start();
+if(isset($_SESSION['errors'])){
+    foreach($_SESSION['errors'] as $error){
+        echo "<p style='color:red;'>$error</p>";
+    }
+    unset($_SESSION['errors']);
+}
+
+if(isset($_SESSION['success_message'])){
+    echo "<p style='color:green;'>".$_SESSION['success_message']."</p>";
+    unset($_SESSION['success_message']);
+}
+?>
+
     <div class="loginC">
     <div class="login">
-        <form id="createForm" action="#" method="post">
+        <form id="createForm" action="register.php" method="POST">
             <h2>Create Account</h2>
        <label for="name">Full Name:</label>
 
