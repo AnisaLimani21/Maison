@@ -1,4 +1,14 @@
 <?php
+
+
+
+
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
 require_once "classes/Category.php";
 
 $categoryObj = new Category();
