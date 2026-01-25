@@ -109,20 +109,20 @@ include_once 'user.php';
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $db =new Database();
     $connection = $db->getConnection();
-    $userObj = new  User(db: $connection);
+    $userObj = new  User($connection);
 
   //  $name = $_POST['name'];
   //  $email = $_POST['email'];
-    $username = $_POST['user'];
-    $password = $_POST['pass'];
+    $username = $_POST['user'] ?? '';
+    $password = $_POST['pass'] ?? '';
     //$confirmPass = $_POST['confirmPass'];
 
 
     if($userObj->login($username,$password)){
-        header(header:"Location:homee.php");
+        header("Location: homee.php");
         exit;
     }else{
-        echo "Error creating user!";
+        echo "Invalid username or password!";
     }
 
 }
