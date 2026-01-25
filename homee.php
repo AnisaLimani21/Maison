@@ -1,12 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
+//if (!isset($_SESSION['user_id'])) {
+  //  header("Location: login.php");
+    //exit;
+//}
 
 //echo "Welcome, " .$_SESSION['username'];
-
 
 class Database {
     public $conn;
