@@ -109,16 +109,16 @@ include_once 'user.php';
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $db =new Database();
     $connection = $db->getConnection();
-    $user = new  User(db: $connection);
+    $userObj = new  User(db: $connection);
 
   //  $name = $_POST['name'];
   //  $email = $_POST['email'];
-    $user = $_POST['user'];
-    $pass = $_POST['pass'];
+    $username = $_POST['user'];
+    $password = $_POST['pass'];
     //$confirmPass = $_POST['confirmPass'];
 
 
-    if($user->login( user: $user, pass: $pass)){
+    if($userObj->login($username,$password)){
         header(header:"Location:homee.php");
         exit;
     }else{

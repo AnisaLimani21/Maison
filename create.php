@@ -1,3 +1,36 @@
+
+<?php
+
+include_once 'database.php';
+include_once 'user.php';
+
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $db =new Database();
+
+    $conn = $db->getConnection();
+
+    $userObj = new  User($conn);
+
+    $fullName = $_POST['name'];
+    $email = $_POST['email'];
+    $username = $_POST['username'];
+    $pass = $_POST['pass'];
+    $confirmPass = $_POST['confirmPass'];
+
+
+    if ($userObj->create($fullName, $email, $username, $pass, $confirmPass)) {
+    header("Location: login.php");
+    exit;
+} else {
+    echo "Error creating user!";
+}
+
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,7 +91,7 @@
 
 <label for="user">Username:</label>
 
-<input type="text" name="user" id="user" placeholder="Choose a username">
+<input type="text" name="username" id="user" placeholder="Choose a username">
 
 <span class="error" id="usernameError"></span>
 
@@ -133,32 +166,3 @@
 </html>
 
 
-<?php
-
-include_once 'database.php';
-include_once 'user.php';
-
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $db =new Database();
-    $connection = $db->getConnection();
-    $user = new  User(db: $connection);
-
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $user = $_POST['user'];
-    $pass = $_POST['pass'];
-    $confirmPass = $_POST['confirmPass'];
-
-
-    if($user->create(name: $name, email: $email, user: $user, pass: $pass, confirmPass: $confirmPass)){
-        header(header:"Location:login.php");
-        exit;
-    }else{
-        echo "Error creating user!";
-    }
-
-}
-
-
-
-?>

@@ -1,6 +1,5 @@
 <?php
 
-
 class User {
     private $conn;
 
@@ -11,54 +10,62 @@ class User {
     }
 
    
-    public function create($name, $email, $user,$pass, $confirmPass, $role = 'user'):bool{
+    public function create($fullName, $email, $username, $pass, $confirmPass, $role = 'user'): bool
+{
+    if ($pass !== $confirmPass) {
+        return false;
+    }
+
+    $hashed = password_hash($pass, PASSWORD_DEFAULT);
+
+    $query = "INSERT INTO users (full_name, username, email, password, role)
+              VALUES (:full_name, :username, :email, :password, :role)";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':full_name', $fullName);
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':password', $hashed);
+    $stmt->bindParam(':role', $role);
+
+    return $stmt->execute();
+}
+
+
+
+    public function login($username,$pass, $role = 'user'):bool{
       
-    $query="INSERT INTO{$this->table_name} (name,email,user,pass,confirmPass,role)VALUES(:name, :email, :user, :pass, :confirmPass, :role)";
+    $query="SELECT id, username, password ,role FROM users WHERE username = :username AND role = :role";
+
     $stmt=$this->conn->prepare($query);
 
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':email',$email);
-    $stmt->bindParam(':user',$user);
-    $stmt->bindParam(':pass',password_hash(password: $pass, algo:PASSWORD_DEFAULT));
-    $stmt->bindParam(':confirmPass',password_hash(password:$confirmPass, algo:PASSWORD_DEFAULT));
+    $stmt->bindParam(':username', $username);
     $stmt->bindParam(':role',$role);
-    
 
-    if($stmt->execute()){
-        return true;
-    }
-    return false;
-    }
-
-
-    public function login($user,$pass, $role = 'user'):bool{
-      
-    $query="SELECT id, name,email,user, password FROM{$this->table_name} WHERE email= :email";
-
-    $stmt=$this->conn->prepare($query);
-
-    $stmt->bindParam(':user', $user);
    // $stmt->bindParam(':email',$email);
     $stmt ->execute();
    // $stmt->bindParam(':pass',password_hash(password: $pass, algo:PASSWORD_DEFAULT));
-   // $stmt->bindParam(':role',$role);
     
-   if($stmt->rowCount()>0){
+   if($stmt->rowCount()===1){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    if(paassword_verify(password: $pass,hash:$row['password'])){
+
+    if(password_verify($pass,$row['password'])){
     session_start();
     $_SESSION ['user_id'] = $row['id'];
-    $_SESSION ['email'] = $row['email'];
+    $_SESSION ['username'] = $row['username'];
+     $_SESSION ['role'] = $row['role'];
+
     return true;
    }
 
 
-   }   return false;
+   }  
+    return false;
+}}
+   
 
-   }
 
 
-}
 
     //$errors = [];
 
@@ -114,4 +121,3 @@ class User {
         }
     }
 }*/
-?>
