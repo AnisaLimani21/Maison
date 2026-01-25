@@ -23,10 +23,14 @@
 
     <div class="nav-right">
         <div class="search-bar">
+            <div class="user-actions">
+  
+</div>
             <input type="text" id="searchInput" placeholder="Search products...">
             <button onclick="searchProduct()">🔍</button>
         </div>
 
+        <a href="logout.php" class="logout-btn">Logout</a>
         <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>

@@ -5,7 +5,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-echo "Welcome, " .$_SESSION['username'];
+//echo "Welcome, " .$_SESSION['username'];
 
 
 class Database {

@@ -595,3 +595,19 @@ footer a:hover {
         width: 110px;
     }
 }
+
+.nav-right .logout-btn {
+    padding: 6px 12px;
+    background-color: #c0392b;
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: 5px;
+    margin-left: auto;
+    transition: background-color 0.3s;
+}
+
+.nav-right .logout-btn:hover {
+    background-color: #e74c3c;
+}
+
+
