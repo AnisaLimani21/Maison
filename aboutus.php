@@ -46,7 +46,7 @@ if (!isset($_SESSION['user_id'])) {
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
 
-        <a href="cart.html" class="cart-icon">
+        <a href="cart.php" class="cart-icon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
         </a>
 
