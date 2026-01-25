@@ -38,24 +38,11 @@
         <img src="img/logoP.png" alt="">
     </div>-->
 
-    <?php
-session_start();
-if(isset($_SESSION['errors'])){
-    foreach($_SESSION['errors'] as $error){
-        echo "<p style='color:red;'>$error</p>";
-    }
-    unset($_SESSION['errors']);
-}
-
-if(isset($_SESSION['success_message'])){
-    echo "<p style='color:green;'>".$_SESSION['success_message']."</p>";
-    unset($_SESSION['success_message']);
-}
-?>
+  
 
     <div class="loginC">
     <div class="login">
-        <form id="createForm" action="register.php" method="POST">
+        <form id="createForm" action="create.php" method="POST">
             <h2>Create Account</h2>
        <label for="name">Full Name:</label>
 
@@ -144,3 +131,34 @@ if(isset($_SESSION['success_message'])){
 <script src="create.js"></script>
 </body>
 </html>
+
+
+<?php
+
+include_once 'database.php';
+include_once 'user.php';
+
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $db =new Database();
+    $connection = $db->getConnection();
+    $user = new  User(db: $connection);
+
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $user = $_POST['user'];
+    $pass = $_POST['pass'];
+    $confirmPass = $_POST['confirmPass'];
+
+
+    if($user->create(name: $name, email: $email, user: $user, pass: $pass, confirmPass: $confirmPass)){
+        header(header:"Location:login.php");
+        exit;
+    }else{
+        echo "Error creating user!";
+    }
+
+}
+
+
+
+?>

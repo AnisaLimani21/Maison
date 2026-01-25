@@ -1,4 +1,13 @@
 <?php
+
+//session_start();
+//if(!isset($_SESSION['user_id'])){
+  //  header(heaader:" Location:login.php");
+   // exit;
+//}
+
+echo"Welcome, " . $_SESSION['user'] . "!";
+
 class Database {
     public $conn;
     public function __construct($servername, $username, $password, $dbname) {

@@ -1,5 +1,5 @@
 <?php
-include_once 'Database.php';
+/*include_once 'Database.php';
 include_once 'User.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     // Register the user
-    if ($user->register($name, $surname, $email, $password)) {
+    if ($user->create($name, $surname, $email, $password)) {
         header("Location: login.php"); // Redirect to login page
         exit;
     } else {
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<form action="register.php" method="POST">
+<form action="create.php" method="POST">
     Name: <input type="text" name="name" required><br>
     Surname: <input type="text" name="surname" required><br>
     Email: <input type="email" name="email" required><br>

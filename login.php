@@ -38,7 +38,7 @@
    
   <div class="login">
    
-    <form  id="loginForm"action="postMetoda.php" method="POST">
+    <form  id="loginForm"action="login.php" method="POST">
       <h2>Log In</h2>
 
       <label for="user">User:</label>
@@ -100,3 +100,32 @@
 </body>
 </html>
 
+<?php
+
+session_start();
+include_once 'database.php';
+include_once 'user.php';
+
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $db =new Database();
+    $connection = $db->getConnection();
+    $user = new  User(db: $connection);
+
+  //  $name = $_POST['name'];
+  //  $email = $_POST['email'];
+    $user = $_POST['user'];
+    $pass = $_POST['pass'];
+    //$confirmPass = $_POST['confirmPass'];
+
+
+    if($user->login( user: $user, pass: $pass)){
+        header(header:"Location:homee.php");
+        exit;
+    }else{
+        echo "Error creating user!";
+    }
+
+}
+
+
+?>
