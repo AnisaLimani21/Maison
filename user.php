@@ -1,6 +1,6 @@
 <?php
 
-class User {
+/*class User {
     private $conn;
 
     private $table_name = "users";
@@ -10,7 +10,7 @@ class User {
     }
 
    
-    public function create($fullName, $email, $username, $pass, $confirmPass, $role = 'user'): bool
+   /* public function create($fullName, $email, $username, $pass, $confirmPass, $role = 'user'): bool
 {
     if ($pass !== $confirmPass) {
         return false;
@@ -31,40 +31,46 @@ class User {
     return $stmt->execute();
 }
 
+public function create($fullName, $email, $username, $pass, $confirmPass, $role = 'user'): bool
+{
+    if ($pass !== $confirmPass) {
+        return false;
+    }
 
+    $hashed = password_hash($pass, PASSWORD_DEFAULT);
 
-    public function login($username,$pass, $role = 'user'):bool{
-      
-    $query="SELECT id, username, password ,role FROM users WHERE username = :username AND role = :role";
+    $query = "INSERT INTO users (username, email, password, role)
+              VALUES (:username, :email, :password, :role)";
 
-    $stmt=$this->conn->prepare($query);
-
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':role',$role);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':password', $hashed);
+    $stmt->bindParam(':role', $role);
 
-   // $stmt->bindParam(':email',$email);
-    $stmt ->execute();
-   // $stmt->bindParam(':pass',password_hash(password: $pass, algo:PASSWORD_DEFAULT));
-    
-   if($stmt->rowCount()===1){
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if(password_verify($pass,$row['password'])){
-    session_start();
-    $_SESSION ['user_id'] = $row['id'];
-    $_SESSION ['username'] = $row['username'];
-     $_SESSION ['role'] = $row['role'];
-
-    return true;
-   }
+    return $stmt->execute();
+}
 
 
-   }  
+
+public function login($username, $password) {
+    $sql = "SELECT * FROM users WHERE username = ?";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    if($user && password_verify($password, $user['password'])) {
+
+        return $user;
+    }
     return false;
-}}
+}
+
    
 
-
+?>
 
 
     //$errors = [];
@@ -121,3 +127,57 @@ class User {
         }
     }
 }*/
+
+
+
+class User {
+    private $conn;
+    private $table_name = "users";
+
+    public function __construct($db) {
+        $this->conn = $db;
+    }
+
+    public function create($fullName, $email, $username, $pass, $confirmPass, $role = 'user'): bool {
+        if ($pass !== $confirmPass) {
+            return false; 
+        }
+
+        $hashed = password_hash($pass, PASSWORD_DEFAULT);
+
+        $query = "INSERT INTO {$this->table_name} (full_name, username, email, password, role, created_at)
+                  VALUES (:full_name, :username, :email, :password, :role, NOW())";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':full_name', $fullName);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $hashed);
+        $stmt->bindParam(':role', $role);
+
+        return $stmt->execute();
+    }
+
+   
+    public function login($username, $password) {
+        $sql = "SELECT * FROM {$this->table_name} WHERE username = :username LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($user && password_verify($password, $user['password'])) {
+            return [
+                'status' => true,
+                'user_id' => $user['id'],
+                'role' => $user['role']
+            ];
+        }
+
+        return [
+            'status' => false,
+            'errors' => ['login' => 'Invalid username or password']
+        ];
+    }
+}
+?>

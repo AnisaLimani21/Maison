@@ -1,84 +1,100 @@
+<?php
+session_start();
+include_once 'database.php';
+include_once 'user.php';
+
+$error = '';
+$redirect = $_GET['redirect'] ?? 'dashboard.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $db = new Database();
+    $conn = $db->getConnection();
+    $userObj = new User($conn);
+
+    $username = $_POST['user'] ?? '';
+    $password = $_POST['pass'] ?? '';
+
+    
+    $userData = $userObj->login($username, $password); 
+
+    if($userData) { 
+        
+        $_SESSION['user_id'] = $userData['id'];  
+        $_SESSION['username'] = $userData['username'];
+        $_SESSION['role'] = $userData['role']; 
+
+        header("Location: $redirect");
+        exit;
+    } else {
+        $error = "Invalid username or password!";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log-in Maison Chocolate</title>
-    <link rel="stylesheet" href="login.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log-in Maison Chocolate</title>
+<link rel="stylesheet" href="login.css">
 </head>
 <body>
-    
-     
 <nav class="navbar">
     <div class="nav-left">
         <img src="img/logoP.png" class="logo">
     </div>
-
     <div class="nav-center" id="nav-links">
         <a href="homee.php">Home</a>
         <a href="Produktet.php">Products</a>
         <a href="aboutus.php">About Us</a>
         <a href="gift.php">Gift Box</a>
     </div>
-
     <div class="nav-right">
         <div class="search-bar">
-            <div class="user-actions">
-  
-</div>
             <input type="text" id="searchInput" placeholder="Search products...">
             <button onclick="searchProduct()">🔍</button>
         </div>
-
-        <a href="logout.php" class="logout-btn">Logout</a>
         <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>
 
-     
-    
-
 <div class="login-container">
-   
-  <div class="login">
-   
-    <form  id="loginForm"action="login.php" method="POST">
-      <h2>Log In</h2>
+    <div class="login">
+        <form id="loginForm" action="login.php" method="POST">
+            <h2>Log In</h2>
+            <?php if($error) echo "<p style='color:red;text-align:center;'>$error</p>"; ?>
+            
+            <label for="user">Username:</label>
+            <input type="text" name="user" id="user" placeholder="Enter username" required>
 
-      <label for="user">User:</label>
-      <input type="text" name="user" id="user" placeholder="Enter username">
-      <span class="error" id="userError"></span>
+            <label for="pass">Password:</label>
+            <input type="password" name="pass" id="pass" placeholder="Enter password" required>
 
-      <label for="pass">Password:</label>
-      <input type="password" name="pass" id="pass" placeholder="Enter password">
-      <span class="error" id="passError"></span>
-      <button type="submit" class="login-btn">Log In</button>
+            <button type="submit" class="login-btn">Log In</button>
 
-      <p class="or-text">or login with</p>
+            <p class="or-text">or login with</p>
+            <div class="social-login">
+                <a href="https://facebook.com" target="_blank" class="facebook-btn">Facebook</a>
+                <a href="mailto:example@example.com" class="email-btn">Email</a>
+            </div>
 
-      <div class="social-login">
-      
-         <a href="https://facebook.com" target="_blank" class="facebook-btn">Facebook</a>
-    <a href="mailto:example@example.com" class="email-btn">Email</a>
-      </div>
-
-      <p class="create-account">Don't have an account? <a href="create.php">Create Account</a></p>
-    </form>
-  </div>
-
+            <p class="create-account">Don't have an account? <a href="create.php">Create Account</a></p>
+        </form>
+    </div>
 </div>
+
 <footer class="footer">
     <div class="footer-left">
         <h2>Maison</h2>
         <p>Unique flavors, modern style, and carefully crafted delights.</p>
     </div>
-
     <div class="footer-center">
         <h2>Contact</h2>
         <p>Email: maison.contact@gmail.com</p>
         <p>Phone: +383 44 000 000</p>
     </div>
-
     <div class="footer-right">
         <h2>Follow Us</h2>
         <div class="social-icons">
@@ -87,49 +103,8 @@
                     <path fill="white" d="M22 12.07C22 6.48 17.52 2 12 2S2 6.48 2 12.07c0 5 3.66 9.13 8.44 9.93v-7.03H8.08v-2.9h2.36V9.91c0-2.33 1.38-3.62 3.52-3.62 1.02 0 2.09.18 2.09.18v2.29h-1.18c-1.16 0-1.52.72-1.52 1.46v1.75h2.59l-.41 2.9h-2.18V22c4.78-.8 8.44-4.93 8.44-9.93z"/>
                 </svg>
             </a>
-            <a href="https://www.instagram.com/" target="_blank" title="Instagram">
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path fill="white" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3.5A5.5 5.5 0 1017.5 13 5.5 5.5 0 0012 7.5zm0 9A3.5 3.5 0 1115.5 13 3.5 3.5 0 0112 16.5zm4.7-9.8a1.3 1.3 0 11-1.3-1.3 1.3 1.3 0 011.3 1.3z"/>
-                </svg>
-            </a>
-            <a href="https://x.com/" target="_blank" title="X/Twitter">
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path fill="white" d="M18.9 2H22l-7.5 8.1L23 22h-6.6L11.7 14l-6.3 8H2l8.1-9.1L2 2h6.6l4.4 6 5.9-6z"/>
-                </svg>
-            </a>
         </div>
     </div>
 </footer>
-<script src="login.js"></script>
 </body>
 </html>
-
-<?php
-
-session_start();
-include_once 'database.php';
-include_once 'user.php';
-
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $db =new Database();
-    $connection = $db->getConnection();
-    $userObj = new  User($connection);
-
-  //  $name = $_POST['name'];
-  //  $email = $_POST['email'];
-    $username = $_POST['user'] ?? '';
-    $password = $_POST['pass'] ?? '';
-    //$confirmPass = $_POST['confirmPass'];
-
-
-    if($userObj->login($username,$password)){
-        header("Location: homee.php");
-        exit;
-    }else{
-        echo "Invalid username or password!";
-    }
-
-}
-
-
-?>

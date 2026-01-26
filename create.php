@@ -1,6 +1,33 @@
 
 <?php
 
+session_start();
+
+include_once 'database.php';
+include_once 'user.php';
+
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $db = new Database();
+    $conn = $db->getConnection();
+    $userObj = new User($conn);
+
+    $fullName    = $_POST['name'] ?? '';
+    $email       = $_POST['email'] ?? '';
+    $username    = $_POST['username'] ?? '';
+    $pass        = $_POST['pass'] ?? '';
+    $confirmPass = $_POST['confirmPass'] ?? '';
+
+    if ($userObj->create($fullName, $email, $username, $pass, $confirmPass)) {
+        header("Location: login.php");
+        exit;
+    } else {
+        $error = "Error creating user!";
+    }
+}
+/*
 //sessiom_start();
 include_once 'database.php';
 include_once 'user.php';
@@ -26,7 +53,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     echo "Error creating user!";
 }
 
-}
+}*/
 ?>
 
 
