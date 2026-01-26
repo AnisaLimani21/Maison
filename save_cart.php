@@ -1,55 +1,59 @@
 <?php
 session_start();
 
+include_once 'database.php';
+include_once 'user.php';
 
 if(!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: login.php?redirect=dashboard.php");
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
-
-$host = "localhost";
-$db = "maison";
-$user = "root";
-$pass = "";
-
-
-$conn = new mysqli($host, $user, $pass, $db);
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
-
-if(empty($_SESSION['cart'])) {
-    die("Cart is empty.");
+if(!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+    die("Cart is empty!");
 }
 
+$db = new Database();
+$conn = $db->getConnection();
+$userManager = new UserManager($conn);
+$userId = $_SESSION['user_id'];
 
-$total_price = 0;
+$finalCart = [];
 foreach($_SESSION['cart'] as $item){
-    $total_price += $item['price'] * $item['qty'];
+    if(isset($finalCart[$item['name']])){
+        $finalCart[$item['name']]['qty'] += $item['qty'];
+    } else {
+        $finalCart[$item['name']] = $item;
+    }
 }
 
 
-$stmt = $conn->prepare("INSERT INTO orders (user_id, total_price, status, created_at) VALUES (?, ?, 'pending', NOW())");
-$stmt->bind_param("id", $user_id, $total_price);
+$totalPrice = 0;
+foreach($finalCart as $item){
+    $totalPrice += $item['price'] * $item['qty'];
+}
+
+
+$stmt = $conn->prepare("INSERT INTO orders (user_id, total_price, status, created_at) VALUES (:uid, :total, 'pending', NOW())");
+$stmt->bindParam(':uid', $userId);
+$stmt->bindParam(':total', $totalPrice);
 $stmt->execute();
 
-$order_id = $stmt->insert_id;
-$stmt->close();
+$orderId = $conn->lastInsertId();
 
-$stmt = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
-foreach($_SESSION['cart'] as $item){
-    $product_id = $item['id'] ?? 0;
-    $quantity = $item['qty'];
-    $price = $item['price'];
-    $stmt->bind_param("iiid", $order_id, $product_id, $quantity, $price);
-    $stmt->execute();
+
+$stmtItem = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (:oid, :pid, :qty, :price)");
+foreach($finalCart as $item){
+    $stmtItem->bindParam(':oid', $orderId);
+    $stmtItem->bindParam(':pid', $item['id']);
+    $stmtItem->bindParam(':qty', $item['qty']);
+    $stmtItem->bindParam(':price', $item['price']);
+    $stmtItem->execute();
 }
-$stmt->close();
-
 
 unset($_SESSION['cart']);
 
 
-header("Location: dashboard.php");
+header("Location: dashboard.php?order_success=1");
 exit;
 ?>

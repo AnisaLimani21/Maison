@@ -15,7 +15,6 @@ if(!$product) die("Produkt nuk u gjet");
 
 if(!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
 
-
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_to_cart') {
     $qty = intval($_POST['quantity']);
     if($qty < 1) $qty = 1;
@@ -23,7 +22,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['a
 
     $found = false;
     foreach($_SESSION['cart'] as &$item){
-        if($item['name'] == $product['name']){
+        if($item['id'] == $product['id']){
             $item['qty'] += $qty;
             $found = true;
             break;
@@ -31,6 +30,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['a
     }
     if(!$found){
         $_SESSION['cart'][] = [
+            'id' => $product['id'],  // product_id tani
             'name' => $product['name'],
             'price' => $product['price'],
             'image' => $product['image'],
@@ -38,7 +38,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['a
         ];
     }
 
-  
     $total = 0;
     foreach($_SESSION['cart'] as $item) $total += $item['price']*$item['qty'];
 
@@ -51,7 +50,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['a
     exit;
 }
 
-
 $cart_count = count($_SESSION['cart']);
 ?>
 <!DOCTYPE html>
@@ -63,7 +61,6 @@ $cart_count = count($_SESSION['cart']);
 <link rel="stylesheet" href="ChocolateChipCookie.css">
 </head>
 <body>
-
 
 <nav class="navbar">
     <div class="nav-left"><img src="img/logoP.png" class="logo" alt="Logo"></div>
@@ -103,9 +100,8 @@ $cart_count = count($_SESSION['cart']);
         ?>
     </ul>
     <p>Total: $<span id="totalPrice"><?php echo number_format($total,2); ?></span></p>
-    <a href="#" class="go-cart-btn" id="goCartBtn">Go to Cart</a>
+    <a href="save_cart.php" class="go-cart-btn" id="goCartBtn">Go to Cart</a>
 </div>
-
 
 <section class="product-single">
     <div class="circle-box">
@@ -135,7 +131,6 @@ $cart_count = count($_SESSION['cart']);
     </div>
 </section>
 
-
 <script>
 const quantityInput = document.getElementById('quantity');
 const price = <?php echo $product['price']; ?>;
@@ -143,7 +138,6 @@ const totalPriceEl = document.querySelector('.total-price');
 const cartCountEl = document.getElementById('cartCount');
 const cartItemsEl = document.getElementById('cartItems');
 const totalPriceSpan = document.getElementById('totalPrice');
-
 
 quantityInput.addEventListener('input', () => {
     let qty = parseInt(quantityInput.value);
@@ -165,8 +159,6 @@ document.getElementById('addCartForm').addEventListener('submit', function(e){
     .then(data => {
         if(data.success){
             cartCountEl.textContent = data.cart_count;
-
-          
             cartItemsEl.innerHTML = '';
             data.cart.forEach(item => {
                 let li = document.createElement('li');
@@ -178,7 +170,6 @@ document.getElementById('addCartForm').addEventListener('submit', function(e){
     });
 });
 
-
 const cartIcon = document.getElementById("cartIcon");
 const miniCart = document.getElementById("miniCart");
 cartIcon.addEventListener("click", e => {
@@ -187,16 +178,6 @@ cartIcon.addEventListener("click", e => {
 });
 document.addEventListener("click", e => {
     if(!cartIcon.contains(e.target) && !miniCart.contains(e.target)) miniCart.style.display = "none";
-});
-
-
-document.getElementById('goCartBtn').addEventListener('click', e => {
-    e.preventDefault();
-    <?php if(!isset($_SESSION['user_id'])): ?>
-        window.location.href = 'login.php?redirect=dashboard.php';
-    <?php else: ?>
-        window.location.href = 'dashboard.php';
-    <?php endif; ?>
 });
 </script>
 </body>
