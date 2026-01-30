@@ -1,6 +1,7 @@
 
 <?php
 ob_start();
+    include_once 'adminGuard.php';
     include_once 'ProduktetClass.php';
     include_once 'ProductRepository.php';
 

@@ -1,6 +1,6 @@
 
     <?php
-
+    include_once 'adminGuard.php';
     include_once 'ProductRepository.php';
     include_once 'ProduktetClass.php';
 
