@@ -35,6 +35,11 @@ $_SESSION['user'] = [
     'role' => $userData->getRole()
 ];
 
+        if($userData->getRole()=='admin'){
+            header("Location: productDashboard.php");
+        }else{
+            header("Location: homee.php");
+        }
 
         header("Location: $redirect");
         exit;

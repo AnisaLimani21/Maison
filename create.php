@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Error creating user!";
     }
 }
-?>
+
 
 /*
 //sessiom_start();
@@ -54,6 +54,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 }
 
 }*/
+?>
+
 
 
 
