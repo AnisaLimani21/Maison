@@ -1,12 +1,12 @@
 
 <?php
-
+ob_start();
     include_once 'Produktet.php';
     include_once 'ProductRepository.php';
 
-    if(isset($_POST[''])){
+    if(isset($_POST['addBtn'])){
 
-    $product =new Product(
+    $product =new Produktet(
         
         null,
 
@@ -21,7 +21,7 @@
     $repo =new ProductRepository();
     $repo -> insertProduct($product);
     header("location: productDashboard.php");
-
+ob_end_flush();
     }
 
 

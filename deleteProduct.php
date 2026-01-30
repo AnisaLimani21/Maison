@@ -4,9 +4,9 @@
     include_once 'productRepository.php';
     $repo = new ProductRepository();
 
-    $repo->deleteproduct($_GET['id']);
+    $repo->deleteProduct($_GET['id']);
 
-    header("location : productDashboard.php");
+    header("location: productDashboard.php");
 
 
     ?>

@@ -16,7 +16,7 @@
                 
                 VALUES (?,?,?,?,?)";
 
-                $statement =$conn->prepare($sql);
+                $statement =$this->connection->prepare($sql);
                 $statement ->execute([
                     $product -> getName(),
                     $product -> getCategory(),

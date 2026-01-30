@@ -6,7 +6,7 @@
     $repo=new ProductRepository();
     $product=$repo->getProductById($_GET['id']);
 
-    if(isser($_POST ['editBtn'])){
+    if(isset($_POST ['editBtn'])){
         $repo->updateProduct(
             $product['id'],
             $_POST['name'],
@@ -16,7 +16,8 @@
             $_POST['image']
 
         );
-        header("location : productDashboard.php");
+        header("location: productDashboard.php");
+        exit;
     }
     ?>
 
