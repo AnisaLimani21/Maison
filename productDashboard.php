@@ -35,7 +35,7 @@ foreach ($products as $product) {
         <td>{$product['description']}</td>
         <td>{$product['price']}</td>
         <td>{$product ['image']}</td>
-        <td><a href='editProduct.php?id={$product['id']}'>Edit</a></td>
+        <td><a href='editProduct.php?id={$product['id']'>Edit</a></td>
         <td><a href='deleteProduct.php?id={$product['id']}'>Delete</a></td>
     </tr>";
 }
