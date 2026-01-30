@@ -1,11 +1,19 @@
 <?php
+
 session_start();
-include_once 'database.php';
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 
 if(!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
+
+include_once 'database.php';
+
+
 
 $db = new Database();
 $conn = $db->getConnection();
@@ -72,6 +80,21 @@ form { display:inline-block; margin:0; }
 <div class="dashboard-container">
 <h1>Welcome, <?php echo htmlspecialchars($userData['username']); ?>!</h1>
 <p>Your role: <?php echo htmlspecialchars($userData['role']); ?></p>
+<form action="logout.php" method="POST" style="margin:15px 0;">
+    <button type="submit" 
+        style="
+            background:#000;
+            color:#fff;
+            padding:10px 18px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:bold;
+        ">
+        Logout
+    </button>
+</form>
+
 
 <h2>Your Products</h2>
 
@@ -133,6 +156,15 @@ form { display:inline-block; margin:0; }
 <?php endif; ?>
 
 </div>
+
+<script>
+window.history.pushState(null, null, window.location.href);
+window.onpopstate = function () {
+    window.location.href = "login.php";
+};
+</script>
+
+
 
 </body>
 </html>
