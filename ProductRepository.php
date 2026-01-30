@@ -32,6 +32,25 @@
         return $this -> connection -> query($sql)-> fetchAll();   
     }
 
+    public function getProductById($id){
+
+        $sql="SELECT * FROM product WHERE id=?";
+        $statement = $this-> connection ->prepare ($sql);
+        $statement ->execute ([$id]);
+        return $statement ->fetch();   
+    }
+
+    public function updateProduct($id,$name,$category,$description,$price,$image){
+
+    $sql =" UPDATE product
+         SET name=?, category=?, description=?,price=?,image=?
+                WHERE id=?;"
+                $statement =$this-> connection ->prepare ($sql);
+                $statement-> execute([$name,$category,$description,$price,$image,$id]);
+
+   }
+
+   
     }
 
 ?>
