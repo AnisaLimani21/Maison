@@ -2,6 +2,7 @@
     <?php
 
     include_once 'ProductRepository.php';
+    include_once 'ProduktetClass.php';
 
     $repo=new ProductRepository();
     $product=$repo->getProductById($_GET['id']);
@@ -20,7 +21,14 @@
         exit;
     }
     ?>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Product</title>
+    <link rel="stylesheet" href="editProduct.css">
+</head>
+<body>
    
 <form method="post">
     <label for="name">Name:</label><br>
@@ -40,4 +48,6 @@
 
     <input type="submit" name="editBtn" value="Save">
 </form>
+</body>
+</html>
 

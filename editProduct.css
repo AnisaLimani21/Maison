@@ -1,0 +1,70 @@
+form {
+    max-width: 500px;
+    margin: 50px auto; 
+    padding: 30px;
+    background: #fff4f0;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+    text-align: center; 
+}
+
+form h2 {
+    color: #6b3e26;
+    margin-bottom: 25px;
+}
+
+form label {
+    display: block;
+    text-align: left; 
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #6b3e26;
+}
+
+form input[type="text"],
+form input[type="number"],
+form textarea {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 2px solid #ffd88c;
+    border-radius: 12px;
+    outline: none;
+    font-size: 1rem;
+    box-sizing: border-box; 
+    transition: 0.3s;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form textarea:focus {
+    border-color: #e6c066;
+    box-shadow: 0 0 10px rgba(230,192,102,0.5);
+}
+
+form input[type="submit"] {
+    padding: 12px 25px;
+    background: #6b3e26;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+    display: block;
+    margin: 0 auto; 
+}
+
+form input[type="submit"]:hover {
+    background: #e6c066;
+    color: #3b1f0b;
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+    form {
+        padding: 20px;
+        margin: 30px 10px;
+    }
+}

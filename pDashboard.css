@@ -1,0 +1,110 @@
+/* Dashboard container */
+body {
+    font-family: Arial, sans-serif;
+    background: #fff4f0;
+    padding: 30px;
+    color: #3b1f0b;
+}
+
+/* Heading */
+h2 {
+    color: #6b3e26;
+    margin-bottom: 20px;
+}
+
+/* Add product button */
+a[href="addProduct.php"] {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #6b3e26;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+a[href="addProduct.php"]:hover {
+    background: #e6c066;
+    color: #3b1f0b;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px 10px;
+    text-align: left;
+}
+
+th {
+    background: #6b3e26;
+    color: #fff;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background: #fffaf3;
+}
+
+tr:nth-child(odd) {
+    background: #fff4f0;
+}
+
+td a {
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+td a[href*="editProduct"] {
+    background: #6b3e26;
+}
+
+td a[href*="editProduct"]:hover {
+    background: #e6c066;
+    color: #3b1f0b;
+}
+
+td a[href*="deleteProduct"] {
+    background: #c0392b;
+}
+
+td a[href*="deleteProduct"]:hover {
+    background: #e74c3c;
+}
+
+/* Responsive for small screens */
+@media (max-width: 768px) {
+    table, tr, th, td {
+        display: block;
+        width: 100%;
+    }
+    tr {
+        margin-bottom: 15px;
+        border-bottom: 2px solid #ffd88c;
+    }
+    th {
+        display: none;
+    }
+    td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        font-weight: 700;
+        color: #6b3e26;
+    }
+}

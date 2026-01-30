@@ -1,7 +1,7 @@
 
 <?php
 ob_start();
-    include_once 'Produktet.php';
+    include_once 'ProduktetClass.php';
     include_once 'ProductRepository.php';
 
     if(isset($_POST['addBtn'])){
@@ -27,9 +27,16 @@ ob_end_flush();
 
 ?>
 
-
-
-<form method="post">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <link rel="stylesheet" href="addProduct.css">
+<body>
+    <form method="post">
     <input type="text" name="name" placeholder="Product name"><br><br>
     <input type="text" name="category" placeholder="Category"><br><br>
     <textarea name="description" placeholder="Description"></textarea><br><br>
@@ -37,4 +44,8 @@ ob_end_flush();
     <input type="text" name="image" placeholder="Image URL"><br><br>
     <input type="submit" name="addBtn" value="Add Product">
 </form>
+</body>
+</html>
+
+
 

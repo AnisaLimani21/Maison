@@ -3,6 +3,8 @@
 <head>
     <title>Product Dashboard</title>
 </head>
+    <link rel="stylesheet" href="pDashboard.css">
+
 <body>
 
 <h2>Products</h2>
