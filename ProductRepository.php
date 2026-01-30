@@ -12,7 +12,7 @@
 
     public function insertProduct($product){
         $con=$this->connection;
-        $sql="INSERT INTO product(name,,category,description,price,image)
+        $sql="INSERT INTO products(name,category,description,price,image)
                 
                 VALUES (?,?,?,?,?,?)";
 
@@ -28,13 +28,13 @@
 
 
     public function getAllProducts(){
-        $sql= "SELECT * FROM  product";
+        $sql= "SELECT * FROM  products";
         return $this -> connection -> query($sql)-> fetchAll();   
     }
 
     public function getProductById($id){
 
-        $sql="SELECT * FROM product WHERE id=?";
+        $sql="SELECT * FROM products WHERE id=?";
         $statement = $this-> connection ->prepare ($sql);
         $statement ->execute ([$id]);
         return $statement ->fetch();   
@@ -42,7 +42,7 @@
 
     public function updateProduct($id,$name,$category,$description,$price,$image){
 
-    $sql =" UPDATE product
+    $sql =" UPDATE products
          SET name=?, category=?, description=?,price=?,image=?
                 WHERE id=?;"
                 $statement =$this-> connection ->prepare ($sql);
@@ -50,7 +50,12 @@
 
    }
 
-   
+        public function deleteproduct ($id){
+            $sql=" DELETE FROM products WHERE id=?";
+            $statement =$this-> connection ->prepare ($sql);
+            $statement -> execute([$id]);
+        }
+
     }
 
 ?>

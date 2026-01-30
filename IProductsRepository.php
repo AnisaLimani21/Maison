@@ -7,10 +7,10 @@
 
     public function getAllProducts();
 
-    public function getProductById();
+    public function getProductById($id);
 
     public function updateProduct($id,$name,$category,$description,$price,$image);
-    
+
     public function deleteProduct($id);
 
     }
