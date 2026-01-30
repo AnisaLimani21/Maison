@@ -23,6 +23,11 @@
     </tr>
 
 <?php
+session_start();
+if(!isset($_SESSION['user'])||$_SESSION['user']['role']!== 'admin'){
+    header("Location: homee.php");
+    exit;
+}
 include_once 'adminGuard.php';
 include_once 'ProductRepository.php';
 

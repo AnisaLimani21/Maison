@@ -93,6 +93,12 @@ $reviews = $reviewObj->getAll();
         <a href="Produktet.php">Products</a>
         <a href="aboutus.php">About Us</a>
         <a href="gift.php">Gift Box</a>
+
+        <?php if(isset($_SESSION['user'])&& $_SESSION['user']['role'] ==='admin'):?>
+
+            <a href="productDashboard.php">Dashboard</a>
+            <?php
+            endif;?>
     </div>
     <div class="nav-right">
         <div class="search-bar">

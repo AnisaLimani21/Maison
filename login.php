@@ -41,7 +41,7 @@ $_SESSION['user'] = [
             header("Location: homee.php");
         }
 
-        header("Location: $redirect");
+        header("Location: homee.php");
         exit;
     } else {
         $error = "Invalid username or password!";
