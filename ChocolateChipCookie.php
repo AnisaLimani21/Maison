@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['a
     }
     if(!$found){
         $_SESSION['cart'][] = [
-            'id' => $product['id'],  // product_id tani
+            'id' => $product['id'],  
             'name' => $product['name'],
             'price' => $product['price'],
             'image' => $product['image'],
