@@ -1,17 +1,17 @@
 <?php
 
-    include_once '../IProductRepository.php';
-    include_once'../database.php';
-    class ProductRepository implements IProductRepository{
+    include_once 'IProductsRepository.php';
+    include_once 'database.php';
+    class ProductRepository implements IProductsRepository{
 
     private $connection;
 
     function __construct(){
-        $conn=new database;
+       $this->connection = (new database())->getConnection();// $conn=new database;
     }
 
     public function insertProduct($product){
-        $con=$this->connection;
+       // $con=$this->connection;
         $sql="INSERT INTO products(name,category,description,price,image)
                 
                 VALUES (?,?,?,?,?)";
@@ -37,14 +37,14 @@
         $sql="SELECT * FROM products WHERE id=?";
         $statement = $this-> connection ->prepare ($sql);
         $statement ->execute ([$id]);
-        return $statement ->fetch();   
+        return $statement ->fetch(PDO::FETCH_ASSOC);   
     }
 
     public function updateProduct($id,$name,$category,$description,$price,$image){
 
     $sql =" UPDATE products
          SET name=?, category=?, description=?,price=?,image=?
-                WHERE id=?;"
+                WHERE id=?";
                 $statement =$this-> connection ->prepare ($sql);
                 $statement-> execute([$name,$category,$description,$price,$image,$id]);
 

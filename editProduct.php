@@ -1,7 +1,7 @@
 
     <?php
 
-    include_once '../ProductRepository.php';
+    include_once 'ProductRepository.php';
 
     $repo=new ProductRepository();
     $product=$repo->getProductById($_GET['id']);

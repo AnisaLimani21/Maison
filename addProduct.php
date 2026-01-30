@@ -1,8 +1,8 @@
 
 <?php
 
-    include_once '../Produktet.php';
-    include_once '../ProductRepository.php';
+    include_once 'Produktet.php';
+    include_once 'ProductRepository.php';
 
     if(isset($_POST[''])){
 

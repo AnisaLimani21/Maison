@@ -1,7 +1,7 @@
 
 <?php
 
-    interface IProductRepository{
+    interface IProductsRepository{
 
     public function insertProduct($product);
 

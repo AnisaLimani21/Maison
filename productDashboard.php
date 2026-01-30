@@ -21,23 +21,23 @@
     </tr>
 
 <?php
-include_once '../ProductRepository.php';
+include_once 'ProductRepository.php';
 
 $productRepo = new ProductRepository();
 $products = $productRepo->getAllProducts();
 
 foreach ($products as $product) {
-    echo "
+    echo '
     <tr>
-        <td>{$product['id']}</td>
-        <td>{$product['name']}</td>
-        <td>{$product['category']}</td>
-        <td>{$product['description']}</td>
-        <td>{$product['price']}</td>
-        <td>{$product ['image']}</td>
-        <td><a href='editProduct.php?id={$product['id']'>Edit</a></td>
-        <td><a href='deleteProduct.php?id={$product['id']}'>Delete</a></td>
-    </tr>";
+        <td>'.$product['id'].'</td>
+        <td>'.$product['name'].'</td>
+        <td>'.$product['category'].'</td>
+        <td>'.$product['description'].'</td>
+        <td>'.$product['price'].'</td>
+        <td>'.$product['image'].'</td>
+        <td><a href="editProduct.php?id='.$product['id'].'">Edit</a></td>
+        <td><a href="deleteProduct.php?id='.$product['id'].'">Delete</a></td>
+    </tr>';
 }
 ?>
 
