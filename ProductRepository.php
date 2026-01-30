@@ -14,7 +14,7 @@
         $con=$this->connection;
         $sql="INSERT INTO products(name,category,description,price,image)
                 
-                VALUES (?,?,?,?,?,?)";
+                VALUES (?,?,?,?,?)";
 
                 $statement =$conn->prepare($sql);
                 $statement ->execute([
@@ -29,7 +29,7 @@
 
     public function getAllProducts(){
         $sql= "SELECT * FROM  products";
-        return $this -> connection -> query($sql)-> fetchAll();   
+        return $this -> connection -> query($sql)-> fetchAll(PDO::FETCH_ASSOC);   
     }
 
     public function getProductById($id){
@@ -50,7 +50,7 @@
 
    }
 
-        public function deleteproduct ($id){
+        public function deleteProduct ($id){
             $sql=" DELETE FROM products WHERE id=?";
             $statement =$this-> connection ->prepare ($sql);
             $statement -> execute([$id]);
