@@ -10,7 +10,7 @@
 
 
     public function addMessage($name,$email,$message,$userID=null){
-        $stmt=$this->db=prepare(
+        $stmt=$this->db->prepare(
             "INSERT INTO messages (user_id,name,email,message,created_at)
             VALUES (:user_id,:name,:email,:message,NOW())"
         );
@@ -30,7 +30,7 @@
             ORDER BY m.created_at DESC"
         );
     }
-    
+
     }
 
 

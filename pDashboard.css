@@ -1,18 +1,16 @@
-/* Dashboard container */
 body {
     font-family: Arial, sans-serif;
     background: #fff4f0;
     padding: 30px;
     color: #3b1f0b;
+    padding: 0;
 }
 
-/* Heading */
 h2 {
     color: #6b3e26;
     margin-bottom: 20px;
 }
 
-/* Add product button */
 a[href="addProduct.php"] {
     display: inline-block;
     padding: 10px 20px;
@@ -28,7 +26,6 @@ a[href="addProduct.php"]:hover {
     color: #3b1f0b;
 }
 
-/* Table styling */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -82,7 +79,6 @@ td a[href*="deleteProduct"]:hover {
     background: #e74c3c;
 }
 
-/* Responsive for small screens */
 @media (max-width: 768px) {
     table, tr, th, td {
         display: block;
@@ -110,3 +106,47 @@ td a[href*="deleteProduct"]:hover {
 }
 
 
+.navbar {
+    width: 100%;
+    background: #6b3e26;  
+    padding: 18px 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 100;
+}
+
+.nav-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;  
+    width: auto;
+}
+
+.nav-center a {
+    color: #fff;            
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 8px 15px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.nav-center a:hover {
+    
+    color: #e6c066;         
+  
+}
+
+@media (max-width: 900px) {
+    .nav-center {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
