@@ -209,7 +209,7 @@ $reviews = $reviewObj->getAll();
 <div class="contact-section">
     <h2>Contact Us</h2>
 
-    <form method="POST" action="contact_submit.php">
+    <form method="POST" action="homee.php">
         <input type="text" name="name" placeholder="Your name" required>
         <input type="email" name="email" placeholder="Your email" required>
         <textarea name="message" placeholder="Your message" required></textarea>
