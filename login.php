@@ -66,18 +66,30 @@ $_SESSION['user'] = [
     <div class="nav-left">
         <img src="img/logoP.png" class="logo">
     </div>
-    <div class="nav-center" id="nav-links">
+
+    <div class="nav-center" id="navLinks">
         <a href="homee.php">Home</a>
         <a href="Produktet.php">Products</a>
         <a href="aboutus.php">About Us</a>
         <a href="gift.php">Gift Box</a>
     </div>
+
     <div class="nav-right">
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="Search products...">
             <button onclick="searchProduct()">🔍</button>
         </div>
-        <span class="hamburger" id="hamburger">☰</span>
+
+        <a href="login.php" class="login-btn">
+            <img src="https://img.icons8.com/ios/50/user--v1.png">
+        </a>
+
+        <div class="cart-icon" id="cartIcon">
+            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png">
+            <span id="cartCount" class="cart-count">0</span>
+        </div>
+
+        <div class="hamburger" id="hamburger">☰</div>
     </div>
 </nav>
 
