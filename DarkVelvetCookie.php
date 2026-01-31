@@ -5,7 +5,7 @@ include_once 'database.php';
 $db = new Database();
 $conn = $db->getConnection(); 
 
-$product_name = "Red Velvet";
+$product_name = "Dark Velvet Cookie";
 
 $stmt = $conn->prepare("SELECT * FROM products WHERE name = :name");
 $stmt->execute(['name' => $product_name]);
@@ -119,7 +119,7 @@ $cart_count = count($_SESSION['cart']);
 
         <h3>Ingredients:</h3>
         <ul>
-            <?php foreach(explode(',', $product['ingredients'] ?? 'Flour,Butter,Sugar,Chocolate Chips') as $ing) echo "<li>".htmlspecialchars(trim($ing))."</li>"; ?>
+            <?php foreach(explode(',', $product['ingredients'] ?? 'Dark cocoa powder,Espresso,DChoco,Butter,Eggs,Sugar') as $ing) echo "<li>".htmlspecialchars(trim($ing))."</li>"; ?>
         </ul>
 
         <form id="addCartForm">

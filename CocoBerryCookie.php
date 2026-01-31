@@ -5,7 +5,7 @@ include_once 'database.php';
 $db = new Database();
 $conn = $db->getConnection(); 
 
-$product_name = "Red Velvet";
+$product_name = "CocoBerry Cookie";
 
 $stmt = $conn->prepare("SELECT * FROM products WHERE name = :name");
 $stmt->execute(['name' => $product_name]);
@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['a
     $found = false;
     foreach($_SESSION['cart'] as &$item){
         if($item['id'] == $product['id']){
-            $item['qty'] += $qty;
+            $item['qty'] += $qty; 
             $found = true;
             break;
         }
@@ -119,7 +119,7 @@ $cart_count = count($_SESSION['cart']);
 
         <h3>Ingredients:</h3>
         <ul>
-            <?php foreach(explode(',', $product['ingredients'] ?? 'Flour,Butter,Sugar,Chocolate Chips') as $ing) echo "<li>".htmlspecialchars(trim($ing))."</li>"; ?>
+            <?php foreach(explode(',', $product['ingredients'] ?? 'Flour,Butter,Sugar,Cocoa,Cherries') as $ing) echo "<li>".htmlspecialchars(trim($ing))."</li>"; ?>
         </ul>
 
         <form id="addCartForm">
@@ -180,5 +180,6 @@ document.addEventListener("click", e => {
     if(!cartIcon.contains(e.target) && !miniCart.contains(e.target)) miniCart.style.display = "none";
 });
 </script>
+
 </body>
 </html>

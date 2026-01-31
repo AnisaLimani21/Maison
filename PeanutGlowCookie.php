@@ -1,11 +1,11 @@
-<?php 
+<?php
 session_start();
 include_once 'database.php'; 
 
 $db = new Database();
 $conn = $db->getConnection(); 
 
-$product_name = "Red Velvet";
+$product_name = "Peanut Glow Cookie";
 
 $stmt = $conn->prepare("SELECT * FROM products WHERE name = :name");
 $stmt->execute(['name' => $product_name]);
@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['a
     $found = false;
     foreach($_SESSION['cart'] as &$item){
         if($item['id'] == $product['id']){
-            $item['qty'] += $qty;
+            $item['qty'] += $qty; 
             $found = true;
             break;
         }
@@ -107,7 +107,7 @@ $cart_count = count($_SESSION['cart']);
     <div class="circle-box">
         <?php
         $imagePath = $product['image']; 
-        if(file_exists($imagePath)) echo "<img src='$imagePath'>";
+        if(file_exists($imagePath)) echo "<img src='$imagePath' alt='{$product['name']}'>";
         else echo "<p style='color:red;'>Foto nuk u gjet</p>";
         ?>
     </div>
@@ -119,7 +119,9 @@ $cart_count = count($_SESSION['cart']);
 
         <h3>Ingredients:</h3>
         <ul>
-            <?php foreach(explode(',', $product['ingredients'] ?? 'Flour,Butter,Sugar,Chocolate Chips') as $ing) echo "<li>".htmlspecialchars(trim($ing))."</li>"; ?>
+            <?php foreach(explode(',', $product['ingredients'] ?? 'Peanut butter,Roasted peanuts,Brown sugar,Butter,Eggs,Flour') as $ing)
+                echo "<li>".htmlspecialchars(trim($ing))."</li>";
+            ?>
         </ul>
 
         <form id="addCartForm">
@@ -180,5 +182,6 @@ document.addEventListener("click", e => {
     if(!cartIcon.contains(e.target) && !miniCart.contains(e.target)) miniCart.style.display = "none";
 });
 </script>
+
 </body>
 </html>
