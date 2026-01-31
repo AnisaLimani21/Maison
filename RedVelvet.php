@@ -1,11 +1,12 @@
-<?php
+<?php 
 session_start();
-include_once 'database.php';
+include_once 'database.php'; 
 
 $db = new Database();
-$conn = $db->getConnection();
+$conn = $db->getConnection(); 
 
 $product_name = "Red Velvet";
+
 $stmt = $conn->prepare("SELECT * FROM products WHERE name = :name");
 $stmt->execute(['name' => $product_name]);
 $product = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -14,13 +15,7 @@ if(!$product) die("Produkt nuk u gjet");
 
 if(!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
 
-function totalCartQuantity($cart){
-    $sum = 0;
-    foreach($cart as $item) $sum += $item['qty'];
-    return $sum;
-}
-
-if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_to_cart'){
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_to_cart') {
     $qty = intval($_POST['quantity']);
     if($qty < 1) $qty = 1;
     if($qty > 20) $qty = 20;
@@ -28,14 +23,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['a
     $found = false;
     foreach($_SESSION['cart'] as &$item){
         if($item['id'] == $product['id']){
-            $item['qty'] += $qty; 
+            $item['qty'] += $qty;
             $found = true;
             break;
         }
     }
     if(!$found){
         $_SESSION['cart'][] = [
-            'id' => $product['id'],
+            'id' => $product['id'],  
             'name' => $product['name'],
             'price' => $product['price'],
             'image' => $product['image'],
@@ -44,18 +39,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['a
     }
 
     $total = 0;
-    foreach($_SESSION['cart'] as $item) $total += $item['price'] * $item['qty'];
+    foreach($_SESSION['cart'] as $item) $total += $item['price']*$item['qty'];
 
     echo json_encode([
-        'success' => true,
-        'cart_count' => totalCartQuantity($_SESSION['cart']),
-        'cart' => $_SESSION['cart'],
-        'total' => $total
+        'success'=>true,
+        'cart_count'=>count($_SESSION['cart']),
+        'cart'=>$_SESSION['cart'],
+        'total'=>$total
     ]);
     exit;
 }
 
-$cart_count = totalCartQuantity($_SESSION['cart']);
+$cart_count = count($_SESSION['cart']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,19 +95,19 @@ $cart_count = totalCartQuantity($_SESSION['cart']);
             $itemTotal = $item['price'] * $item['qty'];
             $total += $itemTotal;
             $imageURL = htmlspecialchars($item['image']);
-            echo "<li><img src='$imageURL' style='width:40px;height:30px;margin-right:5px;'> {$item['name']} x{$item['qty']} - $".number_format($itemTotal,2)."</li>";
+            echo "<li><img src='$imageURL' style='width:40px;height:30px;'> {$item['name']} x{$item['qty']} - $".number_format($itemTotal,2)."</li>";
         }
         ?>
     </ul>
     <p>Total: $<span id="totalPrice"><?php echo number_format($total,2); ?></span></p>
-    <a href="cart.php" class="go-cart-btn">Go to Cart</a>
+    <a href="save_cart.php" class="go-cart-btn" id="goCartBtn">Go to Cart</a>
 </div>
 
 <section class="product-single">
     <div class="circle-box">
         <?php
-        $imagePath = $product['image'];
-        if(file_exists($imagePath)) echo "<img src='$imagePath' alt='{$product['name']}'>";
+        $imagePath = $product['image']; 
+        if(file_exists($imagePath)) echo "<img src='$imagePath'>";
         else echo "<p style='color:red;'>Foto nuk u gjet</p>";
         ?>
     </div>
@@ -120,13 +115,11 @@ $cart_count = totalCartQuantity($_SESSION['cart']);
     <div class="product-details">
         <h2><?php echo htmlspecialchars($product['name']); ?></h2>
         <p class="price" data-unit-price="<?php echo $product['price']; ?>">$<?php echo number_format($product['price'],2); ?></p>
+        <p class="description"><?php echo htmlspecialchars($product['description']); ?></p>
 
         <h3>Ingredients:</h3>
         <ul>
-            <?php
-            foreach(explode(',', $product['ingredients'] ?? 'Soft Vanilla Batter,Brown Sugar,Butter,Eggs,Milk,Flour') as $ing)
-                echo "<li>".htmlspecialchars(trim($ing))."</li>";
-            ?>
+            <?php foreach(explode(',', $product['ingredients'] ?? 'Flour,Butter,Sugar,Chocolate Chips') as $ing) echo "<li>".htmlspecialchars(trim($ing))."</li>"; ?>
         </ul>
 
         <form id="addCartForm">
@@ -165,11 +158,11 @@ document.getElementById('addCartForm').addEventListener('submit', function(e){
     .then(res => res.json())
     .then(data => {
         if(data.success){
-            cartCountEl.textContent = data.cart_count; 
+            cartCountEl.textContent = data.cart_count;
             cartItemsEl.innerHTML = '';
             data.cart.forEach(item => {
                 let li = document.createElement('li');
-                li.innerHTML = `<img src="${item.image}" style="width:40px;height:30px;margin-right:5px;"> ${item.name} x${item.qty} - $${(item.price*item.qty).toFixed(2)}`;
+                li.innerHTML = `<img src="${item.image}" style="width:40px;height:30px;"> ${item.name} x${item.qty} - $${(item.price*item.qty).toFixed(2)}`;
                 cartItemsEl.appendChild(li);
             });
             totalPriceSpan.textContent = data.total.toFixed(2);
@@ -186,13 +179,6 @@ cartIcon.addEventListener("click", e => {
 document.addEventListener("click", e => {
     if(!cartIcon.contains(e.target) && !miniCart.contains(e.target)) miniCart.style.display = "none";
 });
-
-const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("nav-links");
-hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-});
 </script>
-
 </body>
 </html>
