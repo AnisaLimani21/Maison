@@ -1,5 +1,28 @@
 <?php
 session_start();
+
+require_once "database.php";
+//$db=new Database("localhost","root","", "maison");
+//$dbObj=new Database();
+$db=(new Database())->getConnection();
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+$name=$_POST['name'];
+$email=$_POST['email'];
+$message=$_POST['message'];
+
+$user_id= isset($_SESSION['user']['id'])?$_SESSION['user']['id']: NULL;
+
+$stmt=$db -> prepare(
+    "INSERT INTO messages (user_id,name,email,message,created_at)
+    VALUES (:user_id,:name,:email,:message, NOW())"
+);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':message', $message);
+$stmt->execute();
+}
 //if (!isset($_SESSION['user_id'])) {
   //  header("Location: login.php");
     //exit;
@@ -7,7 +30,7 @@ session_start();
 
 //echo "Welcome, " .$_SESSION['username'];
 
-class Database {
+/*class Database {
     public $conn;
     public function __construct($servername, $username, $password, $dbname) {
         $this->conn = new mysqli($servername, $username, $password, $dbname);
@@ -15,14 +38,16 @@ class Database {
         $this->conn->set_charset("utf8mb4");
     }
     public function query($sql) { return $this->conn->query($sql); }
-}
+}*/
 
 class Slider {
     private $db;
     public function __construct($db) { $this->db = $db; }
     public function getAll() {
-        $res = $this->db->query("SELECT * FROM sliders ORDER BY id ASC");
-        $arr = []; if($res) while($row = $res->fetch_assoc()) $arr[] = $row; return $arr;
+    $stmt = $this->db->prepare("SELECT * FROM sliders ORDER BY id ASC");
+       $stmt->execute();
+       return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // $arr = []; if($res) while($row = $res->fetch_assoc()) $arr[] = $row; return $arr;
     }
 }
 
@@ -31,9 +56,13 @@ class Product {
     public function __construct($db) { $this->db = $db; }
     public function getAll($limit=null) {
         $sql = "SELECT * FROM products ORDER BY created_at DESC";
-        if($limit) $sql .= " LIMIT $limit";
-        $res = $this->db->query($sql);
-        $arr = []; if($res) while($row = $res->fetch_assoc()) $arr[] = $row; return $arr;
+        if($limit) $sql .= " LIMIT :limit";
+        $stmt = $this->db->prepare($sql);
+        if($limit)$stmt->bindValue(':limit',(int)$limit,PDO::PARAM_INT);
+        $stmt->execute();
+               return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+       // $arr = []; if($res) while($row = $res->fetch_assoc()) $arr[] = $row; return $arr;
     }
 }
 
@@ -41,8 +70,11 @@ class Review {
     private $db;
     public function __construct($db) { $this->db = $db; }
     public function getAll() {
-        $res = $this->db->query("SELECT * FROM reviews ORDER BY id ASC");
-        $arr = []; if($res) while($row = $res->fetch_assoc()) $arr[] = $row; return $arr;
+        $stmt = $this->db->prepare("SELECT * FROM reviews ORDER BY id ASC");
+       $stmt->execute();
+         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      
+        // $arr = []; if($res) while($row = $res->fetch_assoc()) $arr[] = $row; return $arr;
     }
 }
 
@@ -50,12 +82,13 @@ class Newsletter {
     private $db;
     public function __construct($db) { $this->db = $db; }
     public function addEmail($email) {
-        $stmt = $this->db->query("INSERT IGNORE INTO newsletter (email) VALUES ('".$this->db->conn->real_escape_string($email)."')");
-        return $stmt;
+        $stmt = $this->db->prepare("INSERT IGNORE INTO newsletter (email) VALUES (:email)");
+        $stmt->bindParam(':email', $email);
+        return $stmt->execute();
     }
 }
 
-$db = new Database("localhost", "root", "", "maison");
+//$db = new Database("localhost", "root", "", "maison");
 $sliderObj = new Slider($db);
 $productObj = new Product($db);
 $reviewObj = new Review($db);
@@ -172,6 +205,17 @@ $reviews = $reviewObj->getAll();
         </div>
         <?php endforeach; ?>
     </div>
+</div>
+<div class="contact-section">
+    <h2>Contact Us</h2>
+
+    <form method="POST" action="contact_submit.php">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Your email" required>
+        <textarea name="message" placeholder="Your message" required></textarea>
+
+        <button type="submit">Send Message</button>
+    </form>
 </div>
 
 <footer class="footer">
