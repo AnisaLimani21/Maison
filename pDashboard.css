@@ -1,9 +1,14 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: #fff4f0;
-    padding: 30px;
     color: #3b1f0b;
-    padding: 0;
+    overflow-x: hidden;
 }
 
 h2 {
@@ -21,6 +26,7 @@ a[href="addProduct.php"] {
     margin-bottom: 20px;
     transition: 0.3s;
 }
+
 a[href="addProduct.php"]:hover {
     background: #e6c066;
     color: #3b1f0b;
@@ -28,10 +34,11 @@ a[href="addProduct.php"]:hover {
 
 table {
     width: 100%;
+    max-width: 100%;
     border-collapse: collapse;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     border-radius: 15px;
-    overflow: hidden;
+    margin: 0;
 }
 
 th, td {
@@ -79,39 +86,12 @@ td a[href*="deleteProduct"]:hover {
     background: #e74c3c;
 }
 
-@media (max-width: 768px) {
-    table, tr, th, td {
-        display: block;
-        width: 100%;
-    }
-    tr {
-        margin-bottom: 15px;
-        border-bottom: 2px solid #ffd88c;
-    }
-    th {
-        display: none;
-    }
-    td {
-        text-align: right;
-        padding-left: 50%;
-        position: relative;
-    }
-    td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 15px;
-        font-weight: 700;
-        color: #6b3e26;
-    }
-}
-
-
 .navbar {
-    width: 100vw; 
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
+    padding: 20px 5%;
     background: #6b3e26;
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     border-bottom-left-radius: 10px;
@@ -120,9 +100,10 @@ td a[href*="deleteProduct"]:hover {
     z-index: 10;
 }
 
-
-.nav-left { display: flex; align-items: center; }
-.logo { width: 70px; }
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+}
 
 .nav-center {
     display: flex;
@@ -130,6 +111,7 @@ td a[href*="deleteProduct"]:hover {
     justify-content: center;
     align-items: center;
     flex: 1;
+    flex-wrap: wrap;
 }
 
 .nav-center a {
@@ -139,60 +121,92 @@ td a[href*="deleteProduct"]:hover {
     transition: 0.3s;
 }
 
-.nav-center a:hover { color: #ffd88c; }
-
-.nav-right { display: flex; align-items: center; gap: 15px; }
-
-.search-bar {
-    display: flex; 
-    align-items: center;
-    background: #fff; 
-    border: 1px solid #ffd88c;
-    border-radius: 20px; 
-    padding: 2px 10px;
-}
-/*
-.navbar {
-    width: 100%;
-    background: #6b3e26;  
-    padding: 18px 0;
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    position: relative;
-    z-index: 100;
-}
-
-.nav-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 35px;  
-    width: auto;
-}
-
-.nav-center a {
-    color: #fff;            
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    padding: 8px 15px;
-    border-radius: 6px;
-    transition: 0.3s;
-}
-
 .nav-center a:hover {
-    
-    color: #e6c066;         
-  
+    color: #ffd88c;
 }
 
 @media (max-width: 900px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px 5%;
+    }
+
     .nav-center {
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    th, td {
+        padding: 12px 8px;
+        font-size: 14px;
+    }
+
+    table {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    th, td {
+        padding: 10px 6px;
+        font-size: 12px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+}
+
+.container,
+.container2,
+.main,
+.content,
+.dashboard {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+@media (max-width: 768px) {
+    th, td {
+        padding: 12px 8px;
+        font-size: 14px;
+    }
+
+    table {
+        font-size: 13px;
+        width: 100%;
+    }
+
+    .navbar {
+        padding: 15px 5%;
+    }
+}
+
+@media (max-width: 480px) {
+    th, td {
+        padding: 10px 6px;
+        font-size: 12px;
+    }
+
+    table {
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 5%;
+    }
+
+    .nav-center {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
     }
 }
