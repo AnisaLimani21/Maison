@@ -1,17 +1,69 @@
+<?php 
+session_start();
+include_once 'database.php'; 
+
+$db = new Database();
+$conn = $db->getConnection(); 
+
+$product_name = "Strawberry Dream";
+
+$stmt = $conn->prepare("SELECT * FROM products WHERE name = :name");
+$stmt->execute(['name' => $product_name]);
+$product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if(!$product) die("Produkt nuk u gjet");
+
+if(!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_to_cart') {
+    $qty = intval($_POST['quantity']);
+    if($qty < 1) $qty = 1;
+    if($qty > 20) $qty = 20;
+
+    $found = false;
+    foreach($_SESSION['cart'] as &$item){
+        if($item['id'] == $product['id']){
+            $item['qty'] += $qty;
+            $found = true;
+            break;
+        }
+    }
+    if(!$found){
+        $_SESSION['cart'][] = [
+            'id' => $product['id'],  
+            'name' => $product['name'],
+            'price' => $product['price'],
+            'image' => $product['image'],
+            'qty' => $qty
+        ];
+    }
+
+    $total = 0;
+    foreach($_SESSION['cart'] as $item) $total += $item['price']*$item['qty'];
+
+    echo json_encode([
+        'success'=>true,
+        'cart_count'=>count($_SESSION['cart']),
+        'cart'=>$_SESSION['cart'],
+        'total'=>$total
+    ]);
+    exit;
+}
+
+$cart_count = count($_SESSION['cart']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strawberry Dream</title>
+<title><?php echo htmlspecialchars($product['name']); ?></title>
 <link rel="stylesheet" href="ChocolateChipCookie.css">
 </head>
 <body>
 
 <nav class="navbar">
-    <div class="nav-left">
-        <img src="img/logoP.png" class="logo" alt="Logo">
-    </div>
+    <div class="nav-left"><img src="img/logoP.png" class="logo" alt="Logo"></div>
     <div class="nav-center" id="nav-links">
         <a href="homee.php">Home</a>
         <a href="Produktet.php">Products</a>
@@ -28,7 +80,7 @@
         </a>
         <a href="#" class="cart-icon" id="cartIcon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
-            <span id="cartCount" class="cart-count">0</span>
+            <span id="cartCount" class="cart-count"><?php echo $cart_count; ?></span>
         </a>
         <span class="hamburger" id="hamburger">☰</span>
     </div>
@@ -36,113 +88,97 @@
 
 <div id="miniCart" class="mini-cart">
     <h4>Your Cart</h4>
-    <ul id="cartItems"></ul>
-    <p id="totalPrice">Total: $0.00</p>
-    <a href="cart.php" class="go-cart-btn">Go to Cart</a>
+    <ul id="cartItems">
+        <?php
+        $total = 0;
+        foreach($_SESSION['cart'] as $item){
+            $itemTotal = $item['price'] * $item['qty'];
+            $total += $itemTotal;
+            $imageURL = htmlspecialchars($item['image']);
+            echo "<li><img src='$imageURL' style='width:40px;height:30px;'> {$item['name']} x{$item['qty']} - $".number_format($itemTotal,2)."</li>";
+        }
+        ?>
+    </ul>
+    <p>Total: $<span id="totalPrice"><?php echo number_format($total,2); ?></span></p>
+    <a href="save_cart.php" class="go-cart-btn" id="goCartBtn">Go to Cart</a>
 </div>
 
-<section class="product-single"
-         data-name="Strawberry Dream"
-         data-price="3.00"
-         data-img="Screenshot__418_-removebg-preview.png">
-
+<section class="product-single">
     <div class="circle-box">
-        <img src="img/Screenshot__418_-removebg-preview.png" alt="Strawberry Dream" style="width:400px; max-width:100%;">
+        <?php
+        $imagePath = $product['image']; 
+        if(file_exists($imagePath)) echo "<img src='$imagePath'>";
+        else echo "<p style='color:red;'>Foto nuk u gjet</p>";
+        ?>
     </div>
 
     <div class="product-details">
-        <h2 class="product-title">Strawberry Dream</h2>
-        <p class="price">$3.00</p>
+        <h2><?php echo htmlspecialchars($product['name']); ?></h2>
+        <p class="price" data-unit-price="<?php echo $product['price']; ?>">$<?php echo number_format($product['price'],2); ?></p>
+        <p class="description"><?php echo htmlspecialchars($product['description']); ?></p>
 
         <h3>Ingredients:</h3>
         <ul>
-            <li>Soft Vanilla Batter</li>
-            <li>Strawberries</li>
-            <li>Butter</li>
-            <li>Milk</li>
-            <li>Whipped Cream</li>
+            <?php foreach(explode(',', $product['ingredients'] ?? 'Soft Vanilla Batter,Strawberries,Butter,Milk,Whipped Cream') as $ing) echo "<li>".htmlspecialchars(trim($ing))."</li>"; ?>
         </ul>
-
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" value="1" min="1" max="20">
-
-        <p class="total-price">Total: $3.00</p>
-        <button id="add-to-cart">Add to Cart</button>
+        <form id="addCartForm">
+            <label>Quantity:</label>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" max="20">
+            <p class="total-price">Total: $<?php echo number_format($product['price'],2); ?></p>
+            <button type="submit" id="add-to-cart">Add to Cart</button>
+        </form>
     </div>
 </section>
 
 <script>
-const product = document.querySelector('.product-single');
-const productName = product.dataset.name;
-const productPrice = parseFloat(product.dataset.price);
-const productImg = product.dataset.img;
-
 const quantityInput = document.getElementById('quantity');
+const price = <?php echo $product['price']; ?>;
 const totalPriceEl = document.querySelector('.total-price');
-const addToCartBtn = document.getElementById("add-to-cart");
-
-const cartIcon = document.getElementById("cartIcon");
-const cartCount = document.getElementById("cartCount");
-const miniCart = document.getElementById("miniCart");
-const cartItems = document.getElementById("cartItems");
-
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-cartCount.textContent = cart.length;
-updateMiniCart();
+const cartCountEl = document.getElementById('cartCount');
+const cartItemsEl = document.getElementById('cartItems');
+const totalPriceSpan = document.getElementById('totalPrice');
 
 quantityInput.addEventListener('input', () => {
     let qty = parseInt(quantityInput.value);
-    if(isNaN(qty) || qty < 1) qty = 1;
+    if(qty < 1) qty = 1;
     if(qty > 20) qty = 20;
-    quantityInput.value = qty;
-    totalPriceEl.textContent = `Total: $${(productPrice * qty).toFixed(2)}`;
+    totalPriceEl.textContent = `Total: $${(price * qty).toFixed(2)}`;
 });
 
-addToCartBtn.addEventListener("click", () => {
-    const quantity = parseInt(quantityInput.value);
-    const item = {
-        name: productName,
-        pricePerUnit: productPrice,
-        img: productImg,
-        qty: quantity
-    };
-    cart.push(item);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    cartCount.textContent = cart.length;
-    updateMiniCart();
-    alert(`${productName} x${quantity} added to cart!`);
-});
+document.getElementById('addCartForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    let qty = parseInt(quantityInput.value);
 
-function updateMiniCart() {
-    cartItems.innerHTML = "";
-    let total = 0;
-    cart.forEach(item => {
-        const cost = (item.pricePerUnit * item.qty).toFixed(2);
-        total += parseFloat(cost);
-        const li = document.createElement("li");
-        li.innerHTML = `<img src="img/${item.img}" style="width:40px;height:30px;margin-right:5px;"> ${item.name} x${item.qty} - $${cost}`;
-        cartItems.appendChild(li);
+    fetch('', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `action=add_to_cart&quantity=${qty}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success){
+            cartCountEl.textContent = data.cart_count;
+            cartItemsEl.innerHTML = '';
+            data.cart.forEach(item => {
+                let li = document.createElement('li');
+                li.innerHTML = `<img src="${item.image}" style="width:40px;height:30px;"> ${item.name} x${item.qty} - $${(item.price*item.qty).toFixed(2)}`;
+                cartItemsEl.appendChild(li);
+            });
+            totalPriceSpan.textContent = data.total.toFixed(2);
+        }
     });
-    document.getElementById("totalPrice").textContent = `Total: $${total.toFixed(2)}`;
-}
+});
 
-cartIcon.addEventListener("click", (e) => {
+const cartIcon = document.getElementById("cartIcon");
+const miniCart = document.getElementById("miniCart");
+cartIcon.addEventListener("click", e => {
     e.preventDefault();
     miniCart.style.display = miniCart.style.display === "block" ? "none" : "block";
 });
-
-document.addEventListener("click", (e) => {
-    if (!cartIcon.contains(e.target) && !miniCart.contains(e.target)) {
-        miniCart.style.display = "none";
-    }
-});
-
-const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("nav-links");
-hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
+document.addEventListener("click", e => {
+    if(!cartIcon.contains(e.target) && !miniCart.contains(e.target)) miniCart.style.display = "none";
 });
 </script>
-
 </body>
 </html>
+

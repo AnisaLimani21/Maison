@@ -37,11 +37,13 @@ private $reviews;
         <a href="aboutus.php">About Us</a>
         <a href="gift.php">Gift Box</a>
 
-        <?php if(isset($_SESSION['user'])&& $_SESSION['user']['role'] ==='admin'):?>
-
+         <?php if(isset($_SESSION['user'])): ?>
+        <?php if($_SESSION['user']['role'] === 'admin'): ?>
             <a href="productDashboard.php">Dashboard</a>
-            <?php
-            endif;?>
+        <?php else: ?>
+            <a href="dashboard.php">Dashboard</a>
+        <?php endif; ?>
+    <?php endif; ?>
     </div>
     <div class="nav-right">
         <div class="search-bar">
