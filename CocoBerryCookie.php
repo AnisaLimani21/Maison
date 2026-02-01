@@ -1,11 +1,12 @@
-<?php 
+<?php
 session_start();
-include_once 'database.php'; 
+include_once 'database.php';
 
 $db = new Database();
-$conn = $db->getConnection(); 
+$conn = $db->getConnection();
 
-$product_name = "CocoBerry Cookie";
+// Zgjidh produktin e parë për të treguar (mund të zgjerosh me thumbnails më vonë)
+$product_name = "Dark Chocolate";
 
 $stmt = $conn->prepare("SELECT * FROM products WHERE name = :name");
 $stmt->execute(['name' => $product_name]);
@@ -13,6 +14,7 @@ $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if(!$product) die("Produkt nuk u gjet");
 
+// Inicializo cart në session
 if(!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
 
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_to_cart') {
@@ -52,13 +54,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['a
 
 $cart_count = count($_SESSION['cart']);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo htmlspecialchars($product['name']); ?></title>
-<link rel="stylesheet" href="ChocolateChipCookie.css">
+<link rel="stylesheet" href="Chocolates.css">
 </head>
 <body>
 
@@ -119,7 +122,7 @@ $cart_count = count($_SESSION['cart']);
 
         <h3>Ingredients:</h3>
         <ul>
-            <?php foreach(explode(',', $product['ingredients'] ?? 'Flour,Butter,Sugar,Cocoa,Cherries') as $ing) echo "<li>".htmlspecialchars(trim($ing))."</li>"; ?>
+            <?php foreach(explode(',', $product['ingredients'] ?? 'Cocoa,Milk,Sugar,Butter') as $ing) echo "<li>".htmlspecialchars(trim($ing))."</li>"; ?>
         </ul>
 
         <form id="addCartForm">
