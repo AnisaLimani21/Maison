@@ -35,8 +35,12 @@ session_start();
             <a href="Produktet.php">Products</a>
             <a href="aboutus.php">About Us</a>
             <a href="gift.php">Gift Box</a>
-             <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
-        <a href="productDashboard.php">Dashboard</a>
+        <?php if(isset($_SESSION['user'])): ?>
+        <?php if($_SESSION['user']['role'] === 'admin'): ?>
+            <a href="productDashboard.php">Dashboard</a>
+        <?php else: ?>
+            <a href="dashboard.php">Dashboard</a>
+        <?php endif; ?>
     <?php endif; ?>
         </div>
 
@@ -50,7 +54,7 @@ session_start();
                 <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
             </a>
 
-            <a href="cart.php" class="cart-icon">
+            <a href="login.php" class="cart-icon">
                 <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
             </a>
 
