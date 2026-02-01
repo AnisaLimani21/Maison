@@ -1,3 +1,64 @@
+<?php
+session_start();
+include_once 'database.php';
+
+$db = new Database();
+$conn = $db->getConnection();
+
+$names = ["Red Wine","White Wine","Rosé Wine","Sparkling Wine"];
+$products = [];
+foreach($names as $name){
+    $stmt = $conn->prepare("SELECT * FROM products WHERE name = :name");
+    $stmt->execute(['name'=>$name]);
+    if($p = $stmt->fetch(PDO::FETCH_ASSOC)) $products[] = $p;
+}
+
+if(!$products) die("Produktet nuk u gjetën");
+
+if(!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
+
+if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['action']) && $_POST['action']==='add_to_cart'){
+    $id = intval($_POST['id']);
+    $qty = max(1, min(20, intval($_POST['quantity'])));
+    $found = false;
+
+    foreach($products as $p){
+        if($p['id']==$id){
+            foreach($_SESSION['cart'] as &$item){
+                if($item['id']==$id){
+                    $item['qty'] += $qty;
+                    $found = true;
+                    break;
+                }
+            }
+            if(!$found){
+                $_SESSION['cart'][] = [
+                    'id'=>$p['id'],
+                    'name'=>$p['name'],
+                    'price'=>$p['price'],
+                    'image'=>$p['image'],
+                    'qty'=>$qty
+                ];
+            }
+            break;
+        }
+    }
+
+    $total = 0;
+    foreach($_SESSION['cart'] as $i) $total += $i['price']*$i['qty'];
+
+    echo json_encode([
+        'success'=>true,
+        'cart_count'=>count($_SESSION['cart']),
+        'cart'=>$_SESSION['cart'],
+        'total'=>$total
+    ]);
+    exit;
+}
+
+$first = $products[0];
+$cart_count = count($_SESSION['cart']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,195 +70,130 @@
 <body>
 
 <nav class="navbar">
-    <div class="nav-left">
-        <img src="img/logoP.png" class="logo">
-    </div>
-
-    <div class="nav-center" id="navLinks">
+    <div class="nav-left"><img src="img/logoP.png" class="logo" alt="Logo"></div>
+    <div class="nav-center" id="nav-links">
         <a href="homee.php">Home</a>
         <a href="Produktet.php">Products</a>
         <a href="aboutus.php">About Us</a>
         <a href="gift.php">Gift Box</a>
     </div>
-
     <div class="nav-right">
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search products...">
-            <button onclick="searchProduct()">🔍</button>
-        </div>
-
+        <form class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button>🔍</button>
+        </form>
         <a href="login.php" class="login-btn">
-            <img src="https://img.icons8.com/ios/50/user--v1.png">
+            <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
-
-        <div class="cart-icon" id="cartIcon">
-            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png">
-            <span id="cartCount" class="cart-count">0</span>
-        </div>
-
-        <div class="hamburger" id="hamburger">☰</div>
+        <a href="#" class="cart-icon" id="cartIcon">
+            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+            <span id="cartCount" class="cart-count"><?= $cart_count ?></span>
+        </a>
+        <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>
-
 
 <div class="mini-cart" id="miniCart">
     <h4>Your Cart</h4>
     <ul id="cartItems"></ul>
-    <p id="totalPrice">Total: $0.00</p>
-    <a href="cart.php" class="go-cart-btn">Go to Cart</a>
+    <p>Total: $<span id="totalPrice">0</span></p>
+    <a href="save_cart.php" class="go-cart-btn">Go to Cart</a>
 </div>
 
 <header class="header">
     <h1>Our Wines</h1>
 </header>
 
-<section class="wine-display">
+<div class="wine-display">
     <div class="main-photo-wrapper">
-    <img id="mainWine" src="img/Screenshot__465_-removebg-preview.png">
-</div>
-
+        <img id="mainImg" src="<?= $first['image'] ?>" alt="<?= $first['name'] ?>">
+    </div>
     <div class="wine-info">
-        <h2 id="wineName">Red Wine</h2>
-        <p id="wineDesc">Full-bodied red with notes of cherry.</p>
-        <div class="price-add">
-            <span id="winePrice">$15.00</span>
-        </div>
+        <h2 id="pName"><?= $first['name'] ?></h2>
+        <p id="pPrice"><?= number_format($first['price'],2) ?> €</p>
+        <p id="pDesc"><?= htmlspecialchars($first['description']) ?></p>
+
         <div class="qty-box">
-            <button id="minusBtn">-</button>
-            <span id="qtyDisplay">1</span>
-            <button id="plusBtn">+</button>
+            <button onclick="changeQty(-1)">-</button>
+            <input type="number" id="qty" value="1" min="1" max="20">
+            <button onclick="changeQty(1)">+</button>
         </div>
-        <button id="addToCartBtn" style="padding:8px 15px;background:#6b3e26;color:#fff;border:none;border-radius:5px;cursor:pointer;">
-            Add to Cart
-        </button>
+
+        <button id="addToCartBtn">Add to Cart</button>
+
         <div class="wine-thumbnails">
-            <img src="img/Screenshot__465_-removebg-preview.png" data-name="Red Wine" data-price="15" class="active">
-            <img src="img/Screenshot__460_-removebg-preview.png" data-name="White Wine" data-price="14.5">
-            <img src="img/Screenshot__457_-removebg-preview.png" data-name="Rosé Wine" data-price="16">
-            <img src="img/Screenshot__461_-removebg-preview.png" data-name="Sparkling Wine" data-price="18">
+            <?php foreach($products as $p): ?>
+                <img src="<?= $p['image'] ?>"
+                     data-id="<?= $p['id'] ?>"
+                     data-name="<?= $p['name'] ?>"
+                     data-price="<?= $p['price'] ?>"
+                     data-desc="<?= htmlspecialchars($p['description']) ?>">
+            <?php endforeach; ?>
         </div>
     </div>
-</section>
+</div>
+
 
 <script>
-let qty = 1;
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let currentId = <?= $first['id'] ?>;
 
-const qtyDisplay = document.getElementById("qtyDisplay");
-document.getElementById("plusBtn").onclick = () => {
-    qty++;
-    qtyDisplay.textContent = qty;
-};
-document.getElementById("minusBtn").onclick = () => {
-    if(qty > 1){
-        qty--;
-        qtyDisplay.textContent = qty;
+function changeQty(v){
+    let q = document.getElementById('qty');
+    let n = parseInt(q.value) + v;
+    if(n>=1 && n<=20) q.value = n;
+}
+
+document.querySelectorAll('.wine-thumbnails img').forEach(img=>{
+    img.onclick = ()=>{
+        document.querySelectorAll('.wine-thumbnails img').forEach(t=>t.classList.remove('active'));
+        img.classList.add('active');
+        document.getElementById('mainImg').src = img.src;
+        document.getElementById('pName').innerText = img.dataset.name;
+        document.getElementById('pPrice').innerText = parseFloat(img.dataset.price).toFixed(2)+' €';
+        document.getElementById('pDesc').innerText = img.dataset.desc;
+        currentId = img.dataset.id;
+        document.getElementById('qty').value = 1;
     }
-};
-
-const mainWine = document.getElementById("mainWine");
-const wineName = document.getElementById("wineName");
-const winePrice = document.getElementById("winePrice");
-const thumbnails = document.querySelectorAll(".wine-thumbnails img");
-const miniCart = document.getElementById("miniCart");
-const cartItems = document.getElementById("cartItems");
-const cartIcon = document.getElementById("cartIcon");
-
-thumbnails.forEach(thumb => {
-    thumb.onclick = () => {
-        thumbnails.forEach(t => t.classList.remove("active"));
-        thumb.classList.add("active");
-        mainWine.src = thumb.src;
-        wineName.textContent = thumb.dataset.name;
-        winePrice.textContent = "$" + parseFloat(thumb.dataset.price).toFixed(2);
-        qty = 1;
-        qtyDisplay.textContent = qty;
-    };
 });
 
-document.getElementById("addToCartBtn").onclick = () => {
-    const price = parseFloat(winePrice.textContent.replace("$",""));
-    const existing = cart.find(i => i.name === wineName.textContent);
-    if(existing){
-        existing.qty += qty;
-    } else {
-        cart.push({
-            name: wineName.textContent,
-            pricePerUnit: price,
-            img: mainWine.src.split("/").pop(),
-            qty: qty
-        });
-    }
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateMiniCart();
-    qty = 1;
-    qtyDisplay.textContent = qty;
-};
-
-function updateMiniCart(){
-    cartItems.innerHTML = "";
-    let total = 0;
-    cart.forEach(i => {
-        total += i.pricePerUnit * i.qty;
-        const li = document.createElement("li");
-        li.innerHTML = `
-            <img src="img/${i.img}">
-            <div style="flex:1">
-                <strong>${i.name}</strong><br>
-                $${i.pricePerUnit.toFixed(2)} x ${i.qty} = $${(i.pricePerUnit*i.qty).toFixed(2)}
-            </div>`;
-        cartItems.appendChild(li);
+document.getElementById('addToCartBtn').onclick = ()=>{
+    let qty = parseInt(document.getElementById('qty').value);
+    fetch('',{
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:`action=add_to_cart&id=${currentId}&quantity=${qty}`
+    })
+    .then(r=>r.json())
+    .then(d=>{
+        if(d.success){
+            document.getElementById('cartCount').innerText = d.cart_count;
+            let ul = document.getElementById('cartItems');
+            ul.innerHTML = '';
+            d.cart.forEach(i=>{
+                let li = document.createElement('li');
+                li.innerHTML = `<img src="${i.image}" style="width:40px;height:30px;"> ${i.name} x${i.qty} - $${(i.price*i.qty).toFixed(2)}`;
+                ul.appendChild(li);
+            });
+            document.getElementById('totalPrice').innerText = d.total.toFixed(2);
+            document.getElementById('miniCart').style.display='block';
+        }
     });
-    document.getElementById("totalPrice").textContent = "Total: $" + total.toFixed(2);
-    document.getElementById("cartCount").textContent = cart.reduce((s,i)=>s+i.qty,0);
-}
-
-cartIcon.onclick = e => {
-    e.preventDefault();
-    miniCart.style.display = miniCart.style.display === "block" ? "none" : "block";
 };
 
-document.addEventListener("click", e => {
-    if(!e.target.closest(".cart-icon") && !e.target.closest(".mini-cart")){
-        miniCart.style.display = "none";
-    }
+document.getElementById('cartIcon').onclick = e=>{
+    e.preventDefault();
+    let m = document.getElementById('miniCart');
+    m.style.display = m.style.display==='block'?'none':'block';
+};
+document.addEventListener("click", e=>{
+    let m = document.getElementById('miniCart');
+    let c = document.getElementById('cartIcon');
+    if(!c.contains(e.target) && !m.contains(e.target)) m.style.display='none';
 });
-
-updateMiniCart();
- function searchProduct() {
-    const input = document.getElementById('searchInput').value.toLowerCase().trim();
-
-    const pages = {
-        "muffins": "Muffins.php",
-        "cookies": "Cookies.php",
-        "donuts": "Donuts.php",
-        "macarons": "Macarons.php",
-        "chocolates": "Chocolates.php",
-        "brownies": "Brownies.php",
-        "croissants": "Croissants.php",
-        "cheesecakes": "Cheesecakes.php",
-        "pralines": "Pralines.php",
-        "wine": "Wine.php",
-        "login": "login.php",
-        "boba":"Boba.php",
-        "products": "Produktet.php"
-    };
-
-    if(pages[input]) {
-        window.location.href = pages[input];
-    } else {
-        alert("Product not found");
-    }
-}
 
 const hamburger=document.getElementById("hamburger");
-const navLinks=document.getElementById("navLinks");
-
-hamburger.onclick=()=>{
-    navLinks.classList.toggle("active");
-};
-
-
+const navLinks=document.getElementById("nav-links");
+hamburger.onclick=()=>{navLinks.classList.toggle("active");};
 </script>
 
 </body>

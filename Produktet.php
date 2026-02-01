@@ -129,7 +129,7 @@ function searchProduct() {
         "cheesecakes":"Cheesecakes.php",
         "pralines":"Pralines.php",
         "wine":"Wine.php",
-        "boba drinks":"Boba.php"
+        "boba":"Boba.php"
     };
     if(pages[input]){
         window.location.href = pages[input];

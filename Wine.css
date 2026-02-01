@@ -170,6 +170,23 @@ body {
     object-fit: contain;
 }
 
+#addToCartBtn {
+    background-color: #6b3e26; 
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+#addToCartBtn:hover {
+    background-color: #8b5e3c; 
+    transform: scale(1.05);
+}
 
 
 .wine-info {
@@ -216,26 +233,28 @@ body {
     color: #6b3e26;
 }
 
+
 .wine-thumbnails {
     display: flex;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: 40px;
+    justify-content: center; 
     flex-wrap: wrap;
 }
-
 .wine-thumbnails img {
     width: 60px;
-    height: 60px;
+    height:60px;
     object-fit: contain;
-    cursor: pointer;
     border: 2px solid transparent;
-    border-radius: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
 }
-
-
-.wine-thumbnails img.active {
+.wine-thumbnails img:hover, .wine-thumbnails img.active {
     border-color: #6b3e26;
+    transform: scale(1.1);
 }
+
 
 @media(max-width: 768px) {
     .wine-display {

@@ -1,10 +1,70 @@
+<?php
+session_start();
+include_once 'database.php';
+
+$db = new Database();
+$conn = $db->getConnection();
+
+$names = ["Strawberry Boba", "Taro Boba", "Matcha Boba", "Brown Sugar Boba"];
+$products = [];
+foreach($names as $name){
+    $stmt = $conn->prepare("SELECT * FROM products WHERE name = :name");
+    $stmt->execute(['name'=>$name]);
+    if($p = $stmt->fetch(PDO::FETCH_ASSOC)) $products[] = $p;
+}
+
+if(!$products) die("Produktet nuk u gjetën");
+
+if(!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
+
+if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['action']) && $_POST['action']==='add_to_cart'){
+    $id = intval($_POST['id']);
+    $qty = max(1, min(20, intval($_POST['quantity'])));
+    $found = false;
+
+    foreach($products as $p){
+        if($p['id']==$id){
+            foreach($_SESSION['cart'] as &$item){
+                if($item['id']==$id){
+                    $item['qty'] += $qty;
+                    $found = true;
+                    break;
+                }
+            }
+            if(!$found){
+                $_SESSION['cart'][] = [
+                    'id'=>$p['id'],
+                    'name'=>$p['name'],
+                    'price'=>$p['price'],
+                    'image'=>$p['image'],
+                    'qty'=>$qty
+                ];
+            }
+            break;
+        }
+    }
+
+    $total = 0;
+    foreach($_SESSION['cart'] as $i) $total += $i['price']*$i['qty'];
+
+    echo json_encode([
+        'success'=>true,
+        'cart_count'=>count($_SESSION['cart']),
+        'cart'=>$_SESSION['cart'],
+        'total'=>$total
+    ]);
+    exit;
+}
+
+$first = $products[0];
+$cart_count = count($_SESSION['cart']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Boba Drinks</title>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Arial,sans-serif;background:#fff8f2;overflow-x:hidden}
@@ -158,132 +218,134 @@ body{font-family:Arial,sans-serif;background:#fff8f2;overflow-x:hidden}
 }
 </style>
 </head>
-
 <body>
 
 <nav class="navbar">
-    <div class="nav-left">
-        <img src="img/logoP.png" class="logo">
-    </div>
-
-    <div class="nav-center" id="navLinks">
+    <div class="nav-left"><img src="img/logoP.png" class="logo" alt="Logo"></div>
+    <div class="nav-center" id="nav-links">
         <a href="homee.php">Home</a>
         <a href="Produktet.php">Products</a>
         <a href="aboutus.php">About Us</a>
         <a href="gift.php">Gift Box</a>
     </div>
-
     <div class="nav-right">
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search products...">
-            <button onclick="searchProduct()">🔍</button>
-        </div>
-
+        <form class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button>🔍</button>
+        </form>
         <a href="login.php" class="login-btn">
-            <img src="https://img.icons8.com/ios/50/user--v1.png">
+            <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
-
-        <div class="cart-icon" id="cartIcon">
-            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png">
-            <span id="cartCount" class="cart-count">0</span>
-        </div>
-
-        <div class="hamburger" id="hamburger">☰</div>
+        <a href="#" class="cart-icon" id="cartIcon">
+            <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
+            <span id="cartCount" class="cart-count"><?= $cart_count ?></span>
+        </a>
+        <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>
 
 <div class="mini-cart" id="miniCart">
     <h4>Your Cart</h4>
     <ul id="cartItems"></ul>
-    <p id="totalPrice">Total: $0.00</p>
-    <a href="cart.php" class="go-cart-btn">Go to Cart</a>
+    <p>Total: $<span id="totalPrice">0</span></p>
+    <a href="save_cart.php" class="go-cart-btn">Go to Cart</a>
 </div>
 
-<header class="header"><h1>Our Boba Drinks</h1></header>
+<header class="header">
+    <h1>Our Boba Drinks</h1>
+</header>
 
-<section class="boba-display">
+<div class="boba-display">
     <div class="main-photo-wrapper">
-        <img id="mainBoba" src="img/Screenshot__469_-removebg-preview.png">
+        <img id="mainImg" src="<?= $first['image'] ?>" alt="<?= $first['name'] ?>">
     </div>
     <div class="boba-info">
-        <h2 id="bobaName">Strawberry Boba</h2>
-        <p>Sweet strawberry flavored boba with milk.</p>
-        <div class="price-add"><span id="bobaPrice">$5.00</span></div>
+        <h2 id="pName"><?= $first['name'] ?></h2>
+        <p id="pPrice"><?= number_format($first['price'],2) ?> €</p>
+        <p id="pDesc"><?= htmlspecialchars($first['description']) ?></p>
 
         <div class="qty-box">
-            <button id="minusBtn">-</button>
-            <span id="qtyDisplay">1</span>
-            <button id="plusBtn">+</button>
+            <button onclick="changeQty(-1)">-</button>
+            <input type="number" id="qty" value="1" min="1" max="20">
+            <button onclick="changeQty(1)">+</button>
         </div>
 
         <button id="addToCartBtn">Add to Cart</button>
 
         <div class="boba-thumbnails">
-            <img src="img/Screenshot__469_-removebg-preview.png" data-name="Strawberry Boba" data-price="5" class="active">
-            <img src="img/Screenshot__470_-removebg-preview.png" data-name="Taro Boba" data-price="5.5">
-            <img src="img/unnamed-removebg-preview.png" data-name="Matcha Boba" data-price="6">
-            <img src="img/Screenshot__471_-removebg-preview.png" data-name="Brown Sugar Boba" data-price="6.5">
+            <?php foreach($products as $p): ?>
+                <img src="<?= $p['image'] ?>"
+                     data-id="<?= $p['id'] ?>"
+                     data-name="<?= $p['name'] ?>"
+                     data-price="<?= $p['price'] ?>"
+                     data-desc="<?= htmlspecialchars($p['description']) ?>"
+                     class="<?= $p['id']==$first['id'] ? 'active' : '' ?>">
+            <?php endforeach; ?>
         </div>
     </div>
-</section>
+</div>
 
 <script>
-let qty=1;
-let cart=JSON.parse(localStorage.getItem("cart"))||[];
+let currentId = <?= $first['id'] ?>;
 
-const qtyDisplay=document.getElementById("qtyDisplay");
-const mainBoba=document.getElementById("mainBoba");
-const bobaName=document.getElementById("bobaName");
-const bobaPrice=document.getElementById("bobaPrice");
-const cartIcon=document.getElementById("cartIcon");
-const miniCart=document.getElementById("miniCart");
-const cartItems=document.getElementById("cartItems");
+function changeQty(v){
+    let q = document.getElementById('qty');
+    let n = parseInt(q.value) + v;
+    if(n>=1 && n<=20) q.value = n;
+}
 
-plusBtn.onclick=()=>{qty++;qtyDisplay.textContent=qty}
-minusBtn.onclick=()=>{if(qty>1){qty--;qtyDisplay.textContent=qty}}
-
-document.querySelectorAll(".boba-thumbnails img").forEach(img=>{
-    img.onclick=()=>{
-        document.querySelectorAll(".boba-thumbnails img").forEach(i=>i.classList.remove("active"));
-        img.classList.add("active");
-        mainBoba.src=img.src;
-        bobaName.textContent=img.dataset.name;
-        bobaPrice.textContent="$"+(+img.dataset.price).toFixed(2);
-        qty=1;qtyDisplay.textContent=qty
+document.querySelectorAll('.boba-thumbnails img').forEach(img=>{
+    img.onclick = ()=>{
+        document.querySelectorAll('.boba-thumbnails img').forEach(t=>t.classList.remove('active'));
+        img.classList.add('active');
+        document.getElementById('mainImg').src = img.src;
+        document.getElementById('pName').innerText = img.dataset.name;
+        document.getElementById('pPrice').innerText = parseFloat(img.dataset.price).toFixed(2)+' €';
+        document.getElementById('pDesc').innerText = img.dataset.desc;
+        currentId = img.dataset.id;
+        document.getElementById('qty').value = 1;
     }
 });
 
-addToCartBtn.onclick=()=>{
-    const price=parseFloat(bobaPrice.textContent.replace("$",""));
-    const item=cart.find(i=>i.name===bobaName.textContent);
-    if(item){item.qty+=qty}
-    else{cart.push({name:bobaName.textContent,pricePerUnit:price,img:mainBoba.src.split("/").pop(),qty})}
-    localStorage.setItem("cart",JSON.stringify(cart));
-    updateCart()
+document.getElementById('addToCartBtn').onclick = ()=>{
+    let qty = parseInt(document.getElementById('qty').value);
+    fetch('',{
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:`action=add_to_cart&id=${currentId}&quantity=${qty}`
+    })
+    .then(r=>r.json())
+    .then(d=>{
+        if(d.success){
+            document.getElementById('cartCount').innerText = d.cart_count;
+            let ul = document.getElementById('cartItems');
+            ul.innerHTML = '';
+            d.cart.forEach(i=>{
+                let li = document.createElement('li');
+                li.innerHTML = `<img src="${i.image}" style="width:40px;height:30px;"> ${i.name} x${i.qty} - $${(i.price*i.qty).toFixed(2)}`;
+                ul.appendChild(li);
+            });
+            document.getElementById('totalPrice').innerText = d.total.toFixed(2);
+            document.getElementById('miniCart').style.display='block';
+        }
+    });
 };
 
-function updateCart(){
-    cartItems.innerHTML="";
-    let total=0;
-    cart.forEach(i=>{
-        total+=i.pricePerUnit*i.qty;
-        cartItems.innerHTML+=`<li><img src="img/${i.img}">${i.name} x${i.qty}</li>`
-    });
-    cartCount.textContent=cart.reduce((s,i)=>s+i.qty,0);
-    totalPrice.textContent="Total: $"+total.toFixed(2)
-}
+document.getElementById('cartIcon').onclick = e=>{
+    e.preventDefault();
+    let m = document.getElementById('miniCart');
+    m.style.display = m.style.display==='block'?'none':'block';
+};
 
-cartIcon.onclick=()=>miniCart.style.display=miniCart.style.display==="block"?"none":"block";
+document.addEventListener("click", e=>{
+    let m = document.getElementById('miniCart');
+    let c = document.getElementById('cartIcon');
+    if(!c.contains(e.target) && !m.contains(e.target)) m.style.display='none';
+});
 
-hamburger.onclick=()=>navLinks.classList.toggle("active");
-
-updateCart();
-
-function searchProduct(){
-    const v=searchInput.value.toLowerCase().trim();
-    const p={muffins:"Muffins.php",cookies:"Cookies.php",donuts:"Donuts.php",macarons:"Macarons.php",chocolates:"Chocolates.php",brownies:"Brownies.php",croissants:"Croissants.php",cheesecakes:"Cheesecakes.php",pralines:"Pralines.php",wine:"Wine.php",boba:"Boba.php",products:"Produktet.php",login:"login.php"};
-    if(p[v])location.href=p[v];else alert("Product not found")
-}
+const hamburger=document.getElementById("hamburger");
+const navLinks=document.getElementById("nav-links");
+hamburger.onclick=()=>{navLinks.classList.toggle("active");};
 </script>
 
 </body>
