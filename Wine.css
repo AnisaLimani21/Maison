@@ -1,74 +1,81 @@
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
+
+html, body {
     font-family: Arial, sans-serif;
-    background: #fff8f2;
+    width: 100%;
     overflow-x: hidden;
 }
 
 .navbar {
-    width: 100%;
-    padding: 15px 40px;
+    width: 100vw; 
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 15px 40px;
     background: #6b3e26;
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: relative;
+    z-index: 10;
 }
 
-.logo {
-    width: 70px;
-}
+
+.nav-left { display: flex; align-items: center; }
+.logo { width: 70px; }
 
 .nav-center {
     display: flex;
     gap: 30px;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
 }
 
 .nav-center a {
-    color: #fff;
     text-decoration: none;
+    color: #fff;
     font-weight: 600;
+    transition: 0.3s;
 }
 
-.nav-right {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
+.nav-center a:hover { color: #ffd88c; }
+
+.nav-right { display: flex; align-items: center; gap: 15px; }
 
 .search-bar {
-    display: flex;
-    background: #fff;
-    border-radius: 20px;
+    display: flex; 
+    align-items: center;
+    background: #fff; 
+    border: 1px solid #ffd88c;
+    border-radius: 20px; 
     padding: 2px 10px;
 }
 
-.search-bar input {
-    border: none;
-    outline: none;
+.search-bar input { border: none; outline: none; padding: 5px; background: none; }
+.search-bar button { border: none; background: none; font-size: 18px; cursor: pointer; }
+
+.login-btn img, .cart-icon img {
+    width: 30px; height: 30px;
+    filter: invert(100%);
+    transition: 0.3s;
+}
+.login-btn img:hover, .cart-icon img:hover {
+    filter: invert(85%) sepia(100%) saturate(500%) hue-rotate(30deg);
 }
 
-.search-bar button {
-    border: none;
-    background: none;
+.hamburger {
+    display: none;
+    font-size: 28px;
+    color: #fff;
     cursor: pointer;
 }
-
-.cart-icon {
-    position: relative;
-}
-
-.cart-icon img {
-    width: 30px;
-    filter: invert(100%);
-}
-.login-btn img, .cart-icon img { width: 30px; height: 30px; filter: invert(100%); transition: 0.3s; }
-.login-btn img:hover, .cart-icon img:hover { filter: invert(85%) sepia(100%) saturate(500%) hue-rotate(30deg); }
 
 .cart-count {
     position: absolute;

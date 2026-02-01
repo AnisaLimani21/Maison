@@ -51,7 +51,7 @@ private $reviews;
             <button onclick="searchProduct()">🔍</button>
         </div>
         <a href="login.php" class="login-btn"><img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login"></a>
-        <a href="cart.php" class="cart-icon"><img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart"></a>
+        <a href="login.php" class="cart-icon"><img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart"></a>
         <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>
@@ -91,7 +91,10 @@ private $reviews;
 <div class="featured-products">
     <h1>Our Featured Products</h1>
     <div class="products-grid">
-        <?php foreach($this->products as $prod): ?>
+        <?php 
+        $featured = array_slice($this->products, 0, 5); 
+        foreach($featured as $prod): 
+        ?>
         <div class="product-card">
             <img src="<?php echo $prod['image']; ?>" alt="<?php echo $prod['name']; ?>">
             <h3><?php echo $prod['name']; ?></h3>
