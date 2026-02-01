@@ -5,7 +5,6 @@ include_once 'database.php';
 $db = new Database();
 $conn = $db->getConnection();
 
-// Zgjidh produktin e parë për të treguar (mund të zgjerosh me thumbnails më vonë)
 $product_name = "Dark Chocolate";
 
 $stmt = $conn->prepare("SELECT * FROM products WHERE name = :name");
@@ -14,7 +13,6 @@ $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if(!$product) die("Produkt nuk u gjet");
 
-// Inicializo cart në session
 if(!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
 
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_to_cart') {

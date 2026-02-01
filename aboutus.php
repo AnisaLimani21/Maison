@@ -162,13 +162,7 @@ session_start();
 </div>
 
 
-        <!-- <div class="nicolas">
-             <img src="photos/Screenshot 2025-11-17 155445.png" alt="" width="500px" height="400px">
-            <img src="photos/Nicolas_Cloiseau_326x326_1.webp" alt=""><div class="nico" >
-           
-            <img src="photos/Screenshot 2025-11-17 155527.png" alt="" width="500px" height="400px">
-        </div>
-        </div>-->
+    
 
 <footer class="footer">
     <div class="footer-left">

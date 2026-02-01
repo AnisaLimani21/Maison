@@ -451,11 +451,7 @@ html, body {
 
 
 @media (min-width: 601px) and (max-width: 744px) {
-  /*  .nav-center { display: none; flex-direction: column; background: #4b2e1e; position: absolute; top: 65px; left: 0; width: 100%; padding: 10px 0; z-index: 9; }
-    .nav-center.active { display: flex; }
-    .hamburger { display: block; }
-    .nav-right { gap: 10px; }
-    .search-bar input { width: 100px; font-size: 13px; }*/
+  
     .hero { flex-direction: column; text-align: center; padding: 30px 20px; }
     .hero-text h1 { font-size: 32px; }
     .hero-text p { font-size: 15px; }

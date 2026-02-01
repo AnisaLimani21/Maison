@@ -10,12 +10,7 @@ $controller=new HomeController($db);
 $controller->handlePost();
 
 
-//$db = new Database("localhost", "root", "", "maison");
-/*$sliderObj = new Slider($db);
-$productObj = new Product($db);
-$reviewObj = new Review($db);
 
-*/
 
 
 $sliders = $controller->getSliders() ??[];
