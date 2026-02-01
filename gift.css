@@ -219,7 +219,7 @@ color: rgba(5, 5, 5, 0.684);
 }
 
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
     .footer {
         flex-direction: column;
         align-items: center;
@@ -231,7 +231,7 @@ color: rgba(5, 5, 5, 0.684);
         width: 100%;
         margin-bottom: 5px;
     }
-}
+}*/
  
 
 .buton{
@@ -258,81 +258,30 @@ color: rgba(5, 5, 5, 0.684);
     padding-right: 500px;
 }
 
+
+@media (max-width: 1200px) {
+    .photo { grid-template-columns: repeat(2, 1fr); gap: 40px 20px; }
+    .button1 { justify-content: center; padding-right: 0; }
+}
+
 @media (max-width: 900px) {
-   @media (max-width: 900px) {
-
-    .navbar {
-        flex-wrap: nowrap;
-        padding: 10px 20px;
-    }
-
-    .nav-center {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: #6b3e26;
-        flex-direction: column;
-        align-items: center;
-        display: none;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
-
-    .nav-center a {
-        padding: 15px 0;
-        width: 100%;
-        text-align: center;
-        border-top: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .nav-center.active {
-        display: flex;
-    }
-
-    .hamburger {
-        display: block;
-    }
+    .photo { grid-template-columns: 1fr; gap: 30px; }
+    .navbar { padding: 15px 20px; }
+    .nav-center { gap: 20px; justify-content: center; }
 }
 
-
-    .photo {
-        grid-template-columns: 1fr;
-        row-gap: 60px;
-        column-gap: 0;
-        padding: 20px;
-    }
-
-    .photo .card {
-        height: auto;
-        padding: 20px;
-        font-size: 18px;
-    }
-    .card{
-        margin-top: 20px;
-    }
-
-    .photo .card img {
-        height: auto;
-        max-height: 300px;
-        object-fit: cover;
-    }
-
-    .new h2 {
-        font-size: 32px;
-        padding-bottom: 40px;
-    }
-
-    .new p {
-        font-size: 20px;
-        padding: 0 15px 60px;
-        margin-top: 0;
-    }
-
-    .search-bar input {
-        width: 100px;
-    }
+@media (max-width: 768px) {
+    .hamburger { display: block; }
+    .nav-center { display: none; width: 100%; text-align: center; margin-top: 10px; }
+    .nav-right { flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 10px; }
+    .search-bar { max-width: 100%; width: 100%; }
 }
 
+@media (max-width: 480px) {
+    .new h2 { font-size: 36px; }
+    .new p { font-size: 20px; }
+    .card { font-size: 18px; padding: 15px; height: auto; }
+    .footer { flex-direction: column; align-items: center; text-align: center; }
+    .footer-left, .footer-center, .footer-right { min-width: 100%; margin-bottom: 20px; }
+}
 
