@@ -38,8 +38,10 @@
         <img src="img/dhurata3.webp" alt="Love Gift Box">
     </div>
     <div class="product-details">
-        <h2 class="product-title">Party Gift Box</h2>
+        <h2 class="product-title">Love Gift Box</h2>
         <p class="price">€48.00</p>
+                <p class="description">Assorted mini chocolate bars in a convenient gift box!</p>
+
         <h3>Ingredients:</h3>
         <ul>
             <li>Cocoa butter</li>

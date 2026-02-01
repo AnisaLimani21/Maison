@@ -150,7 +150,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             </div>
 
             <p class="create-account">
-                Already have an account? <a href="login.html">Log In</a>
+                Already have an account? <a href="login.php">Log In</a>
             </p>
         </form>
     </div>
