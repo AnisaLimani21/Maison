@@ -102,12 +102,14 @@ body {
     background-color: #6b3e26;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 40px; 
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: 10px;
 }
+
 #addToCartBtn:hover { background-color: #855c3a; transform: scale(1.05); }
 
 .quantity-box { display:flex; align-items:center; gap:10px; margin-top:10px; }

@@ -1,3 +1,64 @@
+<?php
+session_start();
+include_once 'database.php';
+
+$db = new Database();
+$conn = $db->getConnection();
+
+$names = ["Classic Croissant", "Chocolate Croissant", "Almond Croissant", "Caramel Croissant"];
+$products = [];
+foreach ($names as $name) {
+    $stmt = $conn->prepare("SELECT * FROM products WHERE name = :name");
+    $stmt->execute(['name' => $name]);
+    if ($p = $stmt->fetch(PDO::FETCH_ASSOC)) $products[] = $p;
+}
+if (!$products) die("Produktet nuk u gjetën");
+
+if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_to_cart') {
+    $id = intval($_POST['id']);
+    $qty = max(1, min(20, intval($_POST['quantity'])));
+    $found = false;
+
+    foreach ($products as $p) {
+        if ($p['id'] == $id) {
+            foreach ($_SESSION['cart'] as &$item) {
+                if ($item['id'] == $id) {
+                    $item['qty'] += $qty;
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                $_SESSION['cart'][] = [
+                    'id'=>$p['id'],
+                    'name'=>$p['name'],
+                    'price'=>$p['price'],
+                    'image'=>$p['image'],
+                    'qty'=>$qty
+                ];
+            }
+            break;
+        }
+    }
+
+    $total = 0;
+    foreach ($_SESSION['cart'] as $i) $total += $i['price'] * $i['qty'];
+
+    echo json_encode([
+        'success'=>true,
+        'cart_count'=>count($_SESSION['cart']),
+        'cart'=>$_SESSION['cart'],
+        'total'=>$total
+    ]);
+    exit;
+}
+
+$first = $products[0];
+$cart_count = count($_SESSION['cart']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,18 +67,16 @@
 <title>Croissants</title>
 <link rel="stylesheet" href="Chocolates.css">
 <style>
-.quantity-control { display:flex; align-items:center; gap:5px; }
-.quantity-control button { width:30px; height:30px; font-size:18px; border:none; border-radius:5px; background:#6b3e26; color:#fff; cursor:pointer; transition:0.3s; }
-.quantity-control button:hover { background:#855c3a; }
-.quantity-control input { width:50px; text-align:center; font-size:16px; padding:3px; border-radius:5px; border:1px solid #ccc; }
+.quantity-box { display:flex; align-items:center; gap:5px; }
+.quantity-box button { width:30px; height:30px; font-size:18px; border:none; border-radius:5px; background:#6b3e26; color:#fff; cursor:pointer; transition:0.3s; }
+.quantity-box button:hover { background:#855c3a; }
+.quantity-box input { width:50px; text-align:center; font-size:16px; padding:3px; border-radius:5px; border:1px solid #ccc; }
 </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <div class="nav-left">
-        <img src="img/logoP.png" class="logo" alt="Logo">
-    </div>
+    <div class="nav-left"><img src="img/logoP.png" class="logo" alt="Logo"></div>
     <div class="nav-center" id="nav-links">
         <a href="homee.php">Home</a>
         <a href="Produktet.php">Products</a>
@@ -25,165 +84,117 @@
         <a href="gift.php">Gift Box</a>
     </div>
     <div class="nav-right">
-          <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search products...">
-            <button onclick="searchProduct()">🔍</button>
-        </div>
+        <form class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button>🔍</button>
+        </form>
         <a href="login.php" class="login-btn">
             <img src="https://img.icons8.com/ios/50/user--v1.png" alt="Login">
         </a>
         <a href="#" class="cart-icon" id="cartIcon">
             <img src="https://img.icons8.com/ios/50/shopping-cart--v1.png" alt="Cart">
-            <span id="cartCount" class="cart-count">0</span>
+            <span id="cartCount" class="cart-count"><?php echo $cart_count; ?></span>
         </a>
         <span class="hamburger" id="hamburger">☰</span>
     </div>
 </nav>
 
-<div id="miniCart" class="mini-cart">
+<div class="mini-cart" id="miniCart">
     <h4>Your Cart</h4>
     <ul id="cartItems"></ul>
-    <p id="totalPrice">Total: $0.00</p>
-    <a href="cart.php" class="go-cart-btn">Go to Cart</a>
+    <p>Total: $<span id="totalPrice">0</span></p>
+    <a href="save_cart.php" class="go-cart-btn">Go to Cart</a>
 </div>
 
 <header class="header">
-    <h1>Croissants</h1>
+    <h1>Our Croissants</h1>
 </header>
 
-<section class="chocolate-display">
+<div class="chocolate-display">
+
     <div class="main-photo">
-        <img id="mainChocolate" src="img/Screenshot__434_-removebg-preview.png" alt="Croissant">
+        <img id="mainImg" src="<?= $first['image'] ?>">
     </div>
 
     <div class="chocolate-info">
-        <h2 id="chocName">Classic Croissant</h2>
-        <div class="price-add">
-            <span id="chocPrice" data-price="3.50">$3.50</span>
-            <div class="quantity-control">
-                <button id="decreaseQty">-</button>
-                <input type="number" id="chocQty" value="1" min="1" max="20">
-                <button id="increaseQty">+</button>
-            </div>
-            <button id="addToCartBtn">Add to Cart</button>
+        <h2 id="pName"><?= $first['name'] ?></h2>
+        <p id="pPrice" data-unit-price="<?= $first['price'] ?>"><?= number_format($first['price'],2) ?> €</p>
+
+        <div class="quantity-box">
+            <button onclick="changeQty(-1)">-</button>
+            <input type="number" id="qty" value="1" min="1" max="20">
+            <button onclick="changeQty(1)">+</button>
         </div>
+
+        <button id="addToCartBtn">Add to Cart</button>
     </div>
 
     <div class="thumbnails">
-        <img src="img/Screenshot__434_-removebg-preview.png" data-name="Classic Croissant" data-price="3.50">
-        <img src="img/Screenshot__436_-removebg-preview.png" data-name="Chocolate Croissant" data-price="4.00">
-        <img src="img/Screenshot__437_-removebg-preview.png" data-name="Almond Croissant" data-price="4.20">
-        <img src="img/Screenshot__438_-removebg-preview.png" data-name="Caramel Croissant" data-price="4.50">
+        <?php foreach($products as $p): ?>
+            <img src="<?= $p['image'] ?>"
+                 data-id="<?= $p['id'] ?>"
+                 data-name="<?= $p['name'] ?>"
+                 data-price="<?= $p['price'] ?>">
+        <?php endforeach; ?>
     </div>
-</section>
+
+</div>
 
 <script>
-const mainChocolate = document.getElementById('mainChocolate');
-const chocName = document.getElementById('chocName');
-const chocPrice = document.getElementById('chocPrice');
-const addToCartBtn = document.getElementById("addToCartBtn");
-const thumbnails = document.querySelectorAll('.thumbnails img');
-const qtyInput = document.getElementById("chocQty");
-const increaseBtn = document.getElementById("increaseQty");
-const decreaseBtn = document.getElementById("decreaseQty");
+let currentId = <?= $first['id'] ?>;
 
-const cartIcon = document.getElementById("cartIcon");
-const cartCount = document.getElementById("cartCount");
-const miniCart = document.getElementById("miniCart");
-const cartItems = document.getElementById("cartItems");
-const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("nav-links");
-
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-cartCount.textContent = cart.length;
-
-function updateMiniCart(){
-    cartItems.innerHTML = "";
-    let total = 0;
-    cart.forEach(item => {
-        const li = document.createElement("li");
-        li.innerHTML = `<img src="img/${item.img}" style="width:40px;height:30px;margin-right:5px;vertical-align:middle;"> ${item.name} x${item.qty} - $${(item.pricePerUnit*item.qty).toFixed(2)}`;
-        cartItems.appendChild(li);
-        total += item.pricePerUnit * item.qty;
-    });
-    document.getElementById("totalPrice").textContent = `Total: $${total.toFixed(2)}`;
+function changeQty(v){
+    let q = document.getElementById('qty');
+    let n = parseInt(q.value) + v;
+    if(n>=1 && n<=20) q.value = n;
 }
 
-thumbnails.forEach(thumb => {
-    thumb.addEventListener('click', () => {
-        mainChocolate.src = thumb.src;
-        chocName.textContent = thumb.dataset.name;
-        chocPrice.dataset.price = thumb.dataset.price;
-        chocPrice.textContent = `$${thumb.dataset.price}`;
-        qtyInput.value = 1;
+document.querySelectorAll('.thumbnails img').forEach(img=>{
+    img.onclick = ()=>{
+        document.getElementById('mainImg').src = img.src;
+        document.getElementById('pName').innerText = img.dataset.name;
+        document.getElementById('pPrice').innerText = parseFloat(img.dataset.price).toFixed(2)+' €';
+        document.getElementById('pPrice').dataset.unitPrice = img.dataset.price;
+        currentId = img.dataset.id;
+        document.getElementById('qty').value = 1;
+    }
+});
+
+document.getElementById('addToCartBtn').onclick = ()=>{
+    let qty = parseInt(document.getElementById('qty').value);
+    fetch('', {
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:`action=add_to_cart&id=${currentId}&quantity=${qty}`
+    })
+    .then(res=>res.json())
+    .then(d=>{
+        if(d.success){
+            document.getElementById('cartCount').innerText = d.cart_count;
+            let ul = document.getElementById('cartItems');
+            ul.innerHTML = '';
+            d.cart.forEach(i=>{
+                let li = document.createElement('li');
+                li.innerHTML = `<img src="${i.image}" style="width:40px;height:30px;"> ${i.name} x${i.qty} - $${(i.price*i.qty).toFixed(2)}`;
+                ul.appendChild(li);
+            });
+            document.getElementById('totalPrice').textContent = d.total.toFixed(2);
+            document.getElementById('miniCart').style.display='block';
+        }
     });
-});
+};
 
-increaseBtn.addEventListener("click", () => {
-    let val = parseInt(qtyInput.value);
-    if(val < 20) qtyInput.value = val + 1;
-});
-decreaseBtn.addEventListener("click", () => {
-    let val = parseInt(qtyInput.value);
-    if(val > 1) qtyInput.value = val - 1;
-});
-
-addToCartBtn.addEventListener("click", () => {
-    const quantity = parseInt(qtyInput.value);
-    const item = {
-        name: chocName.textContent,
-        pricePerUnit: parseFloat(chocPrice.dataset.price),
-        img: mainChocolate.src.split("/").pop(),
-        qty: quantity
-    };
-    cart.push(item);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    cartCount.textContent = cart.length;
-    updateMiniCart();
-    alert(`${item.name} x${quantity} added to cart!`);
-});
-
-cartIcon.addEventListener("click", (e) => {
+document.getElementById('cartIcon').onclick = e=>{
     e.preventDefault();
-    miniCart.style.display = miniCart.style.display === "block" ? "none" : "block";
+    let m = document.getElementById('miniCart');
+    m.style.display = m.style.display==='block'?'none':'block';
+};
+
+document.addEventListener("click", e=>{
+    let m = document.getElementById('miniCart');
+    let c = document.getElementById('cartIcon');
+    if(!c.contains(e.target) && !m.contains(e.target)) m.style.display='none';
 });
-
-document.addEventListener("click", (e) => {
-    if (!cartIcon.contains(e.target) && !miniCart.contains(e.target)) {
-        miniCart.style.display = "none";
-    }
-});
-
-hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-});
-
-updateMiniCart();
-function searchProduct() {
-    const input = document.getElementById('searchInput').value.toLowerCase().trim();
-
-    const pages = {
-        "muffins": "Muffins.php",
-        "cookies": "Cookies.php",
-        "donuts": "Donuts.php",
-        "macarons": "Macarons.php",
-        "chocolates": "Chocolates.php",
-        "brownies": "Brownies.php",
-        "croissants": "Croissants.php",
-        "cheesecakes": "Cheesecakes.php",
-        "pralines": "Pralines.php",
-        "wine": "Wine.php",
-        "login": "login.php",
-        "boba":"Boba.php",
-        "products": "Produktet.php"
-    };
-
-    if(pages[input]) {
-        window.location.href = pages[input];
-    } else {
-        alert("Product not found");
-    }
-}
 </script>
 
 </body>
